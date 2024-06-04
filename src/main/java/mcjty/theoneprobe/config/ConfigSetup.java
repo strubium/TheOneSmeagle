@@ -27,16 +27,17 @@ public class ConfigSetup {
 
     public static Configuration mainConfig;
 
-    public static String CATEGORY_THEONEPROBE = "theoneprobe";
-    public static String CATEGORY_PROVIDERS = "providers";
-    public static String CATEGORY_CLIENT = "client";
+    public final static String CATEGORY_THEONEPROBE = "theoneprobe";
+    public final static String CATEGORY_PROVIDERS = "providers";
+    public final static String CATEGORY_CLIENT = "client";
 
     public static final int PROBE_NOTNEEDED = 0;
     public static final int PROBE_NEEDED = 1;
     public static final int PROBE_NEEDEDHARD = 2;
     public static final int PROBE_NEEDEDFOREXTENDED = 3;
+    @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "Is the probe needed to show the tooltip? 0 = no, 1 = yes, 2 = yes and clients cannot override, 3 = probe needed for extended info only")
     public static int needsProbe = PROBE_NEEDEDFOREXTENDED;
-
+    @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)")
     public static boolean extendedInMain = false;
     public static NumberFormat rfFormat = NumberFormat.COMPACT;
     public static NumberFormat tankFormat = NumberFormat.COMPACT;
@@ -44,7 +45,9 @@ public class ConfigSetup {
     public static int waitingForServerTimeout = 2000;
     public static int maxPacketToServer = 20000;
 
+    @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "If true there will be a bauble version of the probe if baubles is present")
     public static boolean supportBaubles = true;
+    @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "If true there will be a readme note for first-time players")
     public static boolean spawnNote = true;
 
     // Chest related settings
@@ -106,7 +109,7 @@ public class ConfigSetup {
         defaultTextStyleClasses.put(PROGRESS, "white");
         textStyleClasses = new HashMap<>(defaultTextStyleClasses);
     }
-
+    @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "How much time (in ms) to wait before reporting an exception again")
     public static int loggingThrowableTimeout = 20000;
 
     public static boolean showCollarColor = true;
@@ -128,8 +131,6 @@ public class ConfigSetup {
     }
 
     public static void init(Configuration cfg) {
-        loggingThrowableTimeout = cfg.getInt("loggingThrowableTimeout", CATEGORY_THEONEPROBE, loggingThrowableTimeout, 1, 10000000, "How much time (in ms) to wait before reporting an exception again");
-        needsProbe = cfg.getInt("needsProbe", CATEGORY_THEONEPROBE, needsProbe, 0, 3, "Is the probe needed to show the tooltip? 0 = no, 1 = yes, 2 = yes and clients cannot override, 3 = probe needed for extended info only");
         extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_THEONEPROBE, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
         supportBaubles = cfg.getBoolean("supportBaubles", CATEGORY_THEONEPROBE, supportBaubles, "If true there will be a bauble version of the probe if baubles is present");
         spawnNote = cfg.getBoolean("spawnNote", CATEGORY_THEONEPROBE, spawnNote, "If true there will be a readme note for first-time players");
