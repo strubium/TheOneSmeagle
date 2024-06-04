@@ -39,10 +39,20 @@ public class ConfigSetup {
     public static int needsProbe = PROBE_NEEDEDFOREXTENDED;
     @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)")
     public static boolean extendedInMain = false;
+
+    @ConfigSync(category = "theoneprobe", comment = "Format for displaying RF: 0 = full, 1 = compact, 2 = comma separated")
     public static NumberFormat rfFormat = NumberFormat.COMPACT;
+
+    @ConfigSync(category = "theoneprobe", comment = "Format for displaying tank contents: 0 = full, 1 = compact, 2 = comma separated")
     public static NumberFormat tankFormat = NumberFormat.COMPACT;
+
+    @ConfigSync(category = "theoneprobe", comment = "The amount of milliseconds to wait before updating probe information from the server (this is a client-side config)")
     public static int timeout = 300;
+
+    @ConfigSync(category = "theoneprobe", comment = "The amount of milliseconds to wait before showing a 'fetch from server' info on the client (if the server is slow to respond) (-1 to disable this feature)")
     public static int waitingForServerTimeout = 2000;
+
+    @ConfigSync(category = "theoneprobe", comment = "The maximum packet size to send an itemstack from client to server. Reduce this if you have issues with network lag caused by TOP")
     public static int maxPacketToServer = 20000;
 
     @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "If true there will be a bauble version of the probe if baubles is present")
