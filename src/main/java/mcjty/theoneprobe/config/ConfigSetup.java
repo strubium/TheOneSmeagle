@@ -11,11 +11,19 @@ import mcjty.theoneprobe.apiimpl.styles.DefaultOverlayStyle;
 import mcjty.theoneprobe.setup.ModSetup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Config.RangeDouble;
+import net.minecraftforge.common.config.Config.RangeInt;
+import net.minecraftforge.common.config.Config.RequiresMcRestart;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,6 +32,7 @@ import java.util.Set;
 import static mcjty.theoneprobe.api.TextStyleClass.*;
 
 public class ConfigSetup {
+    private static final HashMap<Field, Property> elementMappings = new HashMap<>();
 
     public static Configuration mainConfig;
 
@@ -71,6 +80,7 @@ public class ConfigSetup {
     private static Set<ResourceLocation> inventoriesToNotShow = null;
     private static Set<ResourceLocation> dontSendNBTSet = null;
 
+    @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "Distance at which the probe works")
     public static float probeDistance = 6;
     public static boolean showLiquids = false;
     public static boolean isVisible = true;
@@ -121,7 +131,7 @@ public class ConfigSetup {
     }
     @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "How much time (in ms) to wait before reporting an exception again")
     public static int loggingThrowableTimeout = 20000;
-
+    @ConfigSync(category = CATEGORY_THEONEPROBE, comment = "If true, show the color of the collar of a wolf")
     public static boolean showCollarColor = true;
 
     private static IOverlayStyle defaultOverlayStyle;
@@ -141,20 +151,12 @@ public class ConfigSetup {
     }
 
     public static void init(Configuration cfg) {
-        extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_THEONEPROBE, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
-        supportBaubles = cfg.getBoolean("supportBaubles", CATEGORY_THEONEPROBE, supportBaubles, "If true there will be a bauble version of the probe if baubles is present");
-        spawnNote = cfg.getBoolean("spawnNote", CATEGORY_THEONEPROBE, spawnNote, "If true there will be a readme note for first-time players");
-        showCollarColor = cfg.getBoolean("showCollarColor", CATEGORY_THEONEPROBE, showCollarColor, "If true show the color of the collar of a wolf");
         defaultConfig.setRFMode(cfg.getInt("showRF", CATEGORY_THEONEPROBE, defaultConfig.getRFMode(), 0, 2, "How to display RF: 0 = do not show, 1 = show in a bar, 2 = show as text"));
         defaultConfig.setTankMode(cfg.getInt("showTank", CATEGORY_THEONEPROBE, defaultConfig.getTankMode(), 0, 2, "How to display tank contents: 0 = do not show, 1 = show in a bar, 2 = show as text"));
         int fmt = cfg.getInt("rfFormat", CATEGORY_THEONEPROBE, rfFormat.ordinal(), 0, 2, "Format for displaying RF: 0 = full, 1 = compact, 2 = comma separated");
         rfFormat = NumberFormat.values()[fmt];
         fmt = cfg.getInt("tankFormat", CATEGORY_THEONEPROBE, tankFormat.ordinal(), 0, 2, "Format for displaying tank contents: 0 = full, 1 = compact, 2 = comma separated");
         tankFormat = NumberFormat.values()[fmt];
-        timeout = cfg.getInt("timeout", CATEGORY_THEONEPROBE, timeout, 10, 100000, "The amount of milliseconds to wait before updating probe information from the server (this is a client-side config)");
-        waitingForServerTimeout = cfg.getInt("waitingForServerTimeout", CATEGORY_THEONEPROBE, waitingForServerTimeout, -1, 100000, "The amount of milliseconds to wait before showing a 'fetch from server' info on the client (if the server is slow to respond) (-1 to disable this feature)");
-        maxPacketToServer = cfg.getInt("maxPacketToServer", CATEGORY_THEONEPROBE, maxPacketToServer, -1, 32768, "The maximum packet size to send an itemstack from client to server. Reduce this if you have issues with network lag caused by TOP");
-        probeDistance = cfg.getFloat("probeDistance", CATEGORY_THEONEPROBE, probeDistance, 0.1f, 200f, "Distance at which the probe works");
         initDefaultConfig(cfg);
 
         showDebugInfo = cfg.getBoolean("showDebugInfo", CATEGORY_THEONEPROBE, showDebugInfo, "If true show debug info with creative probe");
@@ -381,7 +383,7 @@ public class ConfigSetup {
         }
         return dontSendNBTSet;
     }
-
+    /*
     public static void init() {
         mainConfig = new Configuration(new File(ModSetup.modConfigDir.getPath(), "theoneprobe.cfg"));
         Configuration cfg = mainConfig;
@@ -393,6 +395,69 @@ public class ConfigSetup {
             init(cfg);
         } catch (Exception e1) {
             TheOneProbe.setup.getLogger().log(Level.ERROR, "Problem loading config file!", e1);
+        }
+    }*/
+
+    private static void registerProperty(Field f, ConfigSync annotation) {
+        Property property = null;
+
+        try {
+            if(f.getType() == int.class) {
+                boolean isRanged = f.isAnnotationPresent(RangeInt.class);
+                if(!isRanged) {
+                    property = config.get(annotation.category(), f.getName(), f.getInt(null), annotation.comment());
+                    f.set(null, property.getInt());
+
+                } else {
+                    RangeInt rangedAnnotation = f.getAnnotation(RangeInt.class);
+                    property = config.get(annotation.category(), f.getName(), f.getInt(null), annotation.comment(), rangedAnnotation.min(), rangedAnnotation.max());
+                    f.set(null, property.getInt());
+                }
+
+            } else if(f.getType() == boolean.class) {
+                property = config.get(annotation.category(), f.getName(), f.getBoolean(null), annotation.comment());
+                f.set(null, property.getBoolean());
+
+            } else if(f.getType() == String.class) {
+                property = config.get(annotation.category(), f.getName(), (String) f.get(null), annotation.comment());
+                f.set(null, property.getString());
+
+            } else if(f.getType() == double.class) {
+                boolean isRanged = f.isAnnotationPresent(RangeDouble.class);
+                if(!isRanged) {
+                    property = config.get(annotation.category(), f.getName(), f.getDouble(null), annotation.comment());
+                    f.set(null, property.getDouble());
+
+                } else {
+                    RangeDouble range = f.getAnnotation(RangeDouble.class);
+                    property = config.get(annotation.category(), f.getName(), f.getDouble(null), annotation.comment(), range.min(), range.max());
+                    f.set(null, property.getDouble());
+                }
+            }
+
+        } catch(IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        if (f.isAnnotationPresent(RequiresMcRestart.class) && property != null) {
+            property.setRequiresMcRestart(true);
+        }
+
+        // Put property into the map
+        elementMappings.put(f, property);
+    }
+    private static Configuration config = null;
+    public static void init() {
+        config = new Configuration(new File(Loader.instance().getConfigDir(), "mwc.cfg"));
+
+        // Initialize this class' fields
+        for(Field f : ConfigSetup.class.getFields()) {
+            ConfigSync annotation = f.getAnnotation(ConfigSync.class);
+            if(annotation == null) continue;
+            //MODERN_CONFIG_FIELDS.add(f);
+
+            registerProperty(f, annotation);
+
         }
     }
 }

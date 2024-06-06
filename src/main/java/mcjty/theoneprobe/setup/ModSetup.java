@@ -125,13 +125,6 @@ public class ModSetup {
         for (IProbeInfoProvider provider : providers) {
             defaultValues[i++] = provider.getID();
         }
-
-        String[] sortedProviders = ConfigSetup.mainConfig.getStringList("sortedProviders", ConfigSetup.CATEGORY_PROVIDERS, defaultValues, "Order in which providers should be used");
-        String[] excludedProviders = ConfigSetup.mainConfig.getStringList("excludedProviders", ConfigSetup.CATEGORY_PROVIDERS, new String[] {}, "Providers that should be excluded");
-        Set<String> excluded = new HashSet<>();
-        Collections.addAll(excluded, excludedProviders);
-
-        TheOneProbe.theOneProbeImp.configureProviders(sortedProviders, excluded);
     }
 
     private void configureEntityProviders() {
@@ -141,12 +134,5 @@ public class ModSetup {
         for (IProbeInfoEntityProvider provider : providers) {
             defaultValues[i++] = provider.getID();
         }
-
-        String[] sortedProviders = ConfigSetup.mainConfig.getStringList("sortedEntityProviders", ConfigSetup.CATEGORY_PROVIDERS, defaultValues, "Order in which entity providers should be used");
-        String[] excludedProviders = ConfigSetup.mainConfig.getStringList("excludedEntityProviders", ConfigSetup.CATEGORY_PROVIDERS, new String[] {}, "Entity providers that should be excluded");
-        Set<String> excluded = new HashSet<>();
-        Collections.addAll(excluded, excludedProviders);
-
-        TheOneProbe.theOneProbeImp.configureEntityProviders(sortedProviders, excluded);
     }
 }
