@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.setup;
 
 import mcjty.theoneprobe.gui.GuiConfig;
+import mcjty.theoneprobe.gui.GuiDebug;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -10,6 +11,7 @@ public class GuiProxy implements IGuiHandler {
 
     public static int GUI_NOTE = 1;
     public static int GUI_CONFIG = 2;
+    public static int GUI_DEBUG = 3;
 
     @Override
     public Object getServerGuiElement(int guiid, EntityPlayer entityPlayer, World world, int x, int y, int z) {
@@ -34,7 +36,10 @@ public class GuiProxy implements IGuiHandler {
             return new GuiNote();
         } else if (guiid == GUI_CONFIG) {
             return new GuiConfig();
-        } else {
+        }else if (guiid == GUI_DEBUG)  {
+            return new GuiDebug();
+        }
+        else {
             return null;
         }
     }
