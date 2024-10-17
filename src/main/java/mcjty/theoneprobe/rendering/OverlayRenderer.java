@@ -159,7 +159,7 @@ public class OverlayRenderer {
             }
 
             if (lastPair != null && time < lastPairTime + ConfigSetup.timeout) {
-                ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/note.png");
+                ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/probebackground.png");
                 renderElements(lastPair.getRight(), ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement, backgroundTexture);
                 lastRenderedTime = time;
             } else if (ConfigSetup.waitingForServerTimeout > 0 && lastRenderedTime != -1 && time > lastRenderedTime + ConfigSetup.waitingForServerTimeout) {
@@ -173,7 +173,7 @@ public class OverlayRenderer {
                 }
                 lastPair = Pair.of(time, info);
                 lastPairTime = time;
-                ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/note.png");
+                ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/probebackground.png");
                 renderElements(info, ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement, backgroundTexture);
                 lastRenderedTime = time;
             }
@@ -189,7 +189,7 @@ public class OverlayRenderer {
                     requestBlockInfo(mode, mouseOver, blockPos, player);
                 }
             }
-            ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/note.png");
+            ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/probebackground.png");
             renderElements(((Pair<Long, ProbeInfo>) cacheEntry).getRight(), ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement, backgroundTexture);
             lastRenderedTime = time;
             lastPair = cacheEntry;
@@ -316,7 +316,7 @@ public class OverlayRenderer {
         double sh = scaledresolution.getScaledHeight_double();
 
         setupOverlayRendering(sw * scale, sh * scale);
-        ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/note.png");
+        ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/probebackground.png");
         renderElements((ProbeInfo) probeInfo, style, sw * scale, sh * scale, null, backgroundTexture);
         setupOverlayRendering(sw, sh);
         GlStateManager.popMatrix();
