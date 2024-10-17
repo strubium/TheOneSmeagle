@@ -35,6 +35,7 @@ public class ModSetup {
     public static File modConfigDir;
 
     public static boolean baubles = false;
+    public static boolean gamestages = false;
     public static boolean redstoneflux = false;
 
     public void preInit(FMLPreInitializationEvent e) {
@@ -76,6 +77,11 @@ public class ModSetup {
         redstoneflux = Loader.isModLoaded("redstoneflux");
         if (redstoneflux) {
             logger.log(Level.INFO, "The One Probe Detected RedstoneFlux: enabling support");
+        }
+
+        gamestages = Loader.isModLoaded("gamestages");
+        if (gamestages) {
+            logger.log(Level.INFO, "The One Probe Detected GameStages: enabling support");
         }
 
         baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");

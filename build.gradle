@@ -40,6 +40,9 @@ repositories {
         name = "CoFH Maven"
         url = "https://maven.covers1624.net"
     }
+    maven {
+        url 'https://maven.blamejared.com'
+    }
 }
 
 def ENV = System.getenv()
@@ -67,6 +70,11 @@ minecraft {
 dependencies {
     deobfCompile "mezz.jei:jei_${jei_version}"
     deobfCompile "cofh:RedstoneFlux:${redstoneflux_version}"
+
+    //Gamestages stuff
+    compile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.590"
+    compile "net.darkhax.gamestages:GameStages-1.12.2:2.0.123"
+
 }
 
 jar {
