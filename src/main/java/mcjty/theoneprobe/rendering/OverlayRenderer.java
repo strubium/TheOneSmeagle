@@ -19,11 +19,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -157,7 +159,8 @@ public class OverlayRenderer {
             }
 
             if (lastPair != null && time < lastPairTime + ConfigSetup.timeout) {
-                renderElements(lastPair.getRight(), ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement);
+                ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/note.png");
+                renderElements(lastPair.getRight(), ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement, backgroundTexture);
                 lastRenderedTime = time;
             } else if (ConfigSetup.waitingForServerTimeout > 0 && lastRenderedTime != -1 && time > lastRenderedTime + ConfigSetup.waitingForServerTimeout) {
                 ProbeInfo info;
@@ -170,7 +173,8 @@ public class OverlayRenderer {
                 }
                 lastPair = Pair.of(time, info);
                 lastPairTime = time;
-                renderElements(info, ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement);
+                ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/note.png");
+                renderElements(info, ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement, backgroundTexture);
                 lastRenderedTime = time;
             }
             return false;
@@ -185,7 +189,8 @@ public class OverlayRenderer {
                     requestBlockInfo(mode, mouseOver, blockPos, player);
                 }
             }
-            renderElements(((Pair<Long, ProbeInfo>) cacheEntry).getRight(), ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement);
+            ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/note.png");
+            renderElements(((Pair<Long, ProbeInfo>) cacheEntry).getRight(), ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement, backgroundTexture);
             lastRenderedTime = time;
             lastPair = cacheEntry;
             lastPairTime = time;
@@ -311,7 +316,8 @@ public class OverlayRenderer {
         double sh = scaledresolution.getScaledHeight_double();
 
         setupOverlayRendering(sw * scale, sh * scale);
-        renderElements((ProbeInfo) probeInfo, style, sw * scale, sh * scale, null);
+        ResourceLocation backgroundTexture = new ResourceLocation(TheOneProbe.MODID, "textures/gui/note.png");
+        renderElements((ProbeInfo) probeInfo, style, sw * scale, sh * scale, null, backgroundTexture);
         setupOverlayRendering(sw, sh);
         GlStateManager.popMatrix();
     }
@@ -340,7 +346,7 @@ public class OverlayRenderer {
         cachedEntityInfo = newCachedInfo;
     }
 
-    public static void renderElements(ProbeInfo probeInfo, IOverlayStyle style, double sw, double sh, @Nullable IElement extra) {
+    public static void renderElements(ProbeInfo probeInfo, IOverlayStyle style, double sw, double sh, @Nullable IElement extra, @Nullable ResourceLocation backgroundTexture) {
         if (extra != null) {
             probeInfo.element(extra);
         }
@@ -367,26 +373,26 @@ public class OverlayRenderer {
 
         // Horizontal positioning (X-axis)
         if (style.getLeftX() != -1) {
-            // Interpret LeftX as percentage
             x = (int) (scaledWidth * (style.getLeftX() / 100.0));
         } else if (style.getRightX() != -1) {
-            // Interpret RightX as percentage
             x = (int) (scaledWidth - w - (scaledWidth * (style.getRightX() / 100.0)));
         } else {
-            // Centered by default
             x = (scaledWidth - w) / 2;
         }
 
         // Vertical positioning (Y-axis)
         if (style.getTopY() != -1) {
-            // Interpret TopY as percentage
             y = (int) (scaledHeight * (style.getTopY() / 100.0));
         } else if (style.getBottomY() != -1) {
-            // Interpret BottomY as percentage
             y = (int) (scaledHeight - h - (scaledHeight * (style.getBottomY() / 100.0)));
         } else {
-            // Centered by default
             y = (scaledHeight - h) / 2;
+        }
+
+        // Draw the background image if provided
+        if (backgroundTexture != null) {
+            Minecraft.getMinecraft().getTextureManager().bindTexture(backgroundTexture);
+            Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, w, h, w, h);
         }
 
         // Draw borders and the box
