@@ -48,7 +48,7 @@ This mod also has a flexible API that other mods can use to add more information
    * New de_de.lang (By: @TheScienceDemon)
    * New zh_cn.lang and zh_tw.lang (Fully translated as of Dev-14)
    * New ja_jp.lang (Fully translated as of Dev-15)
-   * New ko_kr.lang (Fully translated as of 1.10)
+   * New ko_kr.lang (By: @yor42, Fully translated as of 1.10)
 * Javadoc's for the random methods lying around to make working easier
 * Many Progress Bars for slower computers (Almost impossible to see if you have a mid-teir computer)
 * API improvements
