@@ -26,19 +26,19 @@ This mod also has a flexible API that other mods can use to add more information
 * View more information with the Creative Probe
 * A greatly improved config screen
   * View all config categories, not just the client ones.
-  * Sub categories to help group things
+  * Subcategories to help group things
 * New theme presets
    * Jade: based on the [mod](https://www.curseforge.com/minecraft/mc-mods/jade) of the same name
    * Crazy: please don't use this, your eyeballs will thank me.
    * Soft Pastels: WIP
-   * Ocean Blue: colors of the ocean will relax you
+   * Ocean Blue: The colors of the ocean will relax you
 * New config options:
    * showDebugUUID (Default: False) If you want to see the UUID of an NPC with the Creative Probe
-   * probeNoteStackSize (Default: 1) Change the stack size of the One Probe Read Me.
+   * probeNoteStackSize (Default: 1) Change the One Probe Read Me stack size.
    * harvestLevels (Default: Stone-Vibranium) Add/remove lang keys for the harvest levels if say you have a block with a > 8  harvest level
-   * probeMaxChars (Default: 13) The max length to display in the probe, will be truncated 
-   * showProbeConfigGUI (Default: true) If players can open the Config UI in the Probe/Note
-   * showProbeNoteGUI (Default: true) If players can open the Note UI in the Note
+   * blockNameMaxWidth (Default: 0.0) The max length to display in the probe, will be truncated. 0.0 for no limit 
+   * showProbeConfigGUI (Default: true) If players can open the Config UI with the Probe/Note
+   * showProbeNoteGUI (Default: true) If players can open the Note UI with the Note
    * probeNoteBlock (Default: minecraft:log) The block to use as the example in the probe config UI
 * Replaced the hardcoded strings with language-translatable versions
    * Updated ru_ru.lang (By: @bigenergy)
@@ -48,6 +48,7 @@ This mod also has a flexible API that other mods can use to add more information
    * New de_de.lang (By: @TheScienceDemon)
    * New zh_cn.lang and zh_tw.lang (Fully translated as of Dev-14)
    * New ja_jp.lang (Fully translated as of Dev-15)
+   * New ko_kr.lang (Fully translated as of 1.10)
 * Javadoc's for the random methods lying around to make working easier
 * Many Progress Bars for slower computers (Almost impossible to see if you have a mid-teir computer)
 * API improvements
