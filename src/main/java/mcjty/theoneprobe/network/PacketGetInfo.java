@@ -1,13 +1,13 @@
 package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeHitData;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.config.ConfigSetup;
 import mcjty.theoneprobe.items.ModItems;
-import mcjty.theoneprobe.network.helpers.PacketHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -48,9 +49,16 @@ public class PacketGetInfo implements IMessage {
         dim = buf.readInt();
         pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
         mode = ProbeMode.values()[buf.readByte()];
-        sideHit = PacketHelper.readEnumFacing(buf);
-        hitVec = PacketHelper.readVec3d(buf);
-        pickBlock = PacketHelper.readItemStack(buf);
+        byte sideByte = buf.readByte();
+        if (sideByte == 127) {
+            sideHit = null;
+        } else {
+            sideHit = EnumFacing.values()[sideByte];
+        }
+        if (buf.readBoolean()) {
+            hitVec = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+        }
+        pickBlock = ByteBufUtils.readItemStack(buf);
     }
 
     @Override
@@ -60,12 +68,28 @@ public class PacketGetInfo implements IMessage {
         buf.writeInt(pos.getY());
         buf.writeInt(pos.getZ());
         buf.writeByte(mode.ordinal());
-        PacketHelper.writeEnumFacing(buf, sideHit);
-        PacketHelper.writeVec3d(buf, hitVec);
-        PacketHelper.writeItemStack(buf, pickBlock);
+        buf.writeByte(sideHit == null ? 127 : sideHit.ordinal());
+        if (hitVec == null) {
+            buf.writeBoolean(false);
+        } else {
+            buf.writeBoolean(true);
+            buf.writeDouble(hitVec.x);
+            buf.writeDouble(hitVec.y);
+            buf.writeDouble(hitVec.z);
+        }
+
+        ByteBuf buffer = Unpooled.buffer();
+        ByteBufUtils.writeItemStack(buffer, pickBlock);
+        if (buffer.writerIndex() <= ConfigSetup.maxPacketToServer) {
+            buf.writeBytes(buffer);
+        } else {
+            ItemStack copy = new ItemStack(pickBlock.getItem(), pickBlock.getCount(), pickBlock.getMetadata());
+            ByteBufUtils.writeItemStack(buf, copy);
+        }
     }
 
-    public PacketGetInfo() {}
+    public PacketGetInfo() {
+    }
 
     public PacketGetInfo(int dim, BlockPos pos, ProbeMode mode, RayTraceResult mouseOver, ItemStack pickBlock) {
         this.dim = dim;
@@ -106,6 +130,7 @@ public class PacketGetInfo implements IMessage {
             // The server says we need a probe, but we don't have one in our hands
             return null;
         }
+
         IBlockState state = world.getBlockState(blockPos);
         ProbeInfo probeInfo = TheOneProbe.theOneProbeImp.create();
         IProbeHitData data = new ProbeHitData(blockPos, hitVec, sideHit, pickBlock);
@@ -128,4 +153,5 @@ public class PacketGetInfo implements IMessage {
         }
         return probeInfo;
     }
+
 }

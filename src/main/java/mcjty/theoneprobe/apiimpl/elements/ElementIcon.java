@@ -6,7 +6,7 @@ import mcjty.theoneprobe.api.IIconStyle;
 import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.apiimpl.client.ElementIconRender;
 import mcjty.theoneprobe.apiimpl.styles.IconStyle;
-import mcjty.theoneprobe.network.helpers.NetworkTools;
+import mcjty.theoneprobe.network.NetworkTools;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

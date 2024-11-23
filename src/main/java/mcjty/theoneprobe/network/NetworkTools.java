@@ -1,4 +1,4 @@
-package mcjty.theoneprobe.network.helpers;
+package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;

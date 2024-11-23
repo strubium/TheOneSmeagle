@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import mcjty.theoneprobe.api.IElement;
 import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.apiimpl.client.ElementTextRender;
-import mcjty.theoneprobe.network.helpers.NetworkTools;
+import mcjty.theoneprobe.network.NetworkTools;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

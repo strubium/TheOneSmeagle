@@ -7,7 +7,6 @@ import mcjty.theoneprobe.apiimpl.ProbeHitEntityData;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.config.ConfigSetup;
 import mcjty.theoneprobe.items.ModItems;
-import mcjty.theoneprobe.network.helpers.PacketHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.RayTraceResult;
@@ -39,7 +38,9 @@ public class PacketGetEntityInfo implements IMessage {
         dim = buf.readInt();
         uuid = new UUID(buf.readLong(), buf.readLong());
         mode = ProbeMode.values()[buf.readByte()];
-        hitVec = PacketHelper.readVec3d(buf);
+        if (buf.readBoolean()) {
+            hitVec = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+        }
     }
 
     @Override
@@ -48,7 +49,12 @@ public class PacketGetEntityInfo implements IMessage {
         buf.writeLong(uuid.getMostSignificantBits());
         buf.writeLong(uuid.getLeastSignificantBits());
         buf.writeByte(mode.ordinal());
-        PacketHelper.writeVec3d(buf, hitVec);
+        buf.writeBoolean(hitVec != null);
+        if (hitVec != null) {
+            buf.writeDouble(hitVec.x);
+            buf.writeDouble(hitVec.y);
+            buf.writeDouble(hitVec.z);
+        }
     }
 
     public PacketGetEntityInfo() {}

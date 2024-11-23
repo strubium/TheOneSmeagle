@@ -7,7 +7,7 @@ import mcjty.theoneprobe.api.NumberFormat;
 import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.apiimpl.client.ElementProgressRender;
 import mcjty.theoneprobe.apiimpl.styles.ProgressStyle;
-import mcjty.theoneprobe.network.helpers.NetworkTools;
+import mcjty.theoneprobe.network.NetworkTools;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

@@ -2,7 +2,6 @@ package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
-import mcjty.theoneprobe.network.helpers.PacketHelper;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -18,16 +17,25 @@ public class PacketReturnEntityInfo implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        // Delegate deserialization to helper class
-        PacketReturnEntityInfo packetData = PacketHelper.readPacketReturnEntityInfo(buf);
-        this.uuid = packetData.uuid;
-        this.probeInfo = packetData.probeInfo;
+        uuid = new UUID(buf.readLong(), buf.readLong());
+        if (buf.readBoolean()) {
+            probeInfo = new ProbeInfo();
+            probeInfo.fromBytes(buf);
+        } else {
+            probeInfo = null;
+        }
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        // Delegate serialization to helper class
-        PacketHelper.writePacketData(buf, uuid, probeInfo);
+        buf.writeLong(uuid.getMostSignificantBits());
+        buf.writeLong(uuid.getLeastSignificantBits());
+        if (probeInfo != null) {
+            buf.writeBoolean(true);
+            probeInfo.toBytes(buf);
+        } else {
+            buf.writeBoolean(false);
+        }
     }
 
     public PacketReturnEntityInfo() {

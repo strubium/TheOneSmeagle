@@ -6,7 +6,7 @@ import mcjty.theoneprobe.api.IEntityStyle;
 import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.apiimpl.client.ElementEntityRender;
 import mcjty.theoneprobe.apiimpl.styles.EntityStyle;
-import mcjty.theoneprobe.network.helpers.NetworkTools;
+import mcjty.theoneprobe.network.NetworkTools;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;

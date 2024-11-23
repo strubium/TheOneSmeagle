@@ -6,7 +6,7 @@ import mcjty.theoneprobe.api.IItemStyle;
 import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.apiimpl.client.ElementItemStackRender;
 import mcjty.theoneprobe.apiimpl.styles.ItemStyle;
-import mcjty.theoneprobe.network.helpers.NetworkTools;
+import mcjty.theoneprobe.network.NetworkTools;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

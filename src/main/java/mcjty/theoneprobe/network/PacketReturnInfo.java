@@ -2,7 +2,6 @@ package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
-import mcjty.theoneprobe.network.helpers.PacketHelper;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
@@ -18,17 +17,28 @@ public class PacketReturnInfo implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        // Delegate deserialization to helper class
-        PacketReturnInfo packetData = PacketHelper.readPacketReturnInfo(buf);
-        this.dim = packetData.dim;
-        this.pos = packetData.pos;
-        this.probeInfo = packetData.probeInfo;
+        dim = buf.readInt();
+        pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
+        if (buf.readBoolean()) {
+            probeInfo = new ProbeInfo();
+            probeInfo.fromBytes(buf);
+        } else {
+            probeInfo = null;
+        }
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        // Delegate serialization to helper class
-        PacketHelper.writePacketData(buf, dim, pos, probeInfo);
+        buf.writeInt(dim);
+        buf.writeInt(pos.getX());
+        buf.writeInt(pos.getY());
+        buf.writeInt(pos.getZ());
+        if (probeInfo != null) {
+            buf.writeBoolean(true);
+            probeInfo.toBytes(buf);
+        } else {
+            buf.writeBoolean(false);
+        }
     }
 
     public PacketReturnInfo() {
