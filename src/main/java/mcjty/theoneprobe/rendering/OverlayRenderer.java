@@ -18,6 +18,7 @@ import mcjty.theoneprobe.network.ThrowableIdentity;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -198,6 +199,14 @@ public class OverlayRenderer {
         if (entity == null) {
             return;
         }
+
+        if (entity instanceof MultiPartEntityPart) {
+            MultiPartEntityPart part = (MultiPartEntityPart) entity;
+            if (part.parent instanceof Entity) {
+                entity = (Entity) part.parent;
+            }
+        }
+
 
         UUID uuid = entity.getPersistentID();
         EntityPlayerSP player = Minecraft.getMinecraft().player;
