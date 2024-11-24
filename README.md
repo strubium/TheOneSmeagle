@@ -5,7 +5,7 @@ _More immersive alternative for WAILA, fork of The One Probe_
 
 The One Smeagle is a fork of The One Probe (or TOP in short) that is meant to be a more immersive version of WAILA/HWYLA.
 
-The purpose of this mod is to show on-screen information about the block you are looking at whenever you hold the probe in your hand (or off-hand). The mod itself will show basic information like the name of the block, the mod the block comes from, and also the tool to use for harvesting the block. In addition, this mod will also show the amount of RF energy that is stored in the block (if the block supports RF), and if you are sneaking it will also give a list of all items that are in the block if it is an inventory (like a chest).
+The purpose of this mod is to show on-screen information about the block you are looking at whenever you hold the probe in your hand (or off-hand). The mod itself will show basic information like the block's name, the mod the block comes from, and the tool to use for harvesting the block. In addition, this mod will also show the amount of RF energy that is stored in the block (if the block supports RF), and if you are sneaking it will also give a list of all items that are in the block if it is an inventory (like a chest).
 
 This mod is very configurable so you can disable all the above features if they do not fit your playing style or modpack.
 
@@ -52,7 +52,7 @@ This mod also has a flexible API that other mods can use to add more information
 * Javadoc's for the random methods lying around to make working easier
 * Many Progress Bars for slower computers (Almost impossible to see if you have a mid-teir computer)
 * API improvements
-  * New ProbeBase to simplify probe creation of new probes 
+  * New ProbeBase to simplify creation of probes 
   * New PresetBuilder to simplify making new presets (And for GroovyScript compact!)
 * Fixed isProbeInHand() checking for the wrong NBT tag 
 * Fixed isProbeHelmet() always checking NBT even though we know that our helmets are probe helmets
