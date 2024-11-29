@@ -87,6 +87,9 @@ public class ConfigSetup {
 
     public static int chestContentsBorderColor = 0xff006699;
     public static int probeButtonColor = 0xff000000;
+    public static int probeProgressColor = 0xff990000;
+    public static int probeProgressAltColor = 0xff550000;
+
     private static int boxBorderColor = 0xff999999;
     private static int boxFillColor = 0x55006699;
     private static int boxThickness = 2;

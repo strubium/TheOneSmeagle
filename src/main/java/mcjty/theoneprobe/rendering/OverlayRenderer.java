@@ -242,8 +242,8 @@ public class OverlayRenderer {
                         .suffix("%")
                         .width(85)
                         .borderColor(0)
-                        .filledColor(0xff990000)
-                        .alternateFilledColor(0xff550000));
+                        .filledColor(ConfigSetup.probeProgressColor)
+                        .alternateFilledColor(ConfigSetup.probeProgressAltColor));
             }
         }
 
