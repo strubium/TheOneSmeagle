@@ -40,6 +40,8 @@ This mod also has a flexible API that other mods can use to add more information
    * showProbeConfigGUI (Default: true) If players can open the Config UI with the Probe/Note
    * showProbeNoteGUI (Default: true) If players can open the Note UI with the Note
    * probeNoteBlock (Default: minecraft:log) The block to use as the example in the probe config UI
+   * showBreakProgressText (Default: true) Show the text in the progress bar
+   * probeProgressColor, probeProgressAltColor, and probeProgressBorderColor Config the color of the progress bar 
 * Replaced the hardcoded strings with language-translatable versions
    * Updated ru_ru.lang (By: @bigenergy)
    * New en_ud.lang

@@ -61,6 +61,7 @@ public class ConfigSetup {
     public static String[] showContentsWithoutSneaking = { "storagedrawers:basicDrawers", "storagedrawersextra:extra_drawers" };
     public static String[] dontShowContentsUnlessSneaking = {};
     public static String[] dontSendNBT = { };
+    public static boolean showBreakProgressText = true;
 
     private static Set<ResourceLocation> inventoriesToShow = null;
     private static Set<ResourceLocation> inventoriesToNotShow = null;
@@ -89,6 +90,7 @@ public class ConfigSetup {
     public static int probeButtonColor = 0xff000000;
     public static int probeProgressColor = 0xff990000;
     public static int probeProgressAltColor = 0xff550000;
+    public static int probeProgressBorderColor = 0;
 
     private static int boxBorderColor = 0xff999999;
     private static int boxFillColor = 0x55006699;
@@ -179,6 +181,7 @@ public class ConfigSetup {
         probeDistance = cfg.getFloat("probeDistance", CATEGORY_THEONEPROBE, probeDistance, 0.1f, 200f, "Distance at which the probe works");
         initDefaultConfig(cfg);
 
+        showBreakProgressText = cfg.getBoolean("showBreakProgressText", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showDebugInfo, "If true show the text in the progress bar");
         showDebugInfo = cfg.getBoolean("showDebugInfo", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showDebugInfo, "If true show debug info with creative probe");
         compactEqualStacks = cfg.getBoolean("compactEqualStacks", CATEGORY_THEONEPROBE, compactEqualStacks, "If true equal stacks will be compacted in the chest contents overlay");
         rfbarFilledColor = parseColor(cfg.getString("rfbarFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarFilledColor), "Color for the RF bar"));
@@ -240,6 +243,9 @@ public class ConfigSetup {
         compactEqualStacks = cfg.getBoolean("compactEqualStacks", CATEGORY_CLIENT, compactEqualStacks, "If true equal stacks will be compacted in the chest contents overlay");
         tooltipScale = cfg.getFloat("tooltipScale", CATEGORY_CLIENT, tooltipScale, 0.4f, 5.0f, "The scale of the tooltips, 1 is default, 2 is smaller");
         probeButtonColor = parseColor(cfg.getString("probeButtonColor", CATEGORY_CLIENT, Integer.toHexString(probeButtonColor), "Color of the buttons in the probe note (0 to disable)"));
+        probeProgressColor = parseColor(cfg.getString("probeProgressColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressColor), "Color of the progress bar (0 to disable)"));
+        probeProgressAltColor = parseColor(cfg.getString("probeProgressAltColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressAltColor), "Alt color of the progress bar (0 to disable)"));
+        probeProgressBorderColor = parseColor(cfg.getString("probeProgressBorderColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressBorderColor), "Color of the border of the progress bar (0 to disable)"));
         chestContentsBorderColor = parseColor(cfg.getString("chestContentsBorderColor", CATEGORY_CLIENT, Integer.toHexString(chestContentsBorderColor), "Color of the border of the chest contents box (0 to disable)"));
         showBreakProgress = cfg.getInt("showBreakProgress", CATEGORY_CLIENT, showBreakProgress, 0, 2, "0 means don't show break progress, 1 is show as bar, 2 is show as text");
         harvestStyleVanilla = cfg.getBoolean("harvestStyleVanilla", CATEGORY_CLIENT, harvestStyleVanilla, "true means shows harvestability with vanilla style icons");

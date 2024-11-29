@@ -235,13 +235,17 @@ public class OverlayRenderer {
         if (ConfigSetup.showBreakProgress > 0) {
             float damage = Minecraft.getMinecraft().playerController.curBlockDamageMP;
             if (damage > 0) {
+                boolean showText = ConfigSetup.showBreakProgressText;
+
                 damageElement = ConfigSetup.showBreakProgress == 2
                         ? new ElementText("" + TextFormatting.RED + I18n.format("theoneprobe.probe.progress_indicator") + " " + (int) (damage * 100) + "%")
                         : new ElementProgress((long) (damage * 100), 100, new ProgressStyle()
-                        .prefix(I18n.format("theoneprobe.probe.progress_indicator") + " ")
+                        .prefix(showText
+                                ? I18n.format("theoneprobe.probe.progress_indicator") + " "
+                                : " ") // If showText is false, skip the prefix
                         .suffix("%")
                         .width(85)
-                        .borderColor(0)
+                        .borderColor(ConfigSetup.probeProgressBorderColor)
                         .filledColor(ConfigSetup.probeProgressColor)
                         .alternateFilledColor(ConfigSetup.probeProgressAltColor));
             }
