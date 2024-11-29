@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.apiimpl.providers;
 
 import mcjty.theoneprobe.Tools;
+import mcjty.theoneprobe.Utilities;
 import mcjty.theoneprobe.api.ElementAlignment;
 import mcjty.theoneprobe.api.IProbeConfig;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -26,7 +27,10 @@ public class ChestInfoTools {
     static void showChestInfo(ProbeMode mode, IProbeInfo probeInfo, World world, BlockPos pos, IProbeConfig config) {
         List<ItemStack> stacks = null;
         IProbeConfig.ConfigMode chestMode = config.getShowChestContents();
-        if (chestMode == IProbeConfig.ConfigMode.EXTENDED && (ConfigSetup.showSmallChestContentsWithoutSneaking > 0 || !ConfigSetup.getInventoriesToShow().isEmpty())) {
+
+        // Determine the chestMode based on configuration and world state
+        if (chestMode == IProbeConfig.ConfigMode.EXTENDED
+                && (ConfigSetup.showSmallChestContentsWithoutSneaking > 0 || !ConfigSetup.getInventoriesToShow().isEmpty())) {
             if (ConfigSetup.getInventoriesToShow().contains(world.getBlockState(pos).getBlock().getRegistryName())) {
                 chestMode = IProbeConfig.ConfigMode.NORMAL;
             } else if (ConfigSetup.showSmallChestContentsWithoutSneaking > 0) {
@@ -42,6 +46,7 @@ public class ChestInfoTools {
             }
         }
 
+        // Check if chest contents should be shown based on the mode and configuration
         if (Tools.show(mode, chestMode)) {
             if (stacks == null) {
                 stacks = new ArrayList<>();
@@ -49,8 +54,8 @@ public class ChestInfoTools {
             }
 
             if (!stacks.isEmpty()) {
-                boolean showDetailed = Tools.show(mode, config.getShowChestContentsDetailed()) && stacks.size() <= ConfigSetup.showItemDetailThresshold;
-                showChestContents(probeInfo, stacks, showDetailed);
+                // Call the updated showChestContents method with mode, probeInfo, and stacks
+               Utilities.showChestContents(probeInfo, stacks, mode);
             }
         }
     }
@@ -71,36 +76,6 @@ public class ChestInfoTools {
         stacks.add(stack.copy());
         if (foundItems != null) {
             foundItems.add(stack.getItem());
-        }
-    }
-
-    private static void showChestContents(IProbeInfo probeInfo, List<ItemStack> stacks, boolean detailed) {
-        IProbeInfo vertical;
-        IProbeInfo horizontal = null;
-
-        int rows = 0;
-        int idx = 0;
-
-        vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(ConfigSetup.chestContentsBorderColor).spacing(0));
-
-        if (detailed) {
-            for (ItemStack stackInSlot : stacks) {
-                horizontal = vertical.horizontal(new LayoutStyle().spacing(10).alignment(ElementAlignment.ALIGN_CENTER));
-                horizontal.item(stackInSlot, new ItemStyle().width(16).height(16))
-                        .itemLabel(stackInSlot); //TOPFIX: Chest info doesn't show gregtechCE item local name when player on server.
-            }
-        } else {
-            for (ItemStack stackInSlot : stacks) {
-                if (idx % 10 == 0) {
-                    horizontal = vertical.horizontal(new LayoutStyle().spacing(0));
-                    rows++;
-                    if (rows > 4) {
-                        break;
-                    }
-                }
-                horizontal.item(stackInSlot);
-                idx++;
-            }
         }
     }
 
