@@ -1,10 +1,17 @@
 package mcjty.theoneprobe.probe;
 
 import mcjty.theoneprobe.TheOneProbe;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+
+import static mcjty.theoneprobe.items.ModItems.PROBETAG;
 
 
 /**
@@ -40,5 +47,17 @@ public class ProbeArmor extends ItemArmor {
 
         // Call the parent method for layer0
         return super.getArmorTexture(stack, entity, slot, type);
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
+        if (this.isInCreativeTab(tab)) {
+            ItemStack stack = new ItemStack(this);
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger(PROBETAG, 1);
+            stack.setTagCompound(tag);
+            subItems.add(stack);
+        }
     }
 }
