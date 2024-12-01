@@ -8,7 +8,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class PropertiesDispatcher implements ICapabilityProvider, INBTSerializable<NBTTagCompound> {
 
-    private PlayerGotNote playerGotNote = new PlayerGotNote();
+    private final PlayerGotNote playerGotNote = new PlayerGotNote();
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {

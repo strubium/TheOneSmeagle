@@ -5,6 +5,7 @@ import mcjty.theoneprobe.api.IElement;
 import mcjty.theoneprobe.api.IProgressStyle;
 import mcjty.theoneprobe.api.NumberFormat;
 import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
+import mcjty.theoneprobe.apiimpl.client.ElementProgressGradientRender;
 import mcjty.theoneprobe.apiimpl.client.ElementProgressRender;
 import mcjty.theoneprobe.apiimpl.styles.ProgressStyle;
 import mcjty.theoneprobe.network.NetworkTools;
@@ -18,11 +19,17 @@ public class ElementProgress implements IElement {
     private final long current;
     private final long max;
     private final IProgressStyle style;
+    private final boolean doGradient;
 
     public ElementProgress(long current, long max, IProgressStyle style) {
+        this(current, max, style, false); // Default doGradient to false
+    }
+
+    public ElementProgress(long current, long max, IProgressStyle style, boolean doGradient) {
         this.current = current;
         this.max = max;
         this.style = style;
+        this.doGradient = doGradient;
     }
 
     public ElementProgress(ByteBuf buf) {
@@ -41,6 +48,7 @@ public class ElementProgress implements IElement {
                 .numberFormat(NumberFormat.values()[buf.readByte()])
                 .lifeBar(buf.readBoolean())
                 .armorBar(buf.readBoolean());
+        doGradient = buf.readBoolean(); // Deserialize doGradient
     }
 
     private static final DecimalFormat dfCommas = new DecimalFormat("###,###");
@@ -83,7 +91,12 @@ public class ElementProgress implements IElement {
     @Override
     @SideOnly(Side.CLIENT)
     public void render(int x, int y) {
-        ElementProgressRender.render(style, current, max, x, y, getWidth(), getHeight());
+        if(doGradient){
+            ElementProgressGradientRender.render(style, current, max, x, y, getWidth(), getHeight());
+        }
+        else{
+            ElementProgressRender.render(style, current, max, x, y, getWidth(), getHeight());
+        }
     }
 
     @Override
@@ -119,6 +132,7 @@ public class ElementProgress implements IElement {
         buf.writeByte(style.getNumberFormat().ordinal());
         buf.writeBoolean(style.isLifeBar());
         buf.writeBoolean(style.isArmorBar());
+        buf.writeBoolean(doGradient);
     }
 
     @Override

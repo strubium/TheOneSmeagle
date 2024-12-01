@@ -91,6 +91,8 @@ public class ConfigSetup {
     public static int probeProgressColor = 0xff990000;
     public static int probeProgressAltColor = 0xff550000;
     public static int probeProgressBorderColor = 0;
+    public static int probeProgressBackgroundColor = 0xff000000;
+    public static boolean probeProgressGradient = false;
 
     private static int boxBorderColor = 0xff999999;
     private static int boxFillColor = 0x55006699;
@@ -246,6 +248,8 @@ public class ConfigSetup {
         probeProgressColor = parseColor(cfg.getString("probeProgressColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressColor), "Color of the progress bar (0 to disable)"));
         probeProgressAltColor = parseColor(cfg.getString("probeProgressAltColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressAltColor), "Alt color of the progress bar (0 to disable)"));
         probeProgressBorderColor = parseColor(cfg.getString("probeProgressBorderColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressBorderColor), "Color of the border of the progress bar (0 to disable)"));
+        probeProgressBackgroundColor = parseColor(cfg.getString("probeProgressBackgroundColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressBackgroundColor), "Color of the background of the progress bar (0 to disable)"));
+        probeProgressGradient = cfg.getBoolean("probeProgressGradient", CATEGORY_CLIENT, probeProgressGradient, "Use a gradient instead of alternating colors in solid blocks");
         chestContentsBorderColor = parseColor(cfg.getString("chestContentsBorderColor", CATEGORY_CLIENT, Integer.toHexString(chestContentsBorderColor), "Color of the border of the chest contents box (0 to disable)"));
         showBreakProgress = cfg.getInt("showBreakProgress", CATEGORY_CLIENT, showBreakProgress, 0, 2, "0 means don't show break progress, 1 is show as bar, 2 is show as text");
         harvestStyleVanilla = cfg.getBoolean("harvestStyleVanilla", CATEGORY_CLIENT, harvestStyleVanilla, "true means shows harvestability with vanilla style icons");

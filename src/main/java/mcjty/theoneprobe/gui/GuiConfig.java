@@ -218,8 +218,8 @@ public class GuiConfig extends GuiScreen {
         y += guiTop;
 
         double factor = (ConfigSetup.tooltipScale - 1) * 1.4 + 1;
-        x *= factor;
-        y *= factor;
+        x *= (int) factor;
+        y *= (int) factor;
 
         if (thick > 0) {
             int x2 = x + w - 1;
