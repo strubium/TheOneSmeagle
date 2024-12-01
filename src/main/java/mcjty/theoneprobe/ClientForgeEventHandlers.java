@@ -7,7 +7,6 @@ import mcjty.theoneprobe.gui.GuiNote;
 import mcjty.theoneprobe.items.ModItems;
 import mcjty.theoneprobe.keys.KeyBindings;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.Item;
@@ -29,7 +28,7 @@ public class ClientForgeEventHandlers {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         if (ignoreNextGuiClose) {
-            GuiScreen current = Minecraft.getMinecraft().currentScreen;
+            GuiScreen current = Tools.mc.currentScreen;
             if (event.getGui() == null && (current instanceof GuiConfig || current instanceof GuiNote)) {
                 ignoreNextGuiClose = false;
                 // We don't want our gui to be closed for a new 'null' gui
@@ -64,7 +63,7 @@ public class ClientForgeEventHandlers {
                     break;
                 case PROBE_NEEDED:
                 case PROBE_NEEDEDHARD:
-                    if (ModItems.hasAProbeSomewhere(Minecraft.getMinecraft().player)) {
+                    if (ModItems.hasAProbeSomewhere(Tools.mc.player)) {
                         OverlayRenderer.renderHUD(getModeForPlayer(), event.getPartialTicks());
                     }
                     break;
@@ -73,7 +72,7 @@ public class ClientForgeEventHandlers {
     }
 
     private ProbeMode getModeForPlayer() {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        EntityPlayerSP player = Tools.mc.player;
         if (ConfigSetup.extendedInMain) {
             if (hasItemInMainHand(ModItems.probe)) {
                 return ProbeMode.EXTENDED;
@@ -83,15 +82,15 @@ public class ClientForgeEventHandlers {
     }
 
     private boolean hasItemInEitherHand(Item item) {
-        ItemStack mainHeldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
-        ItemStack offHeldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.OFF_HAND);
+        ItemStack mainHeldItem = Tools.mc.player.getHeldItem(EnumHand.MAIN_HAND);
+        ItemStack offHeldItem = Tools.mc.player.getHeldItem(EnumHand.OFF_HAND);
         return (mainHeldItem != null && mainHeldItem.getItem() == item) ||
                 (offHeldItem != null && offHeldItem.getItem() == item);
     }
 
 
     private boolean hasItemInMainHand(Item item) {
-        ItemStack mainHeldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
+        ItemStack mainHeldItem = Tools.mc.player.getHeldItem(EnumHand.MAIN_HAND);
         return mainHeldItem != null && mainHeldItem.getItem() == item;
     }
 }

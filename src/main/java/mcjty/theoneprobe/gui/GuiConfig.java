@@ -7,7 +7,6 @@ import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.config.ConfigSetup;
 import mcjty.theoneprobe.rendering.RenderHelper;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -81,15 +80,15 @@ public class GuiConfig extends GuiScreen {
 
         int x = WIDTH + guiLeft + 10;
         int y = guiTop + 10;
-        RenderHelper.renderText(Minecraft.getMinecraft(), x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.placement"));
+        RenderHelper.renderText(Tools.mc, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.placement"));
         y += 12;
-        RenderHelper.renderText(Minecraft.getMinecraft(), x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.1"));
+        RenderHelper.renderText(Tools.mc, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.1"));
         y += 10;
-        RenderHelper.renderText(Minecraft.getMinecraft(), x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.2"));
+        RenderHelper.renderText(Tools.mc, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.2"));
         y += 20;
 
         hitboxes = new ArrayList<>();
-        RenderHelper.renderText(Minecraft.getMinecraft(), x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.presets"));
+        RenderHelper.renderText(Tools.mc, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.presets"));
         y += 12;
         for (Preset preset : PresetBuilder.getPresets()) {
             y = addPreset(x, y, preset);
@@ -97,9 +96,9 @@ public class GuiConfig extends GuiScreen {
 
         y += 5;
 
-        RenderHelper.renderText(Minecraft.getMinecraft(), x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.scale"));
+        RenderHelper.renderText(Tools.mc, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.scale"));
         y += 12;
-        RenderHelper.renderText(Minecraft.getMinecraft(), x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.3"));
+        RenderHelper.renderText(Tools.mc, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.3"));
         y += 12;
         addButton(x+10, y, "--", () -> ConfigSetup.setScale(ConfigSetup.getScale() + 0.2F)); x += 36;
         addButton(x+10, y, "-", () -> ConfigSetup.setScale(ConfigSetup.getScale() + 0.1F)); x += 36;
@@ -143,7 +142,7 @@ public class GuiConfig extends GuiScreen {
 
     private int addPreset(int x, int y, Preset preset) {
         drawRect(x + 10, y - 1, x + 10 + WIDTH - 50, y + 10, ConfigSetup.getProbeButtonColor());
-        RenderHelper.renderText(Minecraft.getMinecraft(), x + 20, y, preset.getName());
+        RenderHelper.renderText(Tools.mc, x + 20, y, preset.getName());
         hitboxes.add(new HitBox(x + 10 - guiLeft, y - 1 - guiTop, x + 10 + WIDTH - 50 - guiLeft, y + 10 - guiTop, () -> PresetBuilder.applyPreset(preset)));
         y += 14;
         return y;
@@ -151,7 +150,7 @@ public class GuiConfig extends GuiScreen {
 
     private void addButton(int x, int y, String text, Runnable runnable) {
         drawRect(x, y, x + 30 -1, y + 14 -1, ConfigSetup.getProbeButtonColor());
-        RenderHelper.renderText(Minecraft.getMinecraft(), x + 3, y + 3, text);
+        RenderHelper.renderText(Tools.mc, x + 3, y + 3, text);
         hitboxes.add(new HitBox(x - guiLeft, y - guiTop, x + 30 -1 - guiLeft, y + 14 -1 - guiTop, runnable));
     }
 
@@ -230,7 +229,7 @@ public class GuiConfig extends GuiScreen {
             RenderHelper.drawThickBeveledBox(x + offset, y + offset, x2 - offset, y2 - offset, thick, style.getBorderColor(), style.getBorderColor(), style.getBoxColor());
         }
 
-        if (!Minecraft.getMinecraft().isGamePaused()) {
+        if (!Tools.mc.isGamePaused()) {
             RenderHelper.rot += .5f;
         }
 

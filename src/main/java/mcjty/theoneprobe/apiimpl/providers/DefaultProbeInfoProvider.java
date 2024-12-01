@@ -14,7 +14,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -350,10 +349,9 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
 
                 if (ConfigSetup.getBlockNameMaxWidth() != 0) {
                     // Calculate available width for text
-                    FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
-                    ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
-                    int screenWidth = resolution.getScaledWidth();
-                    int availableWidth = (int)(screenWidth * ConfigSetup.getBlockNameMaxWidth());
+                    FontRenderer fontRenderer = Tools.mc.fontRenderer;
+                    int screenWidth = Tools.getScreenWidth();
+                    int availableWidth = (int) (screenWidth * ConfigSetup.getBlockNameMaxWidth());
 
                     // String truncation
                     if (blockDisplayName.equals(cachedBlockName))

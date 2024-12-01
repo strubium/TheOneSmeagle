@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.rendering;
 
 import mcjty.theoneprobe.TheOneProbe;
+import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeHitData;
 import mcjty.theoneprobe.apiimpl.ProbeHitEntityData;
@@ -71,14 +72,14 @@ public class OverlayRenderer {
     public static void renderHUD(ProbeMode mode, float partialTicks) {
         float dist = ConfigSetup.probeDistance;
 
-        RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
+        RayTraceResult mouseOver = Tools.mc.objectMouseOver;
         if (mouseOver != null) {
             if (mouseOver.typeOfHit == RayTraceResult.Type.ENTITY) {
                 GlStateManager.pushMatrix();
 
                 double scale = ConfigSetup.tooltipScale;
 
-                ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+                ScaledResolution scaledresolution = new ScaledResolution(Tools.mc);
                 double sw = scaledresolution.getScaledWidth_double();
                 double sh = scaledresolution.getScaledHeight_double();
 
@@ -92,7 +93,7 @@ public class OverlayRenderer {
             }
         }
 
-        EntityPlayerSP entity = Minecraft.getMinecraft().player;
+        EntityPlayerSP entity = Tools.mc.player;
         Vec3d start  = entity.getPositionEyes(partialTicks);
         Vec3d vec31 = entity.getLook(partialTicks);
         Vec3d end = start.addVector(vec31.x * dist, vec31.y * dist, vec31.z * dist);
@@ -107,7 +108,7 @@ public class OverlayRenderer {
 
             double scale = ConfigSetup.tooltipScale;
 
-            ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+            ScaledResolution scaledresolution = new ScaledResolution(Tools.mc);
             double sw = scaledresolution.getScaledWidth_double();
             double sh = scaledresolution.getScaledHeight_double();
 
@@ -208,7 +209,7 @@ public class OverlayRenderer {
         }
 
         UUID uuid = entity.getPersistentID();
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        EntityPlayerSP player = Tools.mc.player;
         long time = System.currentTimeMillis();
 
         Pair<Long, ProbeInfo> cacheEntry = cachedEntityInfo.get(uuid);
@@ -223,7 +224,7 @@ public class OverlayRenderer {
             return;
         }
 
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        EntityPlayerSP player = Tools.mc.player;
         if (player.getEntityWorld().isAirBlock(blockPos)) {
             return;
         }
@@ -232,7 +233,7 @@ public class OverlayRenderer {
 
         IElement damageElement = null;
         if (ConfigSetup.showBreakProgress > 0) {
-            float damage = Minecraft.getMinecraft().playerController.curBlockDamageMP;
+            float damage = Tools.mc.playerController.curBlockDamageMP;
             if (damage > 0) {
 
                 damageElement = ConfigSetup.showBreakProgress == 2
@@ -316,7 +317,7 @@ public class OverlayRenderer {
 
         double scale = ConfigSetup.getScale();
 
-        Minecraft minecraft = Minecraft.getMinecraft();
+        Minecraft minecraft = Tools.mc;
         ScaledResolution scaledresolution = new ScaledResolution(minecraft);
         double sw = scaledresolution.getScaledWidth_double();
         double sh = scaledresolution.getScaledHeight_double();
@@ -408,7 +409,7 @@ public class OverlayRenderer {
             RenderHelper.drawThickBeveledBox(x + offset, y + offset, x + w - 1 - offset, y + h - 1 - offset, thick, style.getBorderColor(), style.getBorderColor(), style.getBoxColor());
         }
 
-        if (!Minecraft.getMinecraft().isGamePaused()) {
+        if (!Tools.mc.isGamePaused()) {
             RenderHelper.rot += .5f;
         }
 

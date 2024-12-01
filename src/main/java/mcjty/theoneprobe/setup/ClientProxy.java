@@ -2,11 +2,11 @@ package mcjty.theoneprobe.setup;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import mcjty.theoneprobe.ClientForgeEventHandlers;
+import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.commands.CommandTopCfg;
 import mcjty.theoneprobe.commands.CommandTopNeed;
 import mcjty.theoneprobe.keys.KeyBindings;
 import mcjty.theoneprobe.keys.KeyInputHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -41,21 +41,21 @@ public class ClientProxy implements IProxy {
 
     @Override
     public World getClientWorld() {
-        return Minecraft.getMinecraft().world;
+        return Tools.mc.world;
     }
 
     @Override
     public EntityPlayer getClientPlayer() {
-        return Minecraft.getMinecraft().player;
+        return Tools.mc.player;
     }
 
     @Override
     public <V> ListenableFuture<V> addScheduledTaskClient(Callable<V> callableToSchedule) {
-        return Minecraft.getMinecraft().addScheduledTask(callableToSchedule);
+        return Tools.mc.addScheduledTask(callableToSchedule);
     }
 
     @Override
     public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule) {
-        return Minecraft.getMinecraft().addScheduledTask(runnableToSchedule);
+        return Tools.mc.addScheduledTask(runnableToSchedule);
     }
 }

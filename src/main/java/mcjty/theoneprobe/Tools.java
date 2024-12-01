@@ -3,6 +3,8 @@ package mcjty.theoneprobe;
 import mcjty.theoneprobe.api.IProbeConfig;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
@@ -21,6 +23,11 @@ import static mcjty.theoneprobe.api.IProbeConfig.ConfigMode.NORMAL;
 public class Tools {
 
     private final static Map<String, String> modNamesForIds = new HashMap<>();
+
+    /**
+     * Constant for {@link Minecraft#getMinecraft()}
+     */
+    public static final Minecraft mc = Minecraft.getMinecraft();
 
     private static void init() {
         Map<String, ModContainer> modMap = Loader.instance().getIndexedModList();
@@ -85,4 +92,15 @@ public class Tools {
     public static boolean show(ProbeMode mode, IProbeConfig.ConfigMode cfg) {
         return cfg == NORMAL || (cfg == EXTENDED && mode == ProbeMode.EXTENDED);
     }
+
+    /**
+     * Retrieves the screen width in pixels.
+     *
+     * @return The screen width in pixels.
+     */
+    public static int getScreenWidth() {
+        ScaledResolution resolution = new ScaledResolution(Tools.mc);
+        return resolution.getScaledWidth();
+    }
+
 }

@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.apiimpl.client;
 
+import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.rendering.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,11 +21,11 @@ public class ElementIconRender {
         }
 
         if (u == -1) {
-            TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(icon.toString());
-            Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+            TextureAtlasSprite sprite = Tools.mc.getTextureMapBlocks().getAtlasSprite(icon.toString());
+            Tools.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             RenderHelper.drawTexturedModalRect(x, y, sprite, w, h);
         } else {
-            Minecraft.getMinecraft().getTextureManager().bindTexture(icon);
+            Tools.mc.getTextureManager().bindTexture(icon);
             RenderHelper.drawTexturedModalRect(x, y, u, v, w, h, txtw, txth);
         }
     }

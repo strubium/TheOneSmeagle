@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
+import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,7 @@ public class PacketReturnEntityInfo implements IMessage {
     public static class Handler implements IMessageHandler<PacketReturnEntityInfo, IMessage> {
         @Override
         public IMessage onMessage(PacketReturnEntityInfo message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> OverlayRenderer.registerProbeInfo(message.uuid, message.probeInfo));
+            Tools.mc.addScheduledTask(() -> OverlayRenderer.registerProbeInfo(message.uuid, message.probeInfo));
             return null;
         }
     }

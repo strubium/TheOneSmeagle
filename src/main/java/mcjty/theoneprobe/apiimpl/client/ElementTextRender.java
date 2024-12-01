@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.apiimpl.client;
 
+import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.config.ConfigSetup;
 import mcjty.theoneprobe.rendering.RenderHelper;
@@ -19,7 +20,7 @@ import static mcjty.theoneprobe.api.IProbeInfo.STARTLOC;
 public class ElementTextRender {
 
     public static void render(String text, int x, int y) {
-        RenderHelper.renderText(Minecraft.getMinecraft(), x, y, stylifyString(text));
+        RenderHelper.renderText(Tools.mc, x, y, stylifyString(text));
     }
 
     private static String stylifyString(String text) {
@@ -64,6 +65,6 @@ public class ElementTextRender {
     }
 
     public static int getWidth(String text) {
-        return Minecraft.getMinecraft().fontRenderer.getStringWidth(stylifyString(text));
+        return Tools.mc.fontRenderer.getStringWidth(stylifyString(text));
     }
 }

@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.rendering;
 
 import mcjty.theoneprobe.TheOneProbe;
+import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.network.ThrowableIdentity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -50,9 +51,9 @@ public class RenderHelper {
         GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
         entity.rotationPitch = 0.0F;
         GlStateManager.translate(0.0F, (float) entity.getYOffset() + (entity instanceof EntityHanging ? 0.5F : 0.0F), 0.0F);
-        Minecraft.getMinecraft().getRenderManager().playerViewY = 180F;
+        Tools.mc.getRenderManager().playerViewY = 180F;
         try {
-            Minecraft.getMinecraft().getRenderManager().renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+            Tools.mc.getRenderManager().renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
         } catch (Exception e) {
             TheOneProbe.setup.getLogger().error("Error rendering entity!", e);
         }
@@ -177,10 +178,23 @@ public class RenderHelper {
         GlStateManager.enableTexture2D();
     }
 
+    /**
+     * Draws a vertical line on the screen.
+     *
+     * @deprecated This method is deprecated. Use {@link #drawLine(int, int, int, int, int, int, String)} with
+     * "vertical" orientation instead.
+     */
     @Deprecated
     public static void drawVerticalLine(int x1, int y1, int y2, int color) {
         Gui.drawRect(x1, y1, x1 + 1, y2, color);
     }
+
+    /**
+     * Draws a horizontal line on the screen.
+     *
+     * @deprecated This method is deprecated. Use {@link #drawLine(int, int, int, int, int, int, String)} with
+     * "horizontal" orientation instead.
+     */
     @Deprecated
     public static void drawHorizontalLine(int x1, int y1, int x2, int color) {
         Gui.drawRect(x1, y1, x2, y1 + 1, color);
@@ -465,8 +479,8 @@ public class RenderHelper {
     }
 
     public static void rotateToPlayer() {
-        GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(-Tools.mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(Tools.mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
     }
 
     /**
@@ -618,8 +632,8 @@ public class RenderHelper {
                 GlStateManager.enableDepth();
             }
 
-            EntityPlayerSP entityplayersp = Minecraft.getMinecraft().player;
-            float f = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), Minecraft.getMinecraft().getRenderPartialTicks());
+            EntityPlayerSP entityplayersp = Tools.mc.player;
+            float f = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), Tools.mc.getRenderPartialTicks());
 
             if (f > 0.0F) {
                 GlStateManager.disableLighting();
