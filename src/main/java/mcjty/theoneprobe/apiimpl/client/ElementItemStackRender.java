@@ -3,7 +3,6 @@ package mcjty.theoneprobe.apiimpl.client;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.IItemStyle;
 import mcjty.theoneprobe.rendering.RenderHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
