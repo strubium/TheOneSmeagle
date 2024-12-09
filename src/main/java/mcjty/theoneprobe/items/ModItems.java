@@ -4,24 +4,18 @@ import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.compat.BaubleTools;
 import mcjty.theoneprobe.probe.ProbeArmor;
 import mcjty.theoneprobe.setup.ModSetup;
+import mcjty.theoneprobe.setup.Registration;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.ParametersAreNonnullByDefault;
 
 public class ModItems {
     public static CreativeProbe creativeProbe;
@@ -51,17 +45,11 @@ public class ModItems {
         creativeProbe = new CreativeProbe();
 
         bar.step("Creating Armor Materials");
-        ItemArmor.ArmorMaterial materialDiamondHelmet = EnumHelper.addArmorMaterial("diamond_helmet_probe", TheOneProbe.MODID + ":probe_diamond",
-                33, new int[]{3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
-        ItemArmor.ArmorMaterial materialGoldHelmet = EnumHelper.addArmorMaterial("gold_helmet_probe", TheOneProbe.MODID + ":probe_gold",
-                7, new int[]{1, 3, 5, 2}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F);
-        ItemArmor.ArmorMaterial materialIronHelmet = EnumHelper.addArmorMaterial("iron_helmet_probe", TheOneProbe.MODID + ":probe_iron",
-                15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
 
         bar.step("Creating Armor Probes");
-        diamondHelmetProbe = makeHelmet(materialDiamondHelmet, 3, "diamond_helmet_probe", "minecraft:textures/models/armor/diamond_layer_1.png");
-        goldHelmetProbe = makeHelmet(materialGoldHelmet, 4, "gold_helmet_probe", "minecraft:textures/models/armor/gold_layer_1.png");
-        ironHelmetProbe = makeHelmet(materialIronHelmet, 2, "iron_helmet_probe", "minecraft:textures/models/armor/iron_layer_1.png");
+        diamondHelmetProbe = makeHelmet(ItemArmor.ArmorMaterial.DIAMOND, 3, "diamond_helmet_probe", "minecraft:textures/models/armor/diamond_layer_1.png");
+        goldHelmetProbe = makeHelmet(ItemArmor.ArmorMaterial.GOLD, 4, "gold_helmet_probe", "minecraft:textures/models/armor/gold_layer_1.png");
+        ironHelmetProbe = makeHelmet(ItemArmor.ArmorMaterial.IRON, 2, "iron_helmet_probe", "minecraft:textures/models/armor/iron_layer_1.png");
 
         bar.step("Initializing Probe Note");
         probeNote = new ProbeNote();
@@ -85,6 +73,8 @@ public class ModItems {
         item.setUnlocalizedName(TheOneProbe.MODID + "." + name);
         item.setRegistryName(name);
         item.setCreativeTab(TheOneProbe.tabProbe);
+
+        Registration.addItem(item); //Make sure this item is registered
         return item;
     }
 

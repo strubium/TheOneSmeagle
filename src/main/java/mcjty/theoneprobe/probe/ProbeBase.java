@@ -2,6 +2,7 @@ package mcjty.theoneprobe.probe;
 
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.setup.GuiProxy;
+import mcjty.theoneprobe.setup.Registration;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -27,6 +28,7 @@ public abstract class ProbeBase extends Item {
         setRegistryName(registryName);
         setMaxStackSize(1);
         setCreativeTab(TheOneProbe.tabProbe);
+        Registration.addItem(this);
     }
 
     @SideOnly(Side.CLIENT)
