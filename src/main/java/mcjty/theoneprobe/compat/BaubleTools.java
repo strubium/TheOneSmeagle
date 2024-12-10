@@ -38,9 +38,4 @@ public class BaubleTools {
         return new ProbeGoggles();
     }
 
-    @SideOnly(Side.CLIENT)
-    public static void initProbeModel(Item probeGoggle) {
-        ((ProbeGoggles) probeGoggle).initModel();
-    }
-
 }

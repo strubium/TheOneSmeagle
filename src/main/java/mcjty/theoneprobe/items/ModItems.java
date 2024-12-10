@@ -7,6 +7,7 @@ import mcjty.theoneprobe.setup.ModSetup;
 import mcjty.theoneprobe.setup.Registration;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -17,6 +18,9 @@ import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModItems {
     public static CreativeProbe creativeProbe;
     public static Probe probe;
@@ -26,16 +30,13 @@ public class ModItems {
     public static Item probeGoggles;
     public static ProbeNote probeNote;
 
+    private static final List<Item> helmetModels = new ArrayList<>();
+
+
     public static final String PROBETAG = TheOneProbe.MODID;
 
     public static void init() {
-        int stepCount;
-        if (ModSetup.baubles) {
-             stepCount = 6;
-        }
-        else {
-             stepCount = 5;
-        }
+        int stepCount = ModSetup.baubles ? 6 : 5;
         final ProgressManager.ProgressBar bar = ProgressManager.push("Loading Mod Items", stepCount);
 
         bar.step("Initializing Probe");
@@ -47,9 +48,9 @@ public class ModItems {
         bar.step("Creating Armor Materials");
 
         bar.step("Creating Armor Probes");
-        diamondHelmetProbe = makeHelmet(ItemArmor.ArmorMaterial.DIAMOND, 3, "diamond_helmet_probe", "minecraft:textures/models/armor/diamond_layer_1.png");
-        goldHelmetProbe = makeHelmet(ItemArmor.ArmorMaterial.GOLD, 4, "gold_helmet_probe", "minecraft:textures/models/armor/gold_layer_1.png");
-        ironHelmetProbe = makeHelmet(ItemArmor.ArmorMaterial.IRON, 2, "iron_helmet_probe", "minecraft:textures/models/armor/iron_layer_1.png");
+        diamondHelmetProbe = makeHelmet(Items.DIAMOND_HELMET,"diamond_helmet_probe");
+        goldHelmetProbe = makeHelmet(Items.GOLDEN_HELMET, "gold_helmet_probe");
+        ironHelmetProbe = makeHelmet(Items.IRON_HELMET, "iron_helmet_probe");
 
         bar.step("Initializing Probe Note");
         probeNote = new ProbeNote();
@@ -62,36 +63,59 @@ public class ModItems {
         ProgressManager.pop(bar);
     }
 
-    private static Item makeHelmet(ItemArmor.ArmorMaterial material, int renderIndex, String name, String baseTexture) {
-        Item item = new ProbeArmor(material, renderIndex, EntityEquipmentSlot.HEAD, baseTexture) {
+    private static Item makeHelmet(Item baseItem, String name) {
+        ItemArmor.ArmorMaterial material = ((ItemArmor) baseItem).getArmorMaterial();
+        int renderIndex = ((ItemArmor) baseItem).renderIndex;
+
+        Item item = new ProbeArmor(material, renderIndex, EntityEquipmentSlot.HEAD, getBaseTexture(baseItem)) {
             @Override
             public boolean getHasSubtypes() {
                 return true;
             }
-
         };
+
         item.setUnlocalizedName(TheOneProbe.MODID + "." + name);
         item.setRegistryName(name);
         item.setCreativeTab(TheOneProbe.tabProbe);
 
-        Registration.addItem(item); //Make sure this item is registered
+        // Register the item
+        Registration.addItem(item);
+        helmetModels.add(item);
+
         return item;
     }
 
+    private static String getBaseTexture(Item baseItem) {
+        String registryName = baseItem.getRegistryName().getResourcePath();  // Get the path part of the registry name, e.g. "golden_helmet"
+        String registryNamespace = baseItem.getRegistryName().getResourceDomain();
+
+        // Determine the material (e.g. "gold") for armor textures
+        String armorMaterial = ((ItemArmor) baseItem).getArmorMaterial().getName().toLowerCase();
+
+        // Return the path to the armor texture (layer 1 in this case)
+        return registryNamespace + ":textures/models/armor/" + armorMaterial + "_layer_1.png";
+    }
+
+
     @SideOnly(Side.CLIENT)
     public static void initClient() {
-        probe.initModel();
-        creativeProbe.initModel();
+        initModel(probe);
+        initModel(creativeProbe);
+        initModel(probeNote);
 
-        ModelLoader.setCustomModelResourceLocation(diamondHelmetProbe, 0, new ModelResourceLocation(diamondHelmetProbe.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(goldHelmetProbe, 0, new ModelResourceLocation(goldHelmetProbe.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(ironHelmetProbe, 0, new ModelResourceLocation(ironHelmetProbe.getRegistryName(), "inventory"));
-
-        probeNote.initModel();
+        // Initialize all helmet models and resolve their textures
+        for (Item helmet : helmetModels) {
+            initModel(helmet);
+        }
 
         if (ModSetup.baubles) {
-            BaubleTools.initProbeModel(probeGoggles);
+            initModel(probeGoggles);
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static void initModel(Item helmet) {
+        ModelLoader.setCustomModelResourceLocation(helmet, 0, new ModelResourceLocation(helmet.getRegistryName(), "inventory"));
     }
 
     @SideOnly(Side.CLIENT)
