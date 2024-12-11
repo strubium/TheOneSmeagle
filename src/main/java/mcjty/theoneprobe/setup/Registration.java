@@ -1,7 +1,5 @@
 package mcjty.theoneprobe.setup;
 
-
-import io.netty.handler.codec.spdy.SpdyWindowUpdateFrame;
 import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
