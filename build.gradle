@@ -40,6 +40,9 @@ repositories {
         name = "CoFH Maven"
         url = "https://maven.covers1624.net"
     }
+    maven { //Cleanroom (HEI)
+        url 'https://maven.cleanroommc.com'
+    }
 }
 
 def ENV = System.getenv()
@@ -65,7 +68,8 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_${jei_version}"
+    deobfCompile 'mezz:jei:4.26.2'
+
     deobfCompile "cofh:RedstoneFlux:${redstoneflux_version}"
 }
 
