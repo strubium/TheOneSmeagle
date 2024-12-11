@@ -2,9 +2,8 @@ package mcjty.theoneprobe.apiimpl.client;
 
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.TextStyleClass;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.rendering.RenderHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -41,9 +40,9 @@ public class ElementTextRender {
         if (text.contains("{=")) {
             Set<TextStyleClass> stylesNeedingContext = EnumSet.noneOf(TextStyleClass.class);
             TextStyleClass context = null;
-            for (TextStyleClass styleClass : ConfigSetup.textStyleClasses.keySet()) {
+            for (TextStyleClass styleClass : Config.textStyleClasses.keySet()) {
                 if (text.contains(styleClass.toString())) {
-                    String replacement = ConfigSetup.getTextStyle(styleClass);
+                    String replacement = Config.getTextStyle(styleClass);
                     if ("context".equals(replacement)) {
                         stylesNeedingContext.add(styleClass);
                     } else if (context == null) {
@@ -56,7 +55,7 @@ public class ElementTextRender {
             }
             if (context != null) {
                 for (TextStyleClass styleClass : stylesNeedingContext) {
-                    String replacement = ConfigSetup.getTextStyle(context);
+                    String replacement = Config.getTextStyle(context);
                     text = StringUtils.replace(text, styleClass.toString(), replacement);
                 }
             }

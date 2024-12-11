@@ -2,9 +2,8 @@ package mcjty.theoneprobe.gui;
 
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.Tools;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.rendering.RenderHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
 
-import static mcjty.theoneprobe.config.ConfigSetup.*;
+import static mcjty.theoneprobe.config.Config.*;
 
 /**
  * GUI for The One Probe Read Me note
@@ -60,7 +59,7 @@ public class GuiNote extends GuiScreen {
         y += 10;
 
         y += 10;
-        switch (ConfigSetup.needsProbe) {
+        switch (Config.needsProbe) {
             case PROBE_NEEDED:
                 RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.1"));
                 y += 10;
@@ -115,11 +114,11 @@ public class GuiNote extends GuiScreen {
         mouseY += guiTop;
         if (mouseY >= hitY && mouseY < hitY + BUTTON_HEIGHT) {
             if (mouseX >= hitX && mouseX < hitX + BUTTON_WIDTH) {
-                ConfigSetup.setProbeNeeded(PROBE_NEEDED);
+                Config.setProbeNeeded(PROBE_NEEDED);
             } else if (mouseX >= hitX+BUTTON_MARGIN && mouseX < hitX + BUTTON_WIDTH+BUTTON_MARGIN) {
-                ConfigSetup.setProbeNeeded(PROBE_NOTNEEDED);
+                Config.setProbeNeeded(PROBE_NOTNEEDED);
             } else if (mouseX >= hitX+BUTTON_MARGIN*2 && mouseX < hitX + BUTTON_WIDTH+BUTTON_MARGIN*2) {
-                ConfigSetup.setProbeNeeded(PROBE_NEEDEDFOREXTENDED);
+                Config.setProbeNeeded(PROBE_NEEDEDFOREXTENDED);
             }
         }
     }
@@ -130,15 +129,15 @@ public class GuiNote extends GuiScreen {
 
         hitY = y + guiTop;
         hitX = x + guiLeft;
-        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, ConfigSetup.getProbeButtonColor());
+        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, Config.getProbeButtonColor());
         RenderHelper.renderText(Tools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.needed"));
         x += BUTTON_MARGIN;
 
-        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, ConfigSetup.getProbeButtonColor());
+        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, Config.getProbeButtonColor());
         RenderHelper.renderText(Tools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.not_needed"));
         x += BUTTON_MARGIN;
 
-        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, ConfigSetup.getProbeButtonColor());
+        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, Config.getProbeButtonColor());
         RenderHelper.renderText(Tools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.extended"));
 
         y += BUTTON_HEIGHT - 4;

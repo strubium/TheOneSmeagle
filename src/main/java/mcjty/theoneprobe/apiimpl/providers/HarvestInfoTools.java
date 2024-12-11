@@ -5,7 +5,7 @@ import mcjty.theoneprobe.api.ElementAlignment;
 import mcjty.theoneprobe.api.IIconStyle;
 import mcjty.theoneprobe.api.ILayoutStyle;
 import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -42,11 +42,11 @@ public class HarvestInfoTools {
             String harvestName;
 
             // Handle out-of-bounds or negative harvest levels by converting to string
-            if (harvestLevel < 0 || harvestLevel >= ConfigSetup.getHarvestLevels().length) {
+            if (harvestLevel < 0 || harvestLevel >= Config.getHarvestLevels().length) {
                 harvestName = Integer.toString(harvestLevel);
             } else {
                 // Use I18n to translate the harvest level
-                harvestName = I18n.format(ConfigSetup.getHarvestLevels()[harvestLevel]);
+                harvestName = I18n.format(Config.getHarvestLevels()[harvestLevel]);
             }
 
             // Add text information to the probe with translated tool and level
@@ -96,14 +96,14 @@ public class HarvestInfoTools {
             int harvestLevel = block.getHarvestLevel(blockState);
             if (harvestLevel < 0) {
                 // If harvest level is out of bounds, set the name manually
-            } else if (harvestLevel >= ConfigSetup.getHarvestLevels().length) {
-                harvestName = I18n.format(ConfigSetup.getHarvestLevels()[ConfigSetup.getHarvestLevels().length - 1]);
+            } else if (harvestLevel >= Config.getHarvestLevels().length) {
+                harvestName = I18n.format(Config.getHarvestLevels()[Config.getHarvestLevels().length - 1]);
             } else {
-                harvestName = I18n.format(ConfigSetup.getHarvestLevels()[harvestLevel]);
+                harvestName = I18n.format(Config.getHarvestLevels()[harvestLevel]);
             }
         }
 
-        boolean harvestStyleVanilla = ConfigSetup.getHarvestStyleVanilla();
+        boolean harvestStyleVanilla = Config.getHarvestStyleVanilla();
         int offs = harvestStyleVanilla ? 16 : 0;
         int dim = harvestStyleVanilla ? 13 : 16;
 

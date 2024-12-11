@@ -86,7 +86,6 @@ public class ModItems {
     }
 
     private static String getBaseTexture(Item baseItem) {
-        String registryName = baseItem.getRegistryName().getResourcePath();  // Get the path part of the registry name, e.g. "golden_helmet"
         String registryNamespace = baseItem.getRegistryName().getResourceDomain();
 
         // Determine the material (e.g. "gold") for armor textures

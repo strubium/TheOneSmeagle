@@ -6,7 +6,7 @@ import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoEntityProvider;
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
@@ -33,7 +33,7 @@ public class DebugProbeInfoEntityProvider implements IProbeInfoEntityProvider {
 
     @Override
     public void addProbeEntityInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, Entity entity, IProbeHitEntityData data) {
-        if (mode == ProbeMode.DEBUG && ConfigSetup.showDebugInfo) {
+        if (mode == ProbeMode.DEBUG && Config.showDebugInfo) {
             IProbeInfo vertical = null;
             if (entity instanceof EntityLivingBase) {
                 vertical = probeInfo.vertical(new LayoutStyle().borderColor(0xffff4444).spacing(2));
@@ -70,7 +70,7 @@ public class DebugProbeInfoEntityProvider implements IProbeInfoEntityProvider {
                         .text(LABEL + "{*theoneprobe.debug_probe.motion_indicator*} " + INFO + String.format("X: %.2f, Y: %.2f, Z: %.2f", motionX, motionY, motionZ))
                         .text(LABEL + "{*theoneprobe.probe.health_indicator*} " + INFO + health + " / " + maxHealth);
 
-                if (ConfigSetup.showDebugUUID) {
+                if (Config.showDebugUUID) {
                     vertical.text(LABEL + "{*theoneprobe.debug_probe.uuid_indicator*} " + INFO + uuid);
                 }
                 if (entityLivingBase.hasCustomName()) {

@@ -5,7 +5,7 @@ import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeHitEntityData;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,8 +23,8 @@ import java.util.UUID;
 
 import static mcjty.theoneprobe.api.TextStyleClass.ERROR;
 import static mcjty.theoneprobe.api.TextStyleClass.LABEL;
-import static mcjty.theoneprobe.config.ConfigSetup.PROBE_NEEDEDFOREXTENDED;
-import static mcjty.theoneprobe.config.ConfigSetup.PROBE_NEEDEDHARD;
+import static mcjty.theoneprobe.config.Config.PROBE_NEEDEDFOREXTENDED;
+import static mcjty.theoneprobe.config.Config.PROBE_NEEDEDHARD;
 
 public class PacketGetEntityInfo implements IMessage {
 
@@ -86,11 +86,11 @@ public class PacketGetEntityInfo implements IMessage {
     }
 
     private static ProbeInfo getProbeInfo(EntityPlayer player, ProbeMode mode, World world, Entity entity, Vec3d hitVec) {
-        if (ConfigSetup.needsProbe == PROBE_NEEDEDFOREXTENDED) {
+        if (Config.needsProbe == PROBE_NEEDEDFOREXTENDED) {
             if (!ModItems.hasAProbeSomewhere(player) && mode == ProbeMode.EXTENDED) {
                 mode = ProbeMode.NORMAL;
             }
-        } else if (ConfigSetup.needsProbe == PROBE_NEEDEDHARD && !ModItems.hasAProbeSomewhere(player)) {
+        } else if (Config.needsProbe == PROBE_NEEDEDHARD && !ModItems.hasAProbeSomewhere(player)) {
             return null;
         }
 
@@ -101,7 +101,7 @@ public class PacketGetEntityInfo implements IMessage {
         for (IProbeConfigProvider configProvider : TheOneProbe.theOneProbeImp.getConfigProviders()) {
             configProvider.getProbeConfig(probeConfig, player, world, entity, data);
         }
-        ConfigSetup.setRealConfig(probeConfig);
+        Config.setRealConfig(probeConfig);
 
         for (IProbeInfoEntityProvider provider : TheOneProbe.theOneProbeImp.getEntityProviders()) {
             try {

@@ -34,14 +34,14 @@ public class TopModConfigGui extends GuiConfig {
     private static List<IConfigElement> getConfigElements() {
         // Define the categories for the configuration
         final String[] categories = {
-                ConfigSetup.CATEGORY_CLIENT,
-                ConfigSetup.CATEGORY_THEONEPROBE,
-                ConfigSetup.CATEGORY_PROVIDERS
+                Config.CATEGORY_CLIENT,
+                Config.CATEGORY_THEONEPROBE,
+                Config.CATEGORY_PROVIDERS
         };
 
         // Create configuration elements for the main categories
         return Arrays.stream(categories)
-                .map(category -> new ConfigElement(ConfigSetup.mainConfig.getCategory(category)))
+                .map(category -> new ConfigElement(Config.mainConfig.getCategory(category)))
                 .collect(Collectors.toList());
     }
 }

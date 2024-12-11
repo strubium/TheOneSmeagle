@@ -27,7 +27,7 @@ import static mcjty.theoneprobe.api.TextStyleClass.*;
  * @since 5/14/2016
  * @author McJty
  */
-public class ConfigSetup {
+public class Config {
 
     public static Configuration mainConfig;
 
@@ -225,7 +225,7 @@ public class ConfigSetup {
 
     public static void setProbeNeeded(int probeNeeded) {
         Configuration cfg = mainConfig;
-        ConfigSetup.needsProbe = probeNeeded;
+        Config.needsProbe = probeNeeded;
         cfg.get(CATEGORY_THEONEPROBE, "needsProbe", probeNeeded).set(probeNeeded);
         cfg.save();
     }
@@ -270,45 +270,45 @@ public class ConfigSetup {
 
     public static void setTextStyle(TextStyleClass styleClass, String style) {
         Configuration cfg = mainConfig;
-        ConfigSetup.textStyleClasses.put(styleClass, style);
+        Config.textStyleClasses.put(styleClass, style);
         cfg.get(CATEGORY_CLIENT + "." + SUBCATEGORY_TEXT, "textStyle" + styleClass.getReadableName(), style).set(style);
         cfg.save();
     }
 
     public static void setExtendedInMain(boolean extendedInMain) {
         Configuration cfg = mainConfig;
-        ConfigSetup.extendedInMain = extendedInMain;
+        Config.extendedInMain = extendedInMain;
         cfg.get(CATEGORY_CLIENT, "extendedInMain", extendedInMain).set(extendedInMain);
         cfg.save();
     }
 
     public static void setLiquids(boolean liquids) {
         Configuration cfg = mainConfig;
-        ConfigSetup.showLiquids = liquids;
+        Config.showLiquids = liquids;
         cfg.get(CATEGORY_CLIENT, "showLiquids", showLiquids).set(liquids);
         cfg.save();
     }
 
     public static void setVisible(boolean visible) {
         Configuration cfg = mainConfig;
-        ConfigSetup.isVisible = visible;
+        Config.isVisible = visible;
         cfg.get(CATEGORY_CLIENT, "isVisible", isVisible).set(visible);
         cfg.save();
     }
 
     public static void setCompactEqualStacks(boolean compact) {
         Configuration cfg = mainConfig;
-        ConfigSetup.compactEqualStacks = compact;
+        Config.compactEqualStacks = compact;
         cfg.get(CATEGORY_CLIENT, "compactEqualStacks", compactEqualStacks).set(compact);
         cfg.save();
     }
 
     public static void setPos(int leftx, int topy, int rightx, int bottomy) {
         Configuration cfg = mainConfig;
-        ConfigSetup.leftX = leftx;
-        ConfigSetup.topY = topy;
-        ConfigSetup.rightX = rightx;
-        ConfigSetup.bottomY = bottomy;
+        Config.leftX = leftx;
+        Config.topY = topy;
+        Config.rightX = rightx;
+        Config.bottomY = bottomy;
         cfg.get(CATEGORY_CLIENT + "." + SUBCATEGORY_OFFSETS, "boxLeftXOffset", leftx).set(leftx);
         cfg.get(CATEGORY_CLIENT + "." + SUBCATEGORY_OFFSETS, "boxRightXOffset", rightx).set(rightx);
         cfg.get(CATEGORY_CLIENT + "." + SUBCATEGORY_OFFSETS, "boxTopYOffset", topy).set(topy);

@@ -11,7 +11,7 @@ import mcjty.theoneprobe.apiimpl.elements.ElementText;
 import mcjty.theoneprobe.apiimpl.providers.DefaultProbeInfoEntityProvider;
 import mcjty.theoneprobe.apiimpl.providers.DefaultProbeInfoProvider;
 import mcjty.theoneprobe.apiimpl.styles.ProgressStyle;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.network.PacketGetEntityInfo;
 import mcjty.theoneprobe.network.PacketGetInfo;
 import mcjty.theoneprobe.network.PacketHandler;
@@ -70,14 +70,14 @@ public class OverlayRenderer {
     }
 
     public static void renderHUD(ProbeMode mode, float partialTicks) {
-        float dist = ConfigSetup.probeDistance;
+        float dist = Config.probeDistance;
 
         RayTraceResult mouseOver = Tools.mc.objectMouseOver;
         if (mouseOver != null) {
             if (mouseOver.typeOfHit == RayTraceResult.Type.ENTITY) {
                 GlStateManager.pushMatrix();
 
-                double scale = ConfigSetup.tooltipScale;
+                double scale = Config.tooltipScale;
 
                 ScaledResolution scaledresolution = new ScaledResolution(Tools.mc);
                 double sw = scaledresolution.getScaledWidth_double();
@@ -98,7 +98,7 @@ public class OverlayRenderer {
         Vec3d vec31 = entity.getLook(partialTicks);
         Vec3d end = start.addVector(vec31.x * dist, vec31.y * dist, vec31.z * dist);
 
-        mouseOver = entity.getEntityWorld().rayTraceBlocks(start, end, ConfigSetup.showLiquids);
+        mouseOver = entity.getEntityWorld().rayTraceBlocks(start, end, Config.showLiquids);
         if (mouseOver == null) {
             return;
         }
@@ -106,7 +106,7 @@ public class OverlayRenderer {
         if (mouseOver.typeOfHit == RayTraceResult.Type.BLOCK) {
             GlStateManager.pushMatrix();
 
-            double scale = ConfigSetup.tooltipScale;
+            double scale = Config.tooltipScale;
 
             ScaledResolution scaledresolution = new ScaledResolution(Tools.mc);
             double sw = scaledresolution.getScaledWidth_double();
@@ -158,10 +158,10 @@ public class OverlayRenderer {
                 }
             }
 
-            if (lastPair != null && time < lastPairTime + ConfigSetup.timeout) {
-                renderElements(lastPair.getRight(), ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement);
+            if (lastPair != null && time < lastPairTime + Config.timeout) {
+                renderElements(lastPair.getRight(), Config.getDefaultOverlayStyle(), sw, sh, extraElement);
                 lastRenderedTime = time;
-            } else if (ConfigSetup.waitingForServerTimeout > 0 && lastRenderedTime != -1 && time > lastRenderedTime + ConfigSetup.waitingForServerTimeout) {
+            } else if (Config.waitingForServerTimeout > 0 && lastRenderedTime != -1 && time > lastRenderedTime + Config.waitingForServerTimeout) {
                 ProbeInfo info;
                 if (entityUUID != null) {
                     info = getWaitingEntityInfo(mode, mouseOver, (Entity) mouseOver.entityHit, player);
@@ -172,13 +172,13 @@ public class OverlayRenderer {
                 }
                 lastPair = Pair.of(time, info);
                 lastPairTime = time;
-                renderElements(info, ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement);
+                renderElements(info, Config.getDefaultOverlayStyle(), sw, sh, extraElement);
                 lastRenderedTime = time;
             }
             return false;
         } else {
             // Cached info is valid or needs refreshing
-            if (time > ((Pair<Long, ProbeInfo>) cacheEntry).getLeft() + ConfigSetup.timeout) {
+            if (time > ((Pair<Long, ProbeInfo>) cacheEntry).getLeft() + Config.timeout) {
                 if (entityUUID != null) {
                     cachedInfo.put(Pair.of(dimension, blockPos), Pair.of(time + 500, (ProbeInfo) cacheEntry.getRight()));
                     requestEntityInfo(mode, mouseOver, (Entity) mouseOver.entityHit, player);
@@ -187,7 +187,7 @@ public class OverlayRenderer {
                     requestBlockInfo(mode, mouseOver, blockPos, player);
                 }
             }
-            renderElements(((Pair<Long, ProbeInfo>) cacheEntry).getRight(), ConfigSetup.getDefaultOverlayStyle(), sw, sh, extraElement);
+            renderElements(((Pair<Long, ProbeInfo>) cacheEntry).getRight(), Config.getDefaultOverlayStyle(), sw, sh, extraElement);
             lastRenderedTime = time;
             lastPair = cacheEntry;
             lastPairTime = time;
@@ -232,21 +232,21 @@ public class OverlayRenderer {
         long time = System.currentTimeMillis();
 
         IElement damageElement = null;
-        if (ConfigSetup.showBreakProgress > 0) {
+        if (Config.showBreakProgress > 0) {
             float damage = Tools.mc.playerController.curBlockDamageMP;
             if (damage > 0) {
 
-                damageElement = ConfigSetup.showBreakProgress == 2
+                damageElement = Config.showBreakProgress == 2
                         ? new ElementText(TextFormatting.RED + I18n.format("theoneprobe.probe.progress_indicator") + " " + (int) (damage * 100) + "%")
                         : new ElementProgress((long) (damage * 100), 100, new ProgressStyle()
                         .prefix(I18n.format("theoneprobe.probe.progress_indicator") + " ")
                         .suffix("%")
                         .width(85)
-                        .showText(ConfigSetup.showBreakProgressText)
-                        .backgroundColor(ConfigSetup.probeProgressBackgroundColor)
-                        .borderColor(ConfigSetup.probeProgressBorderColor)
-                        .filledColor(ConfigSetup.probeProgressColor)
-                        .alternateFilledColor(ConfigSetup.probeProgressAltColor), ConfigSetup.probeProgressGradient);
+                        .showText(Config.showBreakProgressText)
+                        .backgroundColor(Config.probeProgressBackgroundColor)
+                        .borderColor(Config.probeProgressBorderColor)
+                        .filledColor(Config.probeProgressColor)
+                        .alternateFilledColor(Config.probeProgressAltColor), Config.probeProgressGradient);
             }
         }
 
@@ -305,7 +305,7 @@ public class OverlayRenderer {
             // Protection for some invalid items.
             pickBlock = ItemStack.EMPTY;
         }
-        if (!pickBlock.isEmpty() && ConfigSetup.getDontSendNBTSet().contains(pickBlock.getItem().getRegistryName())) {
+        if (!pickBlock.isEmpty() && Config.getDontSendNBTSet().contains(pickBlock.getItem().getRegistryName())) {
             pickBlock = pickBlock.copy();
             pickBlock.setTagCompound(null);
         }
@@ -315,7 +315,7 @@ public class OverlayRenderer {
     public static void renderOverlay(IOverlayStyle style, IProbeInfo probeInfo) {
         GlStateManager.pushMatrix();
 
-        double scale = ConfigSetup.getScale();
+        double scale = Config.getScale();
 
         Minecraft minecraft = Tools.mc;
         ScaledResolution scaledresolution = new ScaledResolution(minecraft);
@@ -333,7 +333,7 @@ public class OverlayRenderer {
         Map<Pair<Integer,BlockPos>, Pair<Long, ProbeInfo>> newCachedInfo = new HashMap<>();
         for (Map.Entry<Pair<Integer, BlockPos>, Pair<Long, ProbeInfo>> entry : cachedInfo.entrySet()) {
             long t = entry.getValue().getLeft();
-            if (time < t + ConfigSetup.timeout + 1000) {
+            if (time < t + Config.timeout + 1000) {
                 newCachedInfo.put(entry.getKey(), entry.getValue());
             }
         }
@@ -345,7 +345,7 @@ public class OverlayRenderer {
         Map<UUID, Pair<Long, ProbeInfo>> newCachedInfo = new HashMap<>();
         for (Map.Entry<UUID, Pair<Long, ProbeInfo>> entry : cachedEntityInfo.entrySet()) {
             long t = entry.getValue().getLeft();
-            if (time < t + ConfigSetup.timeout + 1000) {
+            if (time < t + Config.timeout + 1000) {
                 newCachedInfo.put(entry.getKey(), entry.getValue());
             }
         }

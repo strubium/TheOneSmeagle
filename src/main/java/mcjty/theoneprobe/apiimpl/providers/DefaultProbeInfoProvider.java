@@ -7,12 +7,11 @@ import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeConfig;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
 import mcjty.theoneprobe.compat.RedstoneFluxTools;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.setup.ModSetup;
 import net.minecraft.block.*;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -45,7 +44,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
         Block block = blockState.getBlock();
         BlockPos pos = data.getPos();
 
-        IProbeConfig config = ConfigSetup.getRealConfig();
+        IProbeConfig config = Config.getRealConfig();
 
         boolean handled = false;
         for (IBlockDisplayOverride override : TheOneProbe.theOneProbeImp.getBlockOverrides()) {
@@ -197,7 +196,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
     }
 
     private void showTankInfo(IProbeInfo probeInfo, World world, BlockPos pos) {
-        ProbeConfig config = ConfigSetup.getDefaultConfig();
+        ProbeConfig config = Config.getDefaultConfig();
         TileEntity te = world.getTileEntity(pos);
         if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)) {
             net.minecraftforge.fluids.capability.IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
@@ -225,17 +224,17 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             probeInfo.progress(contents, maxContents,
                     probeInfo.defaultProgressStyle()
                             .suffix("mB")
-                            .filledColor(ConfigSetup.tankbarFilledColor)
-                            .alternateFilledColor(ConfigSetup.tankbarAlternateFilledColor)
-                            .borderColor(ConfigSetup.tankbarBorderColor)
-                            .numberFormat(ConfigSetup.tankFormat));
+                            .filledColor(Config.tankbarFilledColor)
+                            .alternateFilledColor(Config.tankbarAlternateFilledColor)
+                            .borderColor(Config.tankbarBorderColor)
+                            .numberFormat(Config.tankFormat));
         } else {
-            probeInfo.text(PROGRESS + ElementProgress.format(contents, ConfigSetup.tankFormat, "mB"));
+            probeInfo.text(PROGRESS + ElementProgress.format(contents, Config.tankFormat, "mB"));
         }
     }
 
     private void showRF(IProbeInfo probeInfo, World world, BlockPos pos) {
-        ProbeConfig config = ConfigSetup.getDefaultConfig();
+        ProbeConfig config = Config.getDefaultConfig();
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof IBigPower) {
             long energy = ((IBigPower) te).getStoredPower();
@@ -270,12 +269,12 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             probeInfo.progress(energy, maxEnergy,
                     probeInfo.defaultProgressStyle()
                             .suffix("RF")
-                            .filledColor(ConfigSetup.rfbarFilledColor)
-                            .alternateFilledColor(ConfigSetup.rfbarAlternateFilledColor)
-                            .borderColor(ConfigSetup.rfbarBorderColor)
-                            .numberFormat(ConfigSetup.rfFormat));
+                            .filledColor(Config.rfbarFilledColor)
+                            .alternateFilledColor(Config.rfbarAlternateFilledColor)
+                            .borderColor(Config.rfbarBorderColor)
+                            .numberFormat(Config.rfFormat));
         } else {
-            probeInfo.text(PROGRESS + "RF: " + ElementProgress.format(energy, ConfigSetup.rfFormat, "RF"));
+            probeInfo.text(PROGRESS + "RF: " + ElementProgress.format(energy, Config.rfFormat, "RF"));
         }
     }
 
@@ -347,11 +346,11 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             if (Tools.show(mode, config.getShowModName())) {
                 String blockDisplayName = pickBlock.getDisplayName();
 
-                if (ConfigSetup.getBlockNameMaxWidth() != 0) {
+                if (Config.getBlockNameMaxWidth() != 0) {
                     // Calculate available width for text
                     FontRenderer fontRenderer = Tools.mc.fontRenderer;
                     int screenWidth = Tools.getScreenWidth();
-                    int availableWidth = (int) (screenWidth * ConfigSetup.getBlockNameMaxWidth());
+                    int availableWidth = (int) (screenWidth * Config.getBlockNameMaxWidth());
 
                     // String truncation
                     if (blockDisplayName.equals(cachedBlockName))

@@ -1,6 +1,6 @@
 package mcjty.theoneprobe.setup;
 
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.gui.GuiConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -32,11 +32,11 @@ public class GuiProxy implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int guiid, EntityPlayer entityPlayer, World world, int x, int y, int z) {
         if (guiid == GUI_NOTE) {
-            if(ConfigSetup.getShowProbeNoteGUI()){
+            if(Config.getShowProbeNoteGUI()){
                 return new GuiNote();
             }
         } else if (guiid == GUI_CONFIG) {
-            if(ConfigSetup.getShowProbeConfigGUI()){
+            if(Config.getShowProbeConfigGUI()){
                 return new GuiConfig();
             }
         } else {

@@ -4,7 +4,7 @@ import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.IOverlayStyle;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.rendering.RenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
@@ -76,7 +76,7 @@ public class GuiConfig extends GuiScreen {
         mc.getTextureManager().bindTexture(scene);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT);
 
-        renderProbe(ConfigSetup.getProbeNoteBlock());
+        renderProbe(Config.getProbeNoteBlock());
 
         int x = WIDTH + guiLeft + 10;
         int y = guiTop + 10;
@@ -100,11 +100,11 @@ public class GuiConfig extends GuiScreen {
         y += 12;
         RenderHelper.renderText(Tools.mc, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.3"));
         y += 12;
-        addButton(x+10, y, "--", () -> ConfigSetup.setScale(ConfigSetup.getScale() + 0.2F)); x += 36;
-        addButton(x+10, y, "-", () -> ConfigSetup.setScale(ConfigSetup.getScale() + 0.1F)); x += 36;
-        addButton(x+10, y, "0", () -> ConfigSetup.setScale(1f)); x += 36;
-        addButton(x+10, y, "+", () -> ConfigSetup.setScale(ConfigSetup.getScale() - 0.1F)); x += 36;
-        addButton(x+10, y, "++", () -> ConfigSetup.setScale(ConfigSetup.getScale() - 0.2F));
+        addButton(x+10, y, "--", () -> Config.setScale(Config.getScale() + 0.2F)); x += 36;
+        addButton(x+10, y, "-", () -> Config.setScale(Config.getScale() + 0.1F)); x += 36;
+        addButton(x+10, y, "0", () -> Config.setScale(1f)); x += 36;
+        addButton(x+10, y, "+", () -> Config.setScale(Config.getScale() - 0.1F)); x += 36;
+        addButton(x+10, y, "++", () -> Config.setScale(Config.getScale() - 0.2F));
 
         int margin = 90;
 
@@ -121,7 +121,7 @@ public class GuiConfig extends GuiScreen {
 
                 int[] pos = hitboxPositionMap[j * 3 + i];
 
-                hitboxes.add(new HitBox(x1, y1, x2, y2, () -> ConfigSetup.setPos(pos[0], pos[1], pos[2], pos[3])));
+                hitboxes.add(new HitBox(x1, y1, x2, y2, () -> Config.setPos(pos[0], pos[1], pos[2], pos[3])));
             }
         }
 
@@ -141,7 +141,7 @@ public class GuiConfig extends GuiScreen {
 
 
     private int addPreset(int x, int y, Preset preset) {
-        drawRect(x + 10, y - 1, x + 10 + WIDTH - 50, y + 10, ConfigSetup.getProbeButtonColor());
+        drawRect(x + 10, y - 1, x + 10 + WIDTH - 50, y + 10, Config.getProbeButtonColor());
         RenderHelper.renderText(Tools.mc, x + 20, y, preset.getName());
         hitboxes.add(new HitBox(x + 10 - guiLeft, y - 1 - guiTop, x + 10 + WIDTH - 50 - guiLeft, y + 10 - guiTop, () -> PresetBuilder.applyPreset(preset)));
         y += 14;
@@ -149,7 +149,7 @@ public class GuiConfig extends GuiScreen {
     }
 
     private void addButton(int x, int y, String text, Runnable runnable) {
-        drawRect(x, y, x + 30 -1, y + 14 -1, ConfigSetup.getProbeButtonColor());
+        drawRect(x, y, x + 30 -1, y + 14 -1, Config.getProbeButtonColor());
         RenderHelper.renderText(Tools.mc, x + 3, y + 3, text);
         hitboxes.add(new HitBox(x - guiLeft, y - guiTop, x + 30 -1 - guiLeft, y + 14 -1 - guiTop, runnable));
     }
@@ -182,7 +182,7 @@ public class GuiConfig extends GuiScreen {
         probeInfo.text(LABEL + "{*theoneprobe.probe.fuel_indicator*} " + INFO + "5 volts");
         probeInfo.text(LABEL + "{*theoneprobe.probe.error_indicator*} " + ERROR + "Oups!");
 
-        renderElements(probeInfo, ConfigSetup.getDefaultOverlayStyle());
+        renderElements(probeInfo, Config.getDefaultOverlayStyle());
     }
 
     /**
@@ -193,7 +193,7 @@ public class GuiConfig extends GuiScreen {
      */
     private void renderElements(ProbeInfo probeInfo, IOverlayStyle style) {
         GlStateManager.pushMatrix();
-        GlStateManager.scale(1 / ConfigSetup.tooltipScale, 1 / ConfigSetup.tooltipScale, 1 / ConfigSetup.tooltipScale);
+        GlStateManager.scale(1 / Config.tooltipScale, 1 / Config.tooltipScale, 1 / Config.tooltipScale);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();
@@ -216,7 +216,7 @@ public class GuiConfig extends GuiScreen {
         x += guiLeft;
         y += guiTop;
 
-        double factor = (ConfigSetup.tooltipScale - 1) * 1.4 + 1;
+        double factor = (Config.tooltipScale - 1) * 1.4 + 1;
         x *= (int) factor;
         y *= (int) factor;
 

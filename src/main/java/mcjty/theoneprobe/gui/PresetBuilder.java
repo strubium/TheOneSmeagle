@@ -1,7 +1,7 @@
 package mcjty.theoneprobe.gui;
 
 import mcjty.theoneprobe.api.TextStyleClass;
-import mcjty.theoneprobe.config.ConfigSetup;
+import mcjty.theoneprobe.config.Config;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -94,12 +94,12 @@ public class PresetBuilder {
         }
 
         // Apply text styles from the preset
-        for (Map.Entry<TextStyleClass, String> entry : ConfigSetup.defaultTextStyleClasses.entrySet()) {
-            ConfigSetup.setTextStyle(entry.getKey(), entry.getValue());
+        for (Map.Entry<TextStyleClass, String> entry : Config.defaultTextStyleClasses.entrySet()) {
+            Config.setTextStyle(entry.getKey(), entry.getValue());
         }
 
         // Apply box styles from the preset
-        ConfigSetup.setBoxStyle(
+        Config.setBoxStyle(
                 preset.getBoxThickness(),
                 preset.getBoxBorderColor(),
                 preset.getBoxFillColor()
@@ -107,7 +107,7 @@ public class PresetBuilder {
 
         // Apply text styles from the preset
         for (Map.Entry<TextStyleClass, String> entry : preset.getTextStyleClasses().entrySet()) {
-            ConfigSetup.setTextStyle(entry.getKey(), entry.getValue());
+            Config.setTextStyle(entry.getKey(), entry.getValue());
         }
     }
 
