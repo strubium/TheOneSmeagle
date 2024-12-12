@@ -36,7 +36,7 @@ public class ModItems {
     public static final String PROBETAG = TheOneProbe.MODID;
 
     public static void init() {
-        int stepCount = ModSetup.baubles ? 6 : 5;
+        int stepCount = ModSetup.baubles ? 5 : 4;
         final ProgressManager.ProgressBar bar = ProgressManager.push("Loading Mod Items", stepCount);
 
         bar.step("Initializing Probe");
@@ -44,8 +44,6 @@ public class ModItems {
 
         bar.step("Initializing Creative Probe");
         creativeProbe = new CreativeProbe();
-
-        bar.step("Creating Armor Materials");
 
         bar.step("Creating Armor Probes");
         diamondHelmetProbe = makeHelmet(Items.DIAMOND_HELMET,"diamond_helmet_probe");
@@ -63,7 +61,7 @@ public class ModItems {
         ProgressManager.pop(bar);
     }
 
-    private static Item makeHelmet(Item baseItem, String name) {
+    public static Item makeHelmet(Item baseItem, String name) {
         ItemArmor.ArmorMaterial material = ((ItemArmor) baseItem).getArmorMaterial();
         int renderIndex = ((ItemArmor) baseItem).renderIndex;
 

@@ -317,8 +317,7 @@ public class OverlayRenderer {
 
         double scale = Config.getScale();
 
-        Minecraft minecraft = Tools.mc;
-        ScaledResolution scaledresolution = new ScaledResolution(minecraft);
+        ScaledResolution scaledresolution = new ScaledResolution(Tools.mc);
         double sw = scaledresolution.getScaledWidth_double();
         double sh = scaledresolution.getScaledHeight_double();
 
