@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@SideOnly(Side.CLIENT)
 public class CommandTopCfg extends CommandBase {
 
     @Override
