@@ -20,6 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ModItems {
     public static CreativeProbe creativeProbe;
@@ -86,8 +87,16 @@ public class ModItems {
     private static String getBaseTexture(Item baseItem) {
         String registryNamespace = baseItem.getRegistryName().getResourceDomain();
 
+        String registryPath = baseItem.getRegistryName().getResourcePath();
+
+        String[] parts = registryPath.split("_");
+
+        if(Objects.equals(parts[0], "golden")){
+            parts[0] = "gold"; //Golden helmets use "golden" for their id, but the model uses "gold"
+        }
+
         // Determine the material (e.g. "gold") for armor textures
-        String armorMaterial = ((ItemArmor) baseItem).getArmorMaterial().getName().toLowerCase();
+        String armorMaterial = parts[0];
 
         // Return the path to the armor texture (layer 1 in this case)
         return registryNamespace + ":textures/models/armor/" + armorMaterial + "_layer_1.png";
