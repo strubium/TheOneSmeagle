@@ -1,8 +1,8 @@
 package mcjty.theoneprobe.commands;
 
 import mcjty.theoneprobe.ClientForgeEventHandlers;
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.setup.GuiProxy;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -13,8 +13,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -78,7 +76,7 @@ public class CommandTopCfg extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         if (args.length < 1) {
             ClientForgeEventHandlers.ignoreNextGuiClose = true;
-            EntityPlayerSP player = Tools.mc.player;
+            EntityPlayerSP player = ClientTools.mc.player;
             player.openGui(TheOneProbe.instance, GuiProxy.GUI_CONFIG, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
             return;
         }

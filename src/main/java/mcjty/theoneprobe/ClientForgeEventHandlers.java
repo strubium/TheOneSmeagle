@@ -28,7 +28,7 @@ public class ClientForgeEventHandlers {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         if (ignoreNextGuiClose) {
-            GuiScreen current = Tools.mc.currentScreen;
+            GuiScreen current = ClientTools.mc.currentScreen;
             if (event.getGui() == null && (current instanceof GuiConfig || current instanceof GuiNote)) {
                 ignoreNextGuiClose = false;
                 // We don't want our gui to be closed for a new 'null' gui
@@ -63,7 +63,7 @@ public class ClientForgeEventHandlers {
                     break;
                 case PROBE_NEEDED:
                 case PROBE_NEEDEDHARD:
-                    if (ModItems.hasAProbeSomewhere(Tools.mc.player)) {
+                    if (ModItems.hasAProbeSomewhere(ClientTools.mc.player)) {
                         OverlayRenderer.renderHUD(getModeForPlayer(), event.getPartialTicks());
                     }
                     break;
@@ -72,7 +72,7 @@ public class ClientForgeEventHandlers {
     }
 
     private ProbeMode getModeForPlayer() {
-        EntityPlayerSP player = Tools.mc.player;
+        EntityPlayerSP player = ClientTools.mc.player;
         if (Config.extendedInMain) {
             if (hasItemInMainHand(ModItems.probe)) {
                 return ProbeMode.EXTENDED;
@@ -82,15 +82,15 @@ public class ClientForgeEventHandlers {
     }
 
     private boolean hasItemInEitherHand(Item item) {
-        ItemStack mainHeldItem = Tools.mc.player.getHeldItem(EnumHand.MAIN_HAND);
-        ItemStack offHeldItem = Tools.mc.player.getHeldItem(EnumHand.OFF_HAND);
+        ItemStack mainHeldItem = ClientTools.mc.player.getHeldItem(EnumHand.MAIN_HAND);
+        ItemStack offHeldItem = ClientTools.mc.player.getHeldItem(EnumHand.OFF_HAND);
         return (mainHeldItem != null && mainHeldItem.getItem() == item) ||
                 (offHeldItem != null && offHeldItem.getItem() == item);
     }
 
 
     private boolean hasItemInMainHand(Item item) {
-        ItemStack mainHeldItem = Tools.mc.player.getHeldItem(EnumHand.MAIN_HAND);
+        ItemStack mainHeldItem = ClientTools.mc.player.getHeldItem(EnumHand.MAIN_HAND);
         return mainHeldItem != null && mainHeldItem.getItem() == item;
     }
 }

@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.apiimpl.client;
 
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.IEntityStyle;
 import mcjty.theoneprobe.rendering.RenderHelper;
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ElementEntityRender {
 
     public static void renderPlayer(String entityName, Integer playerID, IEntityStyle style, int x, int y) {
-        Entity entity = Tools.mc.world.getEntityByID(playerID);
+        Entity entity = ClientTools.mc.world.getEntityByID(playerID);
         if (entity != null) {
             renderEntity(style, x, y, entity);
         }
@@ -28,12 +29,12 @@ public class ElementEntityRender {
         if (entityName != null && !entityName.isEmpty()) {
             Entity entity = null;
             if (entityNBT != null) {
-                entity = EntityList.createEntityFromNBT(entityNBT, Tools.mc.world);
+                entity = EntityList.createEntityFromNBT(entityNBT, ClientTools.mc.world);
             } else {
                 String fixed = fixEntityId(entityName);
                 EntityEntry value = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixed));
                 if (value != null) {
-                    entity = value.newInstance(Tools.mc.world);
+                    entity = value.newInstance(ClientTools.mc.world);
                 }
             }
             if (entity != null) {

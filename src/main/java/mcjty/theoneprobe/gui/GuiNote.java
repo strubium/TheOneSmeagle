@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.gui;
 
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.config.Config;
@@ -51,57 +52,57 @@ public class GuiNote extends GuiScreen {
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT);
         int x = guiLeft + 5;
         int y = guiTop + 8;
-        RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.title"));
+        RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.title"));
         y += 10;
-        RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.1"));
+        RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.1"));
         y += 10;
-        RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.2"));
+        RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.2"));
         y += 10;
 
         y += 10;
         switch (Config.needsProbe) {
             case PROBE_NEEDED:
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.1"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.1"));
                 y += 10;
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.2"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.body.2"));
                 y += 26;
                 y = setInConfig(x, y);
                 break;
             case PROBE_NOTNEEDED:
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.not_needed.1"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.not_needed.1"));
                 y += 10;
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.not_needed.2"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.not_needed.2"));
                 y += 10;
                 y += 16;
                 y = setInConfig(x, y);
                 break;
             case PROBE_NEEDEDFOREXTENDED:
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_for_extended.1"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_for_extended.1"));
                 y += 10;
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_for_extended.2"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_for_extended.2"));
                 y += 10;
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_for_extended.3"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_for_extended.3"));
                 y += 10;
                 y += 6;
                 y = setInConfig(x, y);
                 break;
             case PROBE_NEEDEDHARD:
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_hard.1"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_hard.1"));
                 y += 10;
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_hard.2"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_hard.2"));
                 y += 10;
-                RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_hard.3"));
+                RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.needed_hard.3"));
                 y += 10;
                 break;
         }
 
         y += 10;
 
-        RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.tail.1"));
+        RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.tail.1"));
         y += 10;
-        RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.tail.2"));
+        RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.tail.2"));
         y += 10;
-        RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.tail.3"));
+        RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.tail.3"));
     }
 
     private int hitX;
@@ -124,21 +125,21 @@ public class GuiNote extends GuiScreen {
     }
 
     private int setInConfig(int x, int y) {
-        RenderHelper.renderText(Tools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.button.title"));
+        RenderHelper.renderText(ClientTools.mc, x, y, I18n.format("gui.theoneprobe.gui_note.button.title"));
         y += 10;
 
         hitY = y + guiTop;
         hitX = x + guiLeft;
         drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, Config.getProbeButtonColor());
-        RenderHelper.renderText(Tools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.needed"));
+        RenderHelper.renderText(ClientTools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.needed"));
         x += BUTTON_MARGIN;
 
         drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, Config.getProbeButtonColor());
-        RenderHelper.renderText(Tools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.not_needed"));
+        RenderHelper.renderText(ClientTools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.not_needed"));
         x += BUTTON_MARGIN;
 
         drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, Config.getProbeButtonColor());
-        RenderHelper.renderText(Tools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.extended"));
+        RenderHelper.renderText(ClientTools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.extended"));
 
         y += BUTTON_HEIGHT - 4;
         return y;

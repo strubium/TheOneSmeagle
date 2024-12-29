@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.rendering;
 
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.*;
@@ -72,14 +73,14 @@ public class OverlayRenderer {
     public static void renderHUD(ProbeMode mode, float partialTicks) {
         float dist = Config.probeDistance;
 
-        RayTraceResult mouseOver = Tools.mc.objectMouseOver;
+        RayTraceResult mouseOver = ClientTools.mc.objectMouseOver;
         if (mouseOver != null) {
             if (mouseOver.typeOfHit == RayTraceResult.Type.ENTITY) {
                 GlStateManager.pushMatrix();
 
                 double scale = Config.tooltipScale;
 
-                ScaledResolution scaledresolution = new ScaledResolution(Tools.mc);
+                ScaledResolution scaledresolution = new ScaledResolution(ClientTools.mc);
                 double sw = scaledresolution.getScaledWidth_double();
                 double sh = scaledresolution.getScaledHeight_double();
 
@@ -93,7 +94,7 @@ public class OverlayRenderer {
             }
         }
 
-        EntityPlayerSP entity = Tools.mc.player;
+        EntityPlayerSP entity = ClientTools.mc.player;
         Vec3d start  = entity.getPositionEyes(partialTicks);
         Vec3d vec31 = entity.getLook(partialTicks);
         Vec3d end = start.addVector(vec31.x * dist, vec31.y * dist, vec31.z * dist);
@@ -108,7 +109,7 @@ public class OverlayRenderer {
 
             double scale = Config.tooltipScale;
 
-            ScaledResolution scaledresolution = new ScaledResolution(Tools.mc);
+            ScaledResolution scaledresolution = new ScaledResolution(ClientTools.mc);
             double sw = scaledresolution.getScaledWidth_double();
             double sh = scaledresolution.getScaledHeight_double();
 
@@ -209,7 +210,7 @@ public class OverlayRenderer {
         }
 
         UUID uuid = entity.getPersistentID();
-        EntityPlayerSP player = Tools.mc.player;
+        EntityPlayerSP player = ClientTools.mc.player;
         long time = System.currentTimeMillis();
 
         Pair<Long, ProbeInfo> cacheEntry = cachedEntityInfo.get(uuid);
@@ -224,7 +225,7 @@ public class OverlayRenderer {
             return;
         }
 
-        EntityPlayerSP player = Tools.mc.player;
+        EntityPlayerSP player = ClientTools.mc.player;
         if (player.getEntityWorld().isAirBlock(blockPos)) {
             return;
         }
@@ -233,7 +234,7 @@ public class OverlayRenderer {
 
         IElement damageElement = null;
         if (Config.showBreakProgress > 0) {
-            float damage = Tools.mc.playerController.curBlockDamageMP;
+            float damage = ClientTools.mc.playerController.curBlockDamageMP;
             if (damage > 0) {
 
                 damageElement = Config.showBreakProgress == 2
@@ -317,7 +318,7 @@ public class OverlayRenderer {
 
         double scale = Config.getScale();
 
-        ScaledResolution scaledresolution = new ScaledResolution(Tools.mc);
+        ScaledResolution scaledresolution = new ScaledResolution(ClientTools.mc);
         double sw = scaledresolution.getScaledWidth_double();
         double sh = scaledresolution.getScaledHeight_double();
 
@@ -408,7 +409,7 @@ public class OverlayRenderer {
             RenderHelper.drawThickBeveledBox(x + offset, y + offset, x + w - 1 - offset, y + h - 1 - offset, thick, style.getBorderColor(), style.getBorderColor(), style.getBoxColor());
         }
 
-        if (!Tools.mc.isGamePaused()) {
+        if (!ClientTools.mc.isGamePaused()) {
             RenderHelper.rot += .5f;
         }
 

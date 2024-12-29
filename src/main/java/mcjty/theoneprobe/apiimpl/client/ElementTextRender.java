@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.apiimpl.client;
 
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.config.Config;
@@ -19,7 +20,7 @@ import static mcjty.theoneprobe.api.IProbeInfo.STARTLOC;
 public class ElementTextRender {
 
     public static void render(String text, int x, int y) {
-        RenderHelper.renderText(Tools.mc, x, y, stylifyString(text));
+        RenderHelper.renderText(ClientTools.mc, x, y, stylifyString(text));
     }
 
     private static String stylifyString(String text) {
@@ -64,6 +65,6 @@ public class ElementTextRender {
     }
 
     public static int getWidth(String text) {
-        return Tools.mc.fontRenderer.getStringWidth(stylifyString(text));
+        return ClientTools.mc.fontRenderer.getStringWidth(stylifyString(text));
     }
 }

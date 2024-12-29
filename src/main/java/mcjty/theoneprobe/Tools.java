@@ -24,11 +24,6 @@ public class Tools {
 
     private final static Map<String, String> modNamesForIds = new HashMap<>();
 
-    /**
-     * Constant for {@link Minecraft#getMinecraft()}
-     */
-    public static final Minecraft mc = Minecraft.getMinecraft();
-
     private static void init() {
         Map<String, ModContainer> modMap = Loader.instance().getIndexedModList();
         for (Map.Entry<String, ModContainer> modEntry : modMap.entrySet()) {
@@ -99,7 +94,7 @@ public class Tools {
      * @return The screen width in pixels.
      */
     public static int getScreenWidth() {
-        ScaledResolution resolution = new ScaledResolution(Tools.mc);
+        ScaledResolution resolution = new ScaledResolution(ClientTools.mc);
         return resolution.getScaledWidth();
     }
 

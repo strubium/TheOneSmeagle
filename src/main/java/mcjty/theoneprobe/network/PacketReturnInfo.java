@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
@@ -53,7 +54,7 @@ public class PacketReturnInfo implements IMessage {
     public static class Handler implements IMessageHandler<PacketReturnInfo, IMessage> {
         @Override
         public IMessage onMessage(PacketReturnInfo message, MessageContext ctx) {
-            Tools.mc.addScheduledTask(() -> OverlayRenderer.registerProbeInfo(message.dim, message.pos, message.probeInfo));
+            ClientTools.mc.addScheduledTask(() -> OverlayRenderer.registerProbeInfo(message.dim, message.pos, message.probeInfo));
             return null;
         }
     }

@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.apiimpl.client;
 
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.IProgressStyle;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
@@ -34,7 +35,7 @@ public class ElementProgressGradientRender {
         }
 
         if (style.isShowText()) {
-            RenderHelper.renderText(Tools.mc, x + 3, y + 2, style.getPrefix() + ElementProgress.format(current, style.getNumberFormat(), style.getSuffix()));
+            RenderHelper.renderText(ClientTools.mc, x + 3, y + 2, style.getPrefix() + ElementProgress.format(current, style.getNumberFormat(), style.getSuffix()));
         }
     }
 
@@ -77,11 +78,11 @@ public class ElementProgressGradientRender {
 
     private static void renderLifeBar(long current, int x, int y, int w, int h) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        Tools.mc.getTextureManager().bindTexture(ICONS);
+        ClientTools.mc.getTextureManager().bindTexture(ICONS);
         if (current * 4 >= w) {
             // Shortened view
             RenderHelper.drawTexturedModalRect(x, y, 52, 0, 9, 9);
-            RenderHelper.renderText(Tools.mc, x + 12, y, TextFormatting.WHITE + String.valueOf((current / 2)));
+            RenderHelper.renderText(ClientTools.mc, x + 12, y, TextFormatting.WHITE + String.valueOf((current / 2)));
         } else {
             for (int i = 0; i < current / 2; i++) {
                 RenderHelper.drawTexturedModalRect(x, y, 52, 0, 9, 9);
@@ -95,11 +96,11 @@ public class ElementProgressGradientRender {
 
     private static void renderArmorBar(long current, int x, int y, int w, int h) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        Tools.mc.getTextureManager().bindTexture(ICONS);
+        ClientTools.mc.getTextureManager().bindTexture(ICONS);
         if (current * 4 >= w) {
             // Shortened view
             RenderHelper.drawTexturedModalRect(x, y, 43, 9, 9, 9);
-            RenderHelper.renderText(Tools.mc, x + 12, y, TextFormatting.WHITE + String.valueOf((current / 2)));
+            RenderHelper.renderText(ClientTools.mc, x + 12, y, TextFormatting.WHITE + String.valueOf((current / 2)));
         } else {
             for (int i = 0; i < current / 2; i++) {
                 RenderHelper.drawTexturedModalRect(x, y, 43, 9, 9, 9);

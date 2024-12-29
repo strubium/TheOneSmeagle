@@ -2,6 +2,7 @@ package mcjty.theoneprobe.setup;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import mcjty.theoneprobe.ClientForgeEventHandlers;
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.commands.CommandTopCfg;
 import mcjty.theoneprobe.commands.CommandTopNeed;
@@ -41,21 +42,21 @@ public class ClientProxy implements IProxy {
 
     @Override
     public World getClientWorld() {
-        return Tools.mc.world;
+        return ClientTools.mc.world;
     }
 
     @Override
     public EntityPlayer getClientPlayer() {
-        return Tools.mc.player;
+        return ClientTools.mc.player;
     }
 
     @Override
     public <V> ListenableFuture<V> addScheduledTaskClient(Callable<V> callableToSchedule) {
-        return Tools.mc.addScheduledTask(callableToSchedule);
+        return ClientTools.mc.addScheduledTask(callableToSchedule);
     }
 
     @Override
     public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule) {
-        return Tools.mc.addScheduledTask(runnableToSchedule);
+        return ClientTools.mc.addScheduledTask(runnableToSchedule);
     }
 }

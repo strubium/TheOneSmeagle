@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.apiimpl.providers;
 
 import mcjty.lib.api.power.IBigPower;
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.*;
@@ -348,7 +349,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
 
                 if (Config.getBlockNameMaxWidth() != 0) {
                     // Calculate available width for text
-                    FontRenderer fontRenderer = Tools.mc.fontRenderer;
+                    FontRenderer fontRenderer = ClientTools.mc.fontRenderer;
                     int screenWidth = Tools.getScreenWidth();
                     int availableWidth = (int) (screenWidth * Config.getBlockNameMaxWidth());
 

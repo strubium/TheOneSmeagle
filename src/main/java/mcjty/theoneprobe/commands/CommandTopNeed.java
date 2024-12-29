@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.commands;
 
 import mcjty.theoneprobe.ClientForgeEventHandlers;
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.setup.GuiProxy;
@@ -29,7 +30,7 @@ public class CommandTopNeed extends CommandBase {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         ClientForgeEventHandlers.ignoreNextGuiClose = true;
-        EntityPlayerSP player = Tools.mc.player;
+        EntityPlayerSP player = ClientTools.mc.player;
         player.openGui(TheOneProbe.instance, GuiProxy.GUI_NOTE, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
     }
 

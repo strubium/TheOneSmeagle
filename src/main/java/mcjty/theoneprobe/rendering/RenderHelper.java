@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.rendering;
 
+import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.network.ThrowableIdentity;
@@ -51,9 +52,9 @@ public class RenderHelper {
         GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
         entity.rotationPitch = 0.0F;
         GlStateManager.translate(0.0F, (float) entity.getYOffset() + (entity instanceof EntityHanging ? 0.5F : 0.0F), 0.0F);
-        Tools.mc.getRenderManager().playerViewY = 180F;
+        ClientTools.mc.getRenderManager().playerViewY = 180F;
         try {
-            Tools.mc.getRenderManager().renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+            ClientTools.mc.getRenderManager().renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
         } catch (Exception e) {
             TheOneProbe.setup.getLogger().error("Error rendering entity!", e);
         }
@@ -479,8 +480,8 @@ public class RenderHelper {
     }
 
     public static void rotateToPlayer() {
-        GlStateManager.rotate(-Tools.mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(Tools.mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(-ClientTools.mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(ClientTools.mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
     }
 
     /**
@@ -632,8 +633,8 @@ public class RenderHelper {
                 GlStateManager.enableDepth();
             }
 
-            EntityPlayerSP entityplayersp = Tools.mc.player;
-            float f = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), Tools.mc.getRenderPartialTicks());
+            EntityPlayerSP entityplayersp = ClientTools.mc.player;
+            float f = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), ClientTools.mc.getRenderPartialTicks());
 
             if (f > 0.0F) {
                 GlStateManager.disableLighting();
