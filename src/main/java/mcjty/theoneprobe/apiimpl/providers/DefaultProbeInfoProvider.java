@@ -155,7 +155,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                 String mobName = logic.getCachedEntity().getName();
                 probeInfo.horizontal(probeInfo.defaultLayoutStyle()
                     .alignment(ElementAlignment.ALIGN_CENTER))
-                    .text(LABEL + "Mob: " + INFO + mobName);
+                    .text(LABEL + "{*theoneprobe.probe.mob_indicator*} " + INFO + mobName);
             }
         }
     }
@@ -279,6 +279,15 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
         }
     }
 
+    /**
+     * Adds information about crop growth based on the given configuration.
+     *
+     * @author McJty
+     * @author Joseph C Sible
+     *
+     * @param probeInfo The {@link IProbeInfo} object to which the growth information will be added.
+     * @param blockState The {@link IBlockState} containing the block info.
+     */
     private void showGrowthLevel(IProbeInfo probeInfo, IBlockState blockState) {
         for (IProperty<?> property : blockState.getProperties().keySet()) {
             if(!"age".equals(property.getName())) continue;
@@ -298,6 +307,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
 
     private static String cachedBlockName;
     private static String cachedTruncatedBlockName;
+
     /**
      * Shows standard information about a block based on the probe configuration and mode.
      * This method handles different types of blocks and their display in the probe info.

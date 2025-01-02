@@ -47,6 +47,7 @@ theoneprobe.probe.owned_by_indicator=Owned by:
 theoneprobe.probe.jump_height_indicator=Jump height:
 theoneprobe.probe.speed_indicator=Speed:
 theoneprobe.probe.playing_indicator=Playing:
+theoneprobe.probe.mob_indicator=Mob:
 theoneprobe.probe.collar_color_indicator=Collar Color:
 theoneprobe.probe.waiting_server_indicator=Waiting for server...
 theoneprobe.probe.error_log_indicator=Error (see log for details)!
