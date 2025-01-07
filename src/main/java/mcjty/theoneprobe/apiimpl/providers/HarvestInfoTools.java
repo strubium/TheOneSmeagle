@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.apiimpl.providers;
 
 import mcjty.theoneprobe.TheOneProbe;
+import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.ElementAlignment;
 import mcjty.theoneprobe.api.IIconStyle;
 import mcjty.theoneprobe.api.ILayoutStyle;
@@ -111,14 +112,14 @@ public class HarvestInfoTools {
         IProbeInfo horizontal = probeInfo.horizontal(alignment);
         if (harvestable) {
             horizontal.icon(ICONS, 0, offs, dim, dim, iconStyle)
-                    .text(OK + ((harvestTool != null) ? harvestTool : "{*theoneprobe.probe.notool_indicator*}"));
+                    .text(OK + ((harvestTool != null) ? Tools.capitalize(harvestTool) : "{*theoneprobe.probe.notool_indicator*}"));
         } else {
             if (harvestName == null || harvestName.isEmpty()) {
                 horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle)
-                        .text(WARNING + ((harvestTool != null) ? harvestTool : "{*theoneprobe.probe.notool_indicator*}"));
+                        .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) : "{*theoneprobe.probe.notool_indicator*}"));
             } else {
                 horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle)
-                        .text(WARNING + ((harvestTool != null) ? harvestTool : I18n.translateToLocal("theoneprobe.probe.notool_indicator")) + " (" + I18n.translateToLocal("theoneprobe.probe.level_indicator") + " " + harvestName + ")");
+                        .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) : I18n.translateToLocal("theoneprobe.probe.notool_indicator")) + " (" + I18n.translateToLocal("theoneprobe.probe.level_indicator") + " " + harvestName + ")");
             }
         }
     }
