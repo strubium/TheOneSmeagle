@@ -17,7 +17,6 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -47,11 +46,11 @@ public class HarvestInfoTools {
                 harvestName = Integer.toString(harvestLevel);
             } else {
                 // Use server-side translation
-                harvestName = I18n.translateToLocal(Config.getHarvestLevels()[harvestLevel]);
+                harvestName = new TextComponentTranslation(Config.getHarvestLevels()[harvestLevel]).getUnformattedText();
             }
 
             // Add text information to the probe
-            probeInfo.text(LABEL + I18n.translateToLocal("theoneprobe.probe.tool_indicator") + " " + INFO + I18n.translateToLocal(harvestTool) + " (" + I18n.translateToLocal("theoneprobe.probe.level_indicator") + " " + harvestName + ")");
+            probeInfo.text(LABEL + new TextComponentTranslation("theoneprobe.probe.tool_indicator").getUnformattedText() + " " + INFO + new TextComponentTranslation(harvestTool).getUnformattedText() + " (" + new TextComponentTranslation("theoneprobe.probe.level_indicator").getUnformattedText() + " " + harvestName + ")");
         }
     }
 
@@ -62,9 +61,9 @@ public class HarvestInfoTools {
 
         boolean harvestable = block.canHarvestBlock(world, pos, player) && world.getBlockState(pos).getBlockHardness(world, pos) >= 0;
         if (harvestable) {
-            probeInfo.text(OK + I18n.translateToLocal("theoneprobe.probe.harvestable_indicator"));
+            probeInfo.text(OK + new TextComponentTranslation("theoneprobe.probe.harvestable_indicator").getUnformattedText());
         } else {
-            probeInfo.text(WARNING + I18n.translateToLocal("theoneprobe.probe.not_harvestable_indicator"));
+            probeInfo.text(WARNING + new TextComponentTranslation("theoneprobe.probe.not_harvestable_indicator").getUnformattedText());
         }
     }
 
@@ -85,7 +84,7 @@ public class HarvestInfoTools {
                         ItemTool toolItem = (ItemTool) testTool.getItem();
                         if (testTool.getDestroySpeed(blockState) >= toolItem.toolMaterial.getEfficiency()) {
                             // Use server-side translation
-                            harvestTool = I18n.translateToLocal(testToolEntry.getKey());
+                            harvestTool = testToolEntry.getKey();
                             break;
                         }
                     }
@@ -120,16 +119,16 @@ public class HarvestInfoTools {
         IProbeInfo horizontal = probeInfo.horizontal(alignment);
         if (harvestable) {
             horizontal.icon(ICONS, 0, offs, dim, dim, iconStyle)
-                    .text(OK + ((harvestTool != null) ? Tools.capitalize(harvestTool) : "{*theoneprobe.probe.notool_indicator*}"));
+                    .text(OK + ((harvestTool != null) ? Tools.capitalize(new TextComponentTranslation(harvestTool).getUnformattedText()) : "{*theoneprobe.probe.notool_indicator*}"));
         } else {
             if (harvestName == null || harvestName.isEmpty()) {
                 horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle)
                         .text(WARNING + (harvestTool != null
-                                ? Tools.capitalize(harvestTool)
+                                ? Tools.capitalize(new TextComponentTranslation(harvestTool).getUnformattedText())
                                 : new TextComponentTranslation("theoneprobe.probe.notool_indicator").getUnformattedText()));
             } else {
                 String toolName = harvestTool != null
-                        ? Tools.capitalize(harvestTool)
+                        ? Tools.capitalize(new TextComponentTranslation(harvestTool).getUnformattedText())
                         : new TextComponentTranslation("theoneprobe.probe.notool_indicator").getUnformattedText();
 
                 String levelIndicator = new TextComponentTranslation("theoneprobe.probe.level_indicator").getUnformattedText();
