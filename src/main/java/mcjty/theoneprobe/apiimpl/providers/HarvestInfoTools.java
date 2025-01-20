@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
@@ -95,20 +94,14 @@ public class HarvestInfoTools {
 
         if (harvestTool != null) {
             int harvestLevel = block.getHarvestLevel(blockState);
-            TextComponentTranslation harvestNameComponent;
-
             if (harvestLevel < 0) {
                 // If harvest level is out of bounds, set the name manually
             } else if (harvestLevel >= Config.getHarvestLevels().length) {
-                harvestNameComponent = new TextComponentTranslation(Config.getHarvestLevels()[Config.getHarvestLevels().length - 1]);
+                harvestName = I18n.translateToLocal(Config.getHarvestLevels()[Config.getHarvestLevels().length - 1]);
             } else {
-                harvestNameComponent = new TextComponentTranslation(Config.getHarvestLevels()[harvestLevel]);
+                harvestName = I18n.translateToLocal(Config.getHarvestLevels()[harvestLevel]);
             }
-
-            // Optionally convert to a string if necessary
-            harvestName = harvestNameComponent.getUnformattedText();
         }
-
 
         boolean harvestStyleVanilla = Config.getHarvestStyleVanilla();
         int offs = harvestStyleVanilla ? 16 : 0;
@@ -123,20 +116,11 @@ public class HarvestInfoTools {
         } else {
             if (harvestName == null || harvestName.isEmpty()) {
                 horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle)
-                        .text(WARNING + (harvestTool != null
-                                ? Tools.capitalize(harvestTool)
-                                : new TextComponentTranslation("theoneprobe.probe.notool_indicator").getUnformattedText()));
+                        .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) : "{*theoneprobe.probe.notool_indicator*}"));
             } else {
-                String toolName = harvestTool != null
-                        ? Tools.capitalize(harvestTool)
-                        : new TextComponentTranslation("theoneprobe.probe.notool_indicator").getUnformattedText();
-
-                String levelIndicator = new TextComponentTranslation("theoneprobe.probe.level_indicator").getUnformattedText();
-
                 horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle)
-                        .text(WARNING + toolName + " (" + levelIndicator + " " + harvestName + ")");
+                        .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) : I18n.translateToLocal("theoneprobe.probe.notool_indicator")) + " (" + I18n.translateToLocal("theoneprobe.probe.level_indicator") + " " + harvestName + ")");
             }
         }
-
     }
 }
