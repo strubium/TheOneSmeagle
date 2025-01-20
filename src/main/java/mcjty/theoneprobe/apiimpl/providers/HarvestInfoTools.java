@@ -99,7 +99,6 @@ public class HarvestInfoTools {
 
             if (harvestLevel < 0) {
                 // If harvest level is out of bounds, set the name manually
-                harvestNameComponent = null;
             } else if (harvestLevel >= Config.getHarvestLevels().length) {
                 harvestNameComponent = new TextComponentTranslation(Config.getHarvestLevels()[Config.getHarvestLevels().length - 1]);
             } else {
