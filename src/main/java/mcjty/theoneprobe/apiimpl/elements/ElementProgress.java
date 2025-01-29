@@ -8,6 +8,7 @@ import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.apiimpl.client.ElementProgressGradientRender;
 import mcjty.theoneprobe.apiimpl.client.ElementProgressRender;
 import mcjty.theoneprobe.apiimpl.styles.ProgressStyle;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.network.NetworkTools;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,17 +20,11 @@ public class ElementProgress implements IElement {
     private final long current;
     private final long max;
     private final IProgressStyle style;
-    private final boolean doGradient;
 
     public ElementProgress(long current, long max, IProgressStyle style) {
-        this(current, max, style, false); // Default doGradient to false
-    }
-
-    public ElementProgress(long current, long max, IProgressStyle style, boolean doGradient) {
         this.current = current;
         this.max = max;
         this.style = style;
-        this.doGradient = doGradient;
     }
 
     public ElementProgress(ByteBuf buf) {
@@ -48,14 +43,10 @@ public class ElementProgress implements IElement {
                 .numberFormat(NumberFormat.values()[buf.readByte()])
                 .lifeBar(buf.readBoolean())
                 .armorBar(buf.readBoolean());
-        doGradient = buf.readBoolean(); // Deserialize doGradient
     }
 
     private static final DecimalFormat dfCommas = new DecimalFormat("###,###");
 
-    /**
-     * If the suffix starts with 'm' we can possibly drop that
-     */
     public static String format(long in, NumberFormat style, String suffix) {
         switch (style) {
             case FULL:
@@ -66,19 +57,8 @@ public class ElementProgress implements IElement {
                     return in + " " + suffix;
                 }
                 int exp = (int) (Math.log(in) / Math.log(unit));
-                char pre;
-                if (suffix.startsWith("m")) {
-                    suffix = suffix.substring(1);
-                    if (exp - 2 >= 0) {
-                        pre = "kMGTPE".charAt(exp - 2);
-                        return String.format("%.1f %s", in / Math.pow(unit, exp), pre) + suffix;
-                    } else {
-                        return String.format("%.1f %s", in / Math.pow(unit, exp), suffix);
-                    }
-                } else {
-                    pre = "kMGTPE".charAt(exp - 1);
-                    return String.format("%.1f %s", in / Math.pow(unit, exp), pre) + suffix;
-                }
+                char pre = "kMGTPE".charAt(exp - 1);
+                return String.format("%.1f %s", in / Math.pow(unit, exp), pre) + suffix;
             }
             case COMMAS:
                 return dfCommas.format(in) + suffix;
@@ -91,10 +71,10 @@ public class ElementProgress implements IElement {
     @Override
     @SideOnly(Side.CLIENT)
     public void render(int x, int y) {
-        if(doGradient){
+        if(Config.probeProgressGradient){
             ElementProgressGradientRender.render(style, current, max, x, y, getWidth(), getHeight());
         }
-        else{
+        else {
             ElementProgressRender.render(style, current, max, x, y, getWidth(), getHeight());
         }
     }
@@ -102,11 +82,7 @@ public class ElementProgress implements IElement {
     @Override
     public int getWidth() {
         if (style.isLifeBar()) {
-            if (current * 4 >= style.getWidth()) {
-                return 100;
-            } else {
-                return (int) (current * 4 + 2);
-            }
+            return Math.max((int) (current * 4 + 2), 100);
         }
         return style.getWidth();
     }
@@ -132,7 +108,6 @@ public class ElementProgress implements IElement {
         buf.writeByte(style.getNumberFormat().ordinal());
         buf.writeBoolean(style.isLifeBar());
         buf.writeBoolean(style.isArmorBar());
-        buf.writeBoolean(doGradient);
     }
 
     @Override

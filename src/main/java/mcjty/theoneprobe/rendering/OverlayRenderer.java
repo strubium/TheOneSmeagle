@@ -247,7 +247,7 @@ public class OverlayRenderer {
                         .backgroundColor(Config.probeProgressBackgroundColor)
                         .borderColor(Config.probeProgressBorderColor)
                         .filledColor(Config.probeProgressColor)
-                        .alternateFilledColor(Config.probeProgressAltColor), Config.probeProgressGradient);
+                        .alternateFilledColor(Config.probeProgressAltColor));
             }
         }
 
