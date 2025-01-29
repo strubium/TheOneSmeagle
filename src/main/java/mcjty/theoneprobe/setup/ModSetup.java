@@ -59,6 +59,7 @@ public class ModSetup {
         TheOneProbe.theOneProbeImp.registerEntityProvider(new MinecartInfoProvider());
         TheOneProbe.theOneProbeImp.registerEntityProvider(new TNTInfoProvider());
         TheOneProbe.theOneProbeImp.registerEntityProvider(new PaintingInfoProvider());
+        TheOneProbe.theOneProbeImp.registerEntityProvider(new HorseInfoProvider());
         ProgressManager.pop(bar);
         modConfigDir = e.getModConfigurationDirectory();
         Config.init();

@@ -11,8 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.IEntityOwnable;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityWolf;
@@ -139,16 +137,6 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
                 }
             } else if (entity instanceof EntityTameable) {
                 probeInfo.text(LABEL + "Tameable");
-            }
-        }
-
-        if (Tools.show(mode, config.getHorseStatSetting())) {
-            if (entity instanceof EntityHorse) {
-                double jumpStrength = ((EntityHorse) entity).getHorseJumpStrength();
-                double jumpHeight = -0.1817584952 * jumpStrength * jumpStrength * jumpStrength + 3.689713992 * jumpStrength * jumpStrength + 2.128599134 * jumpStrength - 0.343930367;
-                probeInfo.text(LABEL + "{*theoneprobe.probe.jump_height_indicator*} " + INFO + dfCommas.format(jumpHeight));
-                IAttributeInstance iattributeinstance = ((EntityHorse) entity).getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-                probeInfo.text(LABEL + "{*theoneprobe.probe.speed_indicator*} " + INFO + dfCommas.format(iattributeinstance.getAttributeValue()));
             }
         }
 
