@@ -5,9 +5,13 @@ import mcjty.theoneprobe.compat.BaubleTools;
 import mcjty.theoneprobe.probe.ProbeArmor;
 import mcjty.theoneprobe.setup.ModSetup;
 import mcjty.theoneprobe.setup.Registration;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.FileResourcePack;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourcePack;
+import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -15,19 +19,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.ProgressManager;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class ModItems {
     public static CreativeProbe creativeProbe;
     public static Probe probe;
-    public static Item diamondHelmetProbe;
-    public static Item goldHelmetProbe;
-    public static Item ironHelmetProbe;
     public static Item probeGoggles;
     public static ProbeNote probeNote;
 
@@ -47,9 +54,12 @@ public class ModItems {
         creativeProbe = new CreativeProbe();
 
         bar.step("Creating Armor Probes");
-        diamondHelmetProbe = makeHelmet(Items.DIAMOND_HELMET,"diamond_helmet_probe");
-        goldHelmetProbe = makeHelmet(Items.GOLDEN_HELMET, "gold_helmet_probe");
-        ironHelmetProbe = makeHelmet(Items.IRON_HELMET, "iron_helmet_probe");
+        for (Item item : ForgeRegistries.ITEMS.getValuesCollection()) {
+            if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
+                String probeHelmetName = item.getRegistryName().getResourcePath() + "_probe";
+                makeHelmet(item, probeHelmetName);
+            }
+        }
 
         bar.step("Initializing Probe Note");
         probeNote = new ProbeNote();
@@ -145,9 +155,6 @@ public class ModItems {
     private static boolean isProbeHelmet(ItemStack stack) {
         if (stack.isEmpty()) {
             return false;
-        }
-        if (stack.getItem() == diamondHelmetProbe || stack.getItem() == goldHelmetProbe || stack.getItem() == ironHelmetProbe) {
-            return true;
         }
         if (stack.getTagCompound() == null) {
             return false;

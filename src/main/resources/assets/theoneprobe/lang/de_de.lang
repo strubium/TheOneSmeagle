@@ -4,7 +4,7 @@ key.categories.theoneprobe=Die Eine Sonde
 item.theoneprobe.probe.name=Die Eine Sonde
 item.theoneprobe.probe_goggles.name=Die Eine Sonde (Bauble)
 item.theoneprobe.diamond_helmet_probe.name=Diamantsondenhelm
-item.theoneprobe.gold_helmet_probe.name=Goldsondenhelm
+item.theoneprobe.golden_helmet_probe.name=Goldsondenhelm
 item.theoneprobe.iron_helmet_probe.name=Eisensondenhelm
 item.theoneprobe.creativeprobe.name=Kreativsonde
 

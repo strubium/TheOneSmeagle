@@ -71,11 +71,41 @@ public class OverlayRenderer {
     }
 
     public static void renderHUD(ProbeMode mode, float partialTicks) {
-        float dist = Config.probeDistance;
+        if(!Minecraft.getMinecraft().gameSettings.showDebugInfo){
+            float dist = Config.probeDistance;
 
-        RayTraceResult mouseOver = ClientTools.mc.objectMouseOver;
-        if (mouseOver != null) {
-            if (mouseOver.typeOfHit == RayTraceResult.Type.ENTITY) {
+            RayTraceResult mouseOver = ClientTools.mc.objectMouseOver;
+            if (mouseOver != null) {
+                if (mouseOver.typeOfHit == RayTraceResult.Type.ENTITY) {
+                    GlStateManager.pushMatrix();
+
+                    double scale = Config.tooltipScale;
+
+                    ScaledResolution scaledresolution = new ScaledResolution(ClientTools.mc);
+                    double sw = scaledresolution.getScaledWidth_double();
+                    double sh = scaledresolution.getScaledHeight_double();
+
+                    setupOverlayRendering(sw * scale, sh * scale);
+                    renderHUDEntity(mode, mouseOver, sw * scale, sh * scale);
+                    setupOverlayRendering(sw, sh);
+                    GlStateManager.popMatrix();
+
+                    checkCleanup();
+                    return;
+                }
+            }
+
+            EntityPlayerSP entity = ClientTools.mc.player;
+            Vec3d start  = entity.getPositionEyes(partialTicks);
+            Vec3d vec31 = entity.getLook(partialTicks);
+            Vec3d end = start.addVector(vec31.x * dist, vec31.y * dist, vec31.z * dist);
+
+            mouseOver = entity.getEntityWorld().rayTraceBlocks(start, end, Config.showLiquids);
+            if (mouseOver == null) {
+                return;
+            }
+
+            if (mouseOver.typeOfHit == RayTraceResult.Type.BLOCK) {
                 GlStateManager.pushMatrix();
 
                 double scale = Config.tooltipScale;
@@ -85,42 +115,14 @@ public class OverlayRenderer {
                 double sh = scaledresolution.getScaledHeight_double();
 
                 setupOverlayRendering(sw * scale, sh * scale);
-                renderHUDEntity(mode, mouseOver, sw * scale, sh * scale);
+                renderHUDBlock(mode, mouseOver, sw * scale, sh * scale);
                 setupOverlayRendering(sw, sh);
+
                 GlStateManager.popMatrix();
-
-                checkCleanup();
-                return;
             }
+
+            checkCleanup();
         }
-
-        EntityPlayerSP entity = ClientTools.mc.player;
-        Vec3d start  = entity.getPositionEyes(partialTicks);
-        Vec3d vec31 = entity.getLook(partialTicks);
-        Vec3d end = start.addVector(vec31.x * dist, vec31.y * dist, vec31.z * dist);
-
-        mouseOver = entity.getEntityWorld().rayTraceBlocks(start, end, Config.showLiquids);
-        if (mouseOver == null) {
-            return;
-        }
-
-        if (mouseOver.typeOfHit == RayTraceResult.Type.BLOCK) {
-            GlStateManager.pushMatrix();
-
-            double scale = Config.tooltipScale;
-
-            ScaledResolution scaledresolution = new ScaledResolution(ClientTools.mc);
-            double sw = scaledresolution.getScaledWidth_double();
-            double sh = scaledresolution.getScaledHeight_double();
-
-            setupOverlayRendering(sw * scale, sh * scale);
-            renderHUDBlock(mode, mouseOver, sw * scale, sh * scale);
-            setupOverlayRendering(sw, sh);
-
-            GlStateManager.popMatrix();
-        }
-
-        checkCleanup();
     }
 
     public static void setupOverlayRendering(double sw, double sh) {

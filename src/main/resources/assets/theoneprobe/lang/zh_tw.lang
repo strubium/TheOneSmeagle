@@ -4,7 +4,7 @@ key.categories.theoneprobe=The One Probe
 item.theoneprobe.probe.name=The One Probe
 item.theoneprobe.probe_goggles.name=The One Probe（飾品）
 item.theoneprobe.diamond_helmet_probe.name=帶探測器的鑽石頭盔
-item.theoneprobe.gold_helmet_probe.name=帶探測器的金頭盔
+item.theoneprobe.golden_helmet_probe.name=帶探測器的金頭盔
 item.theoneprobe.iron_helmet_probe.name=帶探測器的鐵頭盔
 item.theoneprobe.creativeprobe.name=創造模式探測器
 
