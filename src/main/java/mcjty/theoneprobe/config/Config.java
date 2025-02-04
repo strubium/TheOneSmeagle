@@ -16,10 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static mcjty.theoneprobe.api.TextStyleClass.*;
 
@@ -109,6 +106,8 @@ public class Config {
     public static int tankbarBorderColor = 0xff555555;
     public static int probeNoteStackSize = 1;
     public static String probeNoteBlock = "minecraft:log";
+    public static Set<String> probeHelmetBlacklist = new HashSet<>();
+
 
     private static String[] harvestLevels = new String[]{
             "theoneprobe.harvestlevel.stone",
@@ -198,6 +197,9 @@ public class Config {
         showContentsWithoutSneaking = cfg.getStringList("showContentsWithoutSneaking", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showContentsWithoutSneaking, "A list of blocks for which we automatically show chest contents even if not sneaking");
         dontShowContentsUnlessSneaking = cfg.getStringList("dontShowContentsUnlessSneaking", CATEGORY_THEONEPROBE, dontShowContentsUnlessSneaking, "A list of blocks for which we don't show chest contents automatically except if sneaking");
         dontSendNBT = cfg.getStringList("dontSendNBT", CATEGORY_THEONEPROBE, dontSendNBT, "A list of blocks not to send NBT over the network. This is useful for blocks that have HUGE NBT in their pickblock (itemstack)");
+        probeHelmetBlacklist  = new HashSet<>(Arrays.asList(cfg.getStringList("helmetBlacklist", CATEGORY_THEONEPROBE,
+                new String[]{"mwc"},
+                "List of mod IDs whose helmets should be ignored")));
 
         setupStyleConfig(cfg);
     }

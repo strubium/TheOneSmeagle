@@ -2,6 +2,7 @@ package mcjty.theoneprobe.items;
 
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.compat.BaubleTools;
+import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.probe.ProbeArmor;
 import mcjty.theoneprobe.setup.ModSetup;
 import mcjty.theoneprobe.setup.Registration;
@@ -17,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -54,12 +56,25 @@ public class ModItems {
         creativeProbe = new CreativeProbe();
 
         bar.step("Creating Armor Probes");
+        int totalItems = ForgeRegistries.ITEMS.getValuesCollection().size();
+        ProgressManager.ProgressBar progressBar = ProgressManager.push("Processing Helmets", totalItems);
+
         for (Item item : ForgeRegistries.ITEMS.getValuesCollection()) {
+            progressBar.step(item.getRegistryName() != null ? item.getRegistryName().toString() : "Unknown Item");
+
             if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
-                String probeHelmetName = item.getRegistryName().getResourcePath() + "_probe";
-                makeHelmet(item, probeHelmetName);
+                ResourceLocation registryName = item.getRegistryName();
+                if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getResourceDomain())) {
+                    String probeHelmetName = registryName.getResourcePath() + "_probe";
+                    Item madeHelmet = makeHelmet(item, probeHelmetName);
+                    TheOneProbe.setup.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
+                } else {
+                    TheOneProbe.setup.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getResourceDomain());
+                }
             }
         }
+
+        ProgressManager.pop(progressBar);
 
         bar.step("Initializing Probe Note");
         probeNote = new ProbeNote();
