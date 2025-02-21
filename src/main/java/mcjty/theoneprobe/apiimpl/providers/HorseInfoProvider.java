@@ -10,10 +10,8 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraftforge.common.UsernameCache;
 
 import java.text.DecimalFormat;
-import java.util.UUID;
 
 import static mcjty.theoneprobe.api.TextStyleClass.*;
 

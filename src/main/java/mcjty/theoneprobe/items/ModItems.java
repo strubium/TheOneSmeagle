@@ -65,6 +65,10 @@ public class ModItems {
             if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
                 ResourceLocation registryName = item.getRegistryName();
                 if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getResourceDomain())) {
+                    if(((ItemArmor) item).getArmorMaterial().equals(ItemArmor.ArmorMaterial.LEATHER)){
+                        continue; //HACK HACK Skip leather helmets because of their die (dye) rendering
+                    }
+
                     String probeHelmetName = registryName.getResourcePath() + "_probe";
                     Item madeHelmet = makeHelmet(item, probeHelmetName);
                     TheOneProbe.setup.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
@@ -117,7 +121,7 @@ public class ModItems {
         String[] parts = registryPath.split("_");
 
         if(Objects.equals(parts[0], "golden")){
-            parts[0] = "gold"; //Golden helmets use "golden" for their id, but the model uses "gold"
+            parts[0] = "gold"; //HACK HACK Golden helmets use "golden" for their id, but the model uses "gold"
         }
 
         // Determine the material (e.g. "gold") for armor textures
