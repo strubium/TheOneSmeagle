@@ -17,11 +17,13 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -109,6 +111,14 @@ public class ModItems {
         // Register the item
         Registration.addItem(item);
         helmetModels.add(item);
+
+        GameRegistry.addShapelessRecipe(
+                new ResourceLocation(TheOneProbe.MODID, name + "_recipe"), // Recipe ID
+                null, // Recipe Group
+                new ItemStack(item), // Output
+                Ingredient.fromItems(baseItem), // Input 1
+                Ingredient.fromItems(probe) // Input 2
+        );
 
         return item;
     }
