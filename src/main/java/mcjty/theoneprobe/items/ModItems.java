@@ -6,12 +6,7 @@ import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.probe.ProbeArmor;
 import mcjty.theoneprobe.setup.ModSetup;
 import mcjty.theoneprobe.setup.Registration;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.resources.FileResourcePack;
-import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.client.resources.IResourcePack;
-import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -27,12 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -130,7 +120,7 @@ public class ModItems {
 
         String[] parts = registryPath.split("_");
 
-        if(Objects.equals(parts[0], "golden")){
+        if(Objects.equals(parts[0], "golden") & registryNamespace.equals("minecraft")){
             parts[0] = "gold"; //HACK HACK Golden helmets use "golden" for their id, but the model uses "gold"
         }
 

@@ -29,7 +29,7 @@ public class Registration {
         bar.step("Registering Items");
         ModItems.init();
 
-        if (!ModSetup.baubles) {
+        if (!ModSetup.baubles) { //Googles are automatically added to registration, so we need to remove it if baubles isn't loaded
             itemReg.remove(ModItems.probeGoggles);
         }
 
