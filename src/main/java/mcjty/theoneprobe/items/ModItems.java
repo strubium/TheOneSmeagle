@@ -7,6 +7,7 @@ import mcjty.theoneprobe.probe.ProbeArmor;
 import mcjty.theoneprobe.setup.ModSetup;
 import mcjty.theoneprobe.setup.Registration;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -36,51 +37,62 @@ public class ModItems {
 
 
     public static final String PROBETAG = TheOneProbe.MODID;
+    public static CreativeTabs tabProbe;
 
     public static void init() {
-        int stepCount = ModSetup.baubles ? 5 : 4;
-        final ProgressManager.ProgressBar bar = ProgressManager.push("Loading Mod Items", stepCount);
+        if(Config.regProbes){
 
-        bar.step("Initializing Probe");
-        probe = new Probe();
+             tabProbe = new CreativeTabs("Probe") {
+                @Override
+                public ItemStack getTabIconItem() {
+                    return new ItemStack(ModItems.probe);
+                }
+            };
 
-        bar.step("Initializing Creative Probe");
-        creativeProbe = new CreativeProbe();
 
-        bar.step("Creating Armor Probes");
-        int totalItems = ForgeRegistries.ITEMS.getValuesCollection().size();
-        ProgressManager.ProgressBar progressBar = ProgressManager.push("Processing Helmets", totalItems);
+            int stepCount = ModSetup.baubles ? 5 : 4;
+            final ProgressManager.ProgressBar bar = ProgressManager.push("Loading Mod Items", stepCount);
+            bar.step("Initializing Probe");
+            probe = new Probe();
 
-        for (Item item : ForgeRegistries.ITEMS.getValuesCollection()) {
-            progressBar.step(item.getRegistryName() != null ? item.getRegistryName().toString() : "Unknown Item");
+            bar.step("Initializing Creative Probe");
+            creativeProbe = new CreativeProbe();
 
-            if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
-                ResourceLocation registryName = item.getRegistryName();
-                if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getResourceDomain())) {
-                    if(((ItemArmor) item).getArmorMaterial().equals(ItemArmor.ArmorMaterial.LEATHER)){
-                        continue; //HACK HACK Skip leather helmets because of their die (dye) rendering
+            bar.step("Creating Armor Probes");
+            int totalItems = ForgeRegistries.ITEMS.getValuesCollection().size();
+            ProgressManager.ProgressBar progressBar = ProgressManager.push("Processing Helmets", totalItems);
+
+            for (Item item : ForgeRegistries.ITEMS.getValuesCollection()) {
+                progressBar.step(item.getRegistryName() != null ? item.getRegistryName().toString() : "Unknown Item");
+
+                if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
+                    ResourceLocation registryName = item.getRegistryName();
+                    if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getResourceDomain())) {
+                        if(((ItemArmor) item).getArmorMaterial().equals(ItemArmor.ArmorMaterial.LEATHER)){
+                            continue; //HACK HACK Skip leather helmets because of their die (dye) rendering
+                        }
+
+                        String probeHelmetName = registryName.getResourcePath() + "_probe";
+                        Item madeHelmet = makeHelmet(item, probeHelmetName);
+                        TheOneProbe.setup.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
+                    } else {
+                        TheOneProbe.setup.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getResourceDomain());
                     }
-
-                    String probeHelmetName = registryName.getResourcePath() + "_probe";
-                    Item madeHelmet = makeHelmet(item, probeHelmetName);
-                    TheOneProbe.setup.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
-                } else {
-                    TheOneProbe.setup.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getResourceDomain());
                 }
             }
+
+            ProgressManager.pop(progressBar);
+
+            bar.step("Initializing Probe Note");
+            probeNote = new ProbeNote();
+
+            if (ModSetup.baubles) {
+                bar.step("Initializing Probe Goggles");
+                probeGoggles = BaubleTools.initProbeGoggle();
+            }
+
+            ProgressManager.pop(bar);
         }
-
-        ProgressManager.pop(progressBar);
-
-        bar.step("Initializing Probe Note");
-        probeNote = new ProbeNote();
-
-        if (ModSetup.baubles) {
-            bar.step("Initializing Probe Goggles");
-            probeGoggles = BaubleTools.initProbeGoggle();
-        }
-
-        ProgressManager.pop(bar);
     }
 
     public static Item makeHelmet(Item baseItem, String name) {
@@ -96,7 +108,7 @@ public class ModItems {
 
         item.setUnlocalizedName(TheOneProbe.MODID + "." + name);
         item.setRegistryName(name);
-        item.setCreativeTab(TheOneProbe.tabProbe);
+        item.setCreativeTab(ModItems.tabProbe);
 
         // Register the item
         Registration.addItem(item);
@@ -134,17 +146,19 @@ public class ModItems {
 
     @SideOnly(Side.CLIENT)
     public static void initClient() {
-        initModel(probe);
-        initModel(creativeProbe);
-        initModel(probeNote);
+        if(Config.regProbes){
+            initModel(probe);
+            initModel(creativeProbe);
+            initModel(probeNote);
 
-        // Initialize all helmet models and resolve their textures
-        for (Item helmet : helmetModels) {
-            initModel(helmet);
-        }
+            // Initialize all helmet models and resolve their textures
+            for (Item helmet : helmetModels) {
+                initModel(helmet);
+            }
 
-        if (ModSetup.baubles) {
-            initModel(probeGoggles);
+            if (ModSetup.baubles) {
+                initModel(probeGoggles);
+            }
         }
     }
 

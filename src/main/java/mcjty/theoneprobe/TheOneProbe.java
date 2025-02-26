@@ -37,12 +37,8 @@ public class TheOneProbe {
 
     public static TheOneProbeImp theOneProbeImp = new TheOneProbeImp();
 
-    public static CreativeTabs tabProbe = new CreativeTabs("Probe") {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(ModItems.probe);
-        }
-    };
+    @Deprecated
+    public static CreativeTabs tabProbe = ModItems.tabProbe;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {

@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.probe;
 
 import mcjty.theoneprobe.TheOneProbe;
+import mcjty.theoneprobe.items.ModItems;
 import mcjty.theoneprobe.setup.GuiProxy;
 import mcjty.theoneprobe.setup.Registration;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +26,7 @@ public abstract class ProbeBase extends Item {
         setUnlocalizedName(TheOneProbe.MODID + "." + unlocalizedName);
         setRegistryName(registryName);
         setMaxStackSize(1);
-        setCreativeTab(TheOneProbe.tabProbe);
+        setCreativeTab(ModItems.tabProbe);
         Registration.addItem(this);
     }
 
