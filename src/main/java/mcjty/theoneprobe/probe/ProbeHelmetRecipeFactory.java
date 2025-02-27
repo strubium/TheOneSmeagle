@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.probe;
 
 import com.google.gson.JsonObject;
+import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ public class ProbeHelmetRecipeFactory implements IRecipeFactory {
     public IRecipe parse(JsonContext context, JsonObject json) {
         ShapelessOreRecipe recipe = ShapelessOreRecipe.factory(context, json);
 
-        return new HelmetRecipe(new ResourceLocation("theoneprobe", "probe_helmet"), recipe.getRecipeOutput(), recipe.getIngredients());
+        return new HelmetRecipe(new ResourceLocation(TheOneProbe.MODID, "probe_helmet"), recipe.getRecipeOutput(), recipe.getIngredients());
     }
 
     public static class HelmetRecipe extends ShapelessOreRecipe {
