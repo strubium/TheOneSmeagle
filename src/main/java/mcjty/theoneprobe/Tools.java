@@ -98,6 +98,11 @@ public class Tools {
         return resolution.getScaledWidth();
     }
 
+    /**
+     * Capitalizes a string
+     *
+     * @return The Capitalized string
+     */
     public static String capitalize(String input) {
         if (input == null || input.isEmpty()) {
             return input;

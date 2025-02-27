@@ -16,13 +16,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static mcjty.theoneprobe.api.TextStyleClass.*;
+import static mcjty.theoneprobe.api.IProbeInfo.STARTLOC;
+import static mcjty.theoneprobe.api.IProbeInfo.ENDLOC;
 
 public class HarvestInfoTools {
 
@@ -46,11 +47,11 @@ public class HarvestInfoTools {
                 harvestName = Integer.toString(harvestLevel);
             } else {
                 // Use server-side translation
-                harvestName = I18n.translateToLocal(Config.getHarvestLevels()[harvestLevel]);
+                harvestName = STARTLOC + Config.getHarvestLevels()[harvestLevel] + ENDLOC;
             }
 
             // Add text information to the probe
-            probeInfo.text(LABEL + I18n.translateToLocal("theoneprobe.probe.tool_indicator") + " " + INFO + I18n.translateToLocal(harvestTool) + " (" + I18n.translateToLocal("theoneprobe.probe.level_indicator") + " " + harvestName + ")");
+            probeInfo.text(LABEL + STARTLOC + "theoneprobe.probe.tool_indicator" + ENDLOC + " " + INFO + STARTLOC + (harvestTool) + ENDLOC + " (" + STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + harvestName + ")");
         }
     }
 
@@ -61,9 +62,9 @@ public class HarvestInfoTools {
 
         boolean harvestable = block.canHarvestBlock(world, pos, player) && world.getBlockState(pos).getBlockHardness(world, pos) >= 0;
         if (harvestable) {
-            probeInfo.text(OK + I18n.translateToLocal("theoneprobe.probe.harvestable_indicator"));
+            probeInfo.text(OK + STARTLOC +"theoneprobe.probe.harvestable_indicator" + ENDLOC);
         } else {
-            probeInfo.text(WARNING + I18n.translateToLocal("theoneprobe.probe.not_harvestable_indicator"));
+            probeInfo.text(WARNING + STARTLOC + "theoneprobe.probe.not_harvestable_indicator" + ENDLOC);
         }
     }
 
@@ -84,7 +85,7 @@ public class HarvestInfoTools {
                         ItemTool toolItem = (ItemTool) testTool.getItem();
                         if (testTool.getDestroySpeed(blockState) >= toolItem.toolMaterial.getEfficiency()) {
                             // Use server-side translation
-                            harvestTool = I18n.translateToLocal(testToolEntry.getKey());
+                            harvestTool = STARTLOC + testToolEntry.getKey()+ ENDLOC;
                             break;
                         }
                     }
@@ -97,9 +98,9 @@ public class HarvestInfoTools {
             if (harvestLevel < 0) {
                 // If harvest level is out of bounds, set the name manually
             } else if (harvestLevel >= Config.getHarvestLevels().length) {
-                harvestName = I18n.translateToLocal(Config.getHarvestLevels()[Config.getHarvestLevels().length - 1]);
+                harvestName = STARTLOC + Config.getHarvestLevels()[Config.getHarvestLevels().length - 1] + ENDLOC;
             } else {
-                harvestName = I18n.translateToLocal(Config.getHarvestLevels()[harvestLevel]);
+                harvestName = STARTLOC + Config.getHarvestLevels()[harvestLevel] + ENDLOC;
             }
         }
 
@@ -119,7 +120,7 @@ public class HarvestInfoTools {
                         .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) : "{*theoneprobe.probe.notool_indicator*}"));
             } else {
                 horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle)
-                        .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) : I18n.translateToLocal("theoneprobe.probe.notool_indicator")) + " (" + I18n.translateToLocal("theoneprobe.probe.level_indicator") + " " + harvestName + ")");
+                        .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) :  STARTLOC + "theoneprobe.probe.notool_indicator" + ENDLOC) + " (" + STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + harvestName + ")");
             }
         }
     }
