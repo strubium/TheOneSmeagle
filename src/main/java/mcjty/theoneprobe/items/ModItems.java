@@ -114,13 +114,13 @@ public class ModItems {
         Registration.addItem(item);
         helmetModels.add(item);
 
-        GameRegistry.addShapelessRecipe(
-                new ResourceLocation(TheOneProbe.MODID, name + "_recipe"), // Recipe ID
-                null, // Recipe Group
-                new ItemStack(item), // Output
-                Ingredient.fromItems(baseItem), // Input 1
-                Ingredient.fromItems(probe) // Input 2
-        );
+//        GameRegistry.addShapelessRecipe(
+//                new ResourceLocation(TheOneProbe.MODID, name + "_recipe"), // Recipe ID
+//                null, // Recipe Group
+//                new ItemStack(item), // Output
+//                Ingredient.fromItems(baseItem), // Input 1
+//                Ingredient.fromItems(probe) // Input 2
+//        );
 
         return item;
     }
