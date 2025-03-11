@@ -59,29 +59,31 @@ public class ModItems {
             creativeProbe = new CreativeProbe();
 
             bar.step("Creating Armor Probes");
-            int totalItems = ForgeRegistries.ITEMS.getValuesCollection().size();
-            ProgressManager.ProgressBar progressBar = ProgressManager.push("Processing Helmets", totalItems);
+            if (Config.regProbeHelmets) {
+                int totalItems = ForgeRegistries.ITEMS.getValuesCollection().size();
+                ProgressManager.ProgressBar progressBar = ProgressManager.push("Processing Helmets", totalItems);
 
-            for (Item item : ForgeRegistries.ITEMS.getValuesCollection()) {
-                progressBar.step(item.getRegistryName() != null ? item.getRegistryName().toString() : "Unknown Item");
+                for (Item item : ForgeRegistries.ITEMS.getValuesCollection()) {
+                    progressBar.step(item.getRegistryName() != null ? item.getRegistryName().toString() : "Unknown Item");
 
-                if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
-                    ResourceLocation registryName = item.getRegistryName();
-                    if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getResourceDomain())) {
-                        if(((ItemArmor) item).getArmorMaterial().equals(ItemArmor.ArmorMaterial.LEATHER)){
-                            continue; //HACK HACK Skip leather helmets because of their die (dye) rendering
+                    if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
+                        ResourceLocation registryName = item.getRegistryName();
+                        if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getResourceDomain())) {
+                            if (((ItemArmor) item).getArmorMaterial().equals(ItemArmor.ArmorMaterial.LEATHER)) {
+                                continue; //HACK HACK Skip leather helmets because of their die (dye) rendering
+                            }
+
+                            String probeHelmetName = registryName.getResourcePath() + "_probe";
+                            Item madeHelmet = makeHelmet(item, probeHelmetName);
+                            TheOneProbe.setup.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
+                        } else {
+                            TheOneProbe.setup.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getResourceDomain());
                         }
-
-                        String probeHelmetName = registryName.getResourcePath() + "_probe";
-                        Item madeHelmet = makeHelmet(item, probeHelmetName);
-                        TheOneProbe.setup.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
-                    } else {
-                        TheOneProbe.setup.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getResourceDomain());
                     }
                 }
-            }
 
-            ProgressManager.pop(progressBar);
+                ProgressManager.pop(progressBar);
+            }
 
             bar.step("Initializing Probe Note");
             probeNote = new ProbeNote();
@@ -114,13 +116,13 @@ public class ModItems {
         Registration.addItem(item);
         helmetModels.add(item);
 
-//        GameRegistry.addShapelessRecipe(
-//                new ResourceLocation(TheOneProbe.MODID, name + "_recipe"), // Recipe ID
-//                null, // Recipe Group
-//                new ItemStack(item), // Output
-//                Ingredient.fromItems(baseItem), // Input 1
-//                Ingredient.fromItems(probe) // Input 2
-//        );
+        GameRegistry.addShapelessRecipe(
+                new ResourceLocation(TheOneProbe.MODID, name + "_recipe"), // Recipe ID
+                null, // Recipe Group
+                new ItemStack(item), // Output
+                Ingredient.fromItems(baseItem), // Input 1
+                Ingredient.fromItems(probe) // Input 2
+        );
 
         return item;
     }

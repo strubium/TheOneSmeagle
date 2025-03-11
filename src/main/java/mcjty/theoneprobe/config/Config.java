@@ -43,6 +43,7 @@ public class Config {
     public static int needsProbe = PROBE_NEEDEDFOREXTENDED;
 
     public static boolean regProbes = true;
+    public static boolean regProbeHelmets = false;
     public static boolean extendedInMain = false;
     public static NumberFormat rfFormat = NumberFormat.COMPACT;
     public static NumberFormat tankFormat = NumberFormat.COMPACT;
@@ -168,6 +169,7 @@ public class Config {
         loggingThrowableTimeout = cfg.getInt("loggingThrowableTimeout", CATEGORY_THEONEPROBE, loggingThrowableTimeout, 1, 10000000, "How much time (in ms) to wait before reporting an exception again");
         needsProbe = cfg.getInt("needsProbe", CATEGORY_THEONEPROBE, needsProbe, 0, 3, "Is the probe needed to show the tooltip? 0 = no, 1 = yes, 2 = yes and clients cannot override, 3 = probe needed for extended info only");
         regProbes = cfg.getBoolean("regProbes", CATEGORY_THEONEPROBE, regProbes, "Should probes be registered? Useful if needsProbe is 0");
+        regProbeHelmets = cfg.getBoolean("regProbeHelmets", CATEGORY_THEONEPROBE, regProbeHelmets, "Should probe helmets be registered? Useful if needsProbe is 0");
         extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_THEONEPROBE, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
         supportBaubles = cfg.getBoolean("supportBaubles", CATEGORY_THEONEPROBE, supportBaubles, "If true there will be a bauble version of the probe if baubles is present");
         spawnNote = cfg.getBoolean("spawnNote", CATEGORY_THEONEPROBE, spawnNote, "If true there will be a readme note for first-time players");
