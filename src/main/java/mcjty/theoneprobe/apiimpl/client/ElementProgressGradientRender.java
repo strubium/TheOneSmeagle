@@ -1,21 +1,15 @@
 package mcjty.theoneprobe.apiimpl.client;
 
 import mcjty.theoneprobe.ClientTools;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.IProgressStyle;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
 import mcjty.theoneprobe.rendering.RenderHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ElementProgressGradientRender {
-
-    private static final ResourceLocation ICONS = new ResourceLocation("textures/gui/icons.png");
+public class ElementProgressGradientRender extends ElementProgressRender {
 
     public static void render(IProgressStyle style, long current, long max, int x, int y, int w, int h) {
         if (style.isLifeBar()) {
@@ -74,41 +68,5 @@ public class ElementProgressGradientRender {
         GlStateManager.shadeModel(7424); // GL_FLAT
         GlStateManager.disableBlend();
         GlStateManager.enableTexture2D();
-    }
-
-    private static void renderLifeBar(long current, int x, int y, int w, int h) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        ClientTools.mc.getTextureManager().bindTexture(ICONS);
-        if (current * 4 >= w) {
-            // Shortened view
-            RenderHelper.drawTexturedModalRect(x, y, 52, 0, 9, 9);
-            RenderHelper.renderText(ClientTools.mc, x + 12, y, TextFormatting.WHITE + String.valueOf((current / 2)));
-        } else {
-            for (int i = 0; i < current / 2; i++) {
-                RenderHelper.drawTexturedModalRect(x, y, 52, 0, 9, 9);
-                x += 8;
-            }
-            if (current % 2 != 0) {
-                RenderHelper.drawTexturedModalRect(x, y, 61, 0, 9, 9);
-            }
-        }
-    }
-
-    private static void renderArmorBar(long current, int x, int y, int w, int h) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        ClientTools.mc.getTextureManager().bindTexture(ICONS);
-        if (current * 4 >= w) {
-            // Shortened view
-            RenderHelper.drawTexturedModalRect(x, y, 43, 9, 9, 9);
-            RenderHelper.renderText(ClientTools.mc, x + 12, y, TextFormatting.WHITE + String.valueOf((current / 2)));
-        } else {
-            for (int i = 0; i < current / 2; i++) {
-                RenderHelper.drawTexturedModalRect(x, y, 43, 9, 9, 9);
-                x += 8;
-            }
-            if (current % 2 != 0) {
-                RenderHelper.drawTexturedModalRect(x, y, 25, 9, 9, 9);
-            }
-        }
     }
 }

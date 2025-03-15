@@ -46,14 +46,16 @@ public class ElementProgressRender {
         }
     }
 
-    private static void renderLifeBar(long current, int x, int y, int w, int h) {
+    static void renderLifeBar(long current, int x, int y, int w, int h) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         ClientTools.mc.getTextureManager().bindTexture(ICONS);
-        if (current * 4 >= w) {
-            // Shortened view
+
+        if (current > 25) {
+            // Display only one heart and the count
             RenderHelper.drawTexturedModalRect(x, y, 52, 0, 9, 9);
-            RenderHelper.renderText(ClientTools.mc, x + 12, y, TextFormatting.WHITE + String.valueOf((current / 2)));
+            RenderHelper.renderText(ClientTools.mc, x + 12, y, TextFormatting.WHITE + " x" + (current / 2));
         } else {
+            // Render individual hearts as usual
             for (int i = 0; i < current / 2; i++) {
                 RenderHelper.drawTexturedModalRect(x, y, 52, 0, 9, 9);
                 x += 8;
@@ -64,7 +66,7 @@ public class ElementProgressRender {
         }
     }
 
-    private static void renderArmorBar(long current, int x, int y, int w, int h) {
+    static void renderArmorBar(long current, int x, int y, int w, int h) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         ClientTools.mc.getTextureManager().bindTexture(ICONS);
         if (current * 4 >= w) {
