@@ -57,24 +57,6 @@ public class ChestInfoTools {
         }
     }
 
-    private static void addItemStack(List<ItemStack> stacks, Set<Item> foundItems, @Nonnull ItemStack stack) {
-        if (stack.isEmpty()) {
-            return;
-        }
-        if (foundItems != null && foundItems.contains(stack.getItem())) {
-            for (ItemStack s : stacks) {
-                if (ItemHandlerHelper.canItemStacksStack(s, stack)) {
-                    s.grow(stack.getCount());
-                    return;
-                }
-            }
-        }
-        // If we come here we need to append a new stack
-        stacks.add(stack.copy());
-        if (foundItems != null) {
-            foundItems.add(stack.getItem());
-        }
-    }
 
     private static int getChestContents(World world, BlockPos pos, List<ItemStack> stacks) {
         TileEntity te = world.getTileEntity(pos);
@@ -86,13 +68,13 @@ public class ChestInfoTools {
                 IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
                 maxSlots = Objects.requireNonNull(capability).getSlots();
                 for (int i = 0; i < maxSlots; i++) {
-                    addItemStack(stacks, foundItems, capability.getStackInSlot(i));
+                    Utilities.addItemStack(stacks, foundItems, capability.getStackInSlot(i));
                 }
             } else if (te instanceof IInventory) {
                 IInventory inventory = (IInventory) te;
                 maxSlots = inventory.getSizeInventory();
                 for (int i = 0; i < maxSlots; i++) {
-                    addItemStack(stacks, foundItems, inventory.getStackInSlot(i));
+                    Utilities.addItemStack(stacks, foundItems, inventory.getStackInSlot(i));
                 }
             }
         } catch(RuntimeException e) {
