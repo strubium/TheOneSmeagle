@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static mcjty.theoneprobe.api.TextStyleClass.*;
 import static mcjty.theoneprobe.api.IProbeInfo.STARTLOC;
@@ -37,7 +38,7 @@ public class HarvestInfoTools {
     }
 
     static void showHarvestLevel(IProbeInfo probeInfo, IBlockState blockState, Block block) {
-        String harvestTool = block.getHarvestTool(blockState);
+        String harvestTool = convertToTranslation(block, blockState);
         if (harvestTool != null) {
             int harvestLevel = block.getHarvestLevel(blockState);
             String harvestName;
@@ -51,7 +52,7 @@ public class HarvestInfoTools {
             }
 
             // Add text information to the probe
-            probeInfo.text(LABEL + STARTLOC + "theoneprobe.probe.tool_indicator" + ENDLOC + " " + INFO + STARTLOC + (harvestTool) + ENDLOC + " (" + STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + harvestName + ")");
+            probeInfo.text(LABEL + STARTLOC + "theoneprobe.probe.tool_indicator" + ENDLOC + " " + INFO + STARTLOC + harvestTool + ENDLOC + " (" + STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + harvestName + ")");
         }
     }
 
@@ -71,7 +72,7 @@ public class HarvestInfoTools {
     static void showHarvestInfo(IProbeInfo probeInfo, World world, BlockPos pos, Block block, IBlockState blockState, EntityPlayer player) {
         boolean harvestable = block.canHarvestBlock(world, pos, player) && world.getBlockState(pos).getBlockHardness(world, pos) >= 0;
 
-        String harvestTool = block.getHarvestTool(blockState);
+        String harvestTool = convertToTranslation(block, blockState);
         String harvestName = null;
 
         if (harvestTool == null) {
@@ -113,15 +114,37 @@ public class HarvestInfoTools {
         IProbeInfo horizontal = probeInfo.horizontal(alignment);
         if (harvestable) {
             horizontal.icon(ICONS, 0, offs, dim, dim, iconStyle)
-                    .text(OK + ((harvestTool != null) ? Tools.capitalize(harvestTool) : "{*theoneprobe.probe.notool_indicator*}"));
+                    .text(OK + ((harvestTool != null) ? STARTLOC + harvestTool + ENDLOC : "{*theoneprobe.probe.notool_indicator*}"));
         } else {
             if (harvestName == null || harvestName.isEmpty()) {
                 horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle)
-                        .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) : "{*theoneprobe.probe.notool_indicator*}"));
+                        .text(WARNING + ((harvestTool != null) ? STARTLOC + harvestTool + ENDLOC : "{*theoneprobe.probe.notool_indicator*}"));
             } else {
                 horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle)
-                        .text(WARNING + ((harvestTool != null) ? Tools.capitalize(harvestTool) :  STARTLOC + "theoneprobe.probe.notool_indicator" + ENDLOC) + " (" + STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + harvestName + ")");
+                        .text(WARNING + ((harvestTool != null) ? STARTLOC + harvestTool + ENDLOC :  STARTLOC + "theoneprobe.probe.notool_indicator" + ENDLOC) + " (" + STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + harvestName + ")");
             }
         }
     }
+
+    private static String convertToTranslation(Block block, IBlockState blockState) {
+        String harvestTool = block.getHarvestTool(blockState);
+
+        try {
+            switch (Objects.requireNonNull(harvestTool)) {
+                case "pickaxe":
+                    return "theoneprobe.probe.pickaxe";
+                case "shovel":
+                    return "theoneprobe.probe.shovel";
+                case "axe":
+                    return "theoneprobe.probe.axe";
+
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+           return null;
+        }
+
+    }
+
 }
