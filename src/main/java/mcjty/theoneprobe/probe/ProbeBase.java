@@ -30,6 +30,14 @@ public abstract class ProbeBase extends Item {
         Registration.addItem(this);
     }
 
+    public ProbeBase(String registryName) {
+        setUnlocalizedName(TheOneProbe.MODID + "." + registryName);
+        setRegistryName(registryName);
+        setMaxStackSize(1);
+        setCreativeTab(ModItems.tabProbe);
+        Registration.addItem(this);
+    }
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);

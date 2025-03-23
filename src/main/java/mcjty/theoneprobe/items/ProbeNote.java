@@ -16,7 +16,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class ProbeNote extends ProbeBase {
 
     public ProbeNote() {
-        super("probenote", "probenote");
+        super("probenote");
         setMaxStackSize(Config.probeNoteStackSize);
     }
 

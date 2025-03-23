@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 public class ProbeGoggles extends ProbeBase implements IBauble {
 
     public ProbeGoggles() {
-        super("probe_goggles", "probe_goggles");
+        super("probe_goggles");
     }
 
     @Override
