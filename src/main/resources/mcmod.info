@@ -1,16 +1,12 @@
 [
-{
-  "modid": "theoneprobe",
-  "name": "The One Smeagle",
-  "description": "A Probe to rule them all!, forked from The One Probe",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["McJty", "smeagle"],
-  "credits": "bigenergy, SKZGx, and HJ-zhtw for language translations",
-  "logoFile": "assets/theoneprobe/textures/modlogo.png",
-  "screenshots": [],
-  "dependencies": []
-}
+	{
+		"modid": "theoneprobe",
+		"name": "The One Smeagle",
+		"description": "A Probe to rule them all!, forked from The One Probe",
+		"version": "${version}",
+		"url": "https://github.com/strubium/TheOneSmeagle",
+		"authorList": ["McJty", "smeagle"],
+		"credits": "bigenergy, SKZGx, and HJ-zhtw for language translations",
+		"logoFile": "assets/theoneprobe/textures/modlogo.png"
+	}
 ]

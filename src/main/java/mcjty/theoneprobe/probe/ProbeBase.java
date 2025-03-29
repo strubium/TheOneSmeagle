@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class ProbeBase extends Item {
 
     public ProbeBase(String registryName, String unlocalizedName) {
-        setUnlocalizedName(TheOneProbe.MODID + "." + unlocalizedName);
+        setTranslationKey(TheOneProbe.MODID + "." + unlocalizedName);
         setRegistryName(registryName);
         setMaxStackSize(1);
         setCreativeTab(ModItems.tabProbe);
@@ -31,7 +31,7 @@ public abstract class ProbeBase extends Item {
     }
 
     public ProbeBase(String registryName) {
-        setUnlocalizedName(TheOneProbe.MODID + "." + registryName);
+        setTranslationKey(TheOneProbe.MODID + "." + registryName);
         setRegistryName(registryName);
         setMaxStackSize(1);
         setCreativeTab(ModItems.tabProbe);
