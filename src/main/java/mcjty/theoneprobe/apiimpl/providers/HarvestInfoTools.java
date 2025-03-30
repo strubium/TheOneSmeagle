@@ -1,7 +1,6 @@
 package mcjty.theoneprobe.apiimpl.providers;
 
 import mcjty.theoneprobe.TheOneProbe;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.ElementAlignment;
 import mcjty.theoneprobe.api.IIconStyle;
 import mcjty.theoneprobe.api.ILayoutStyle;
@@ -68,8 +67,12 @@ public class HarvestInfoTools {
         } else {
             String text = WARNING + formatToolInfo(harvestTool);
             if (harvestLevelName != null) {
-                text += " (" + STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + harvestLevelName + ")";
+                text += " (" + STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + STARTLOC + harvestLevelName + ENDLOC + ")";
             }
+            else {
+                text += "";
+            }
+
             horizontal.icon(ICONS, 16, offs, dim, dim, iconStyle).text(text);
         }
     }
@@ -104,7 +107,7 @@ public class HarvestInfoTools {
         int harvestLevel = block.getHarvestLevel(blockState);
 
         if (harvestLevel < 0) {
-            return Integer.toString(harvestLevel);
+            return null;
         } else if (harvestLevel >= Config.getHarvestLevels().length) {
             return Config.getHarvestLevels()[Config.getHarvestLevels().length - 1];
         } else {
@@ -141,9 +144,18 @@ public class HarvestInfoTools {
         String harvestTool = convertToTranslation(block, blockState);
         if (harvestTool != null) {
             String harvestLevelName = getHarvestLevelName(block, blockState);
-            probeInfo.text(LABEL + STARTLOC + "theoneprobe.probe.tool_indicator" + ENDLOC + " " +
-                    INFO + STARTLOC + harvestTool + ENDLOC + " (" +
-                    STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " + harvestLevelName + ")");
+
+            if(harvestLevelName != null) {
+                probeInfo.text(LABEL + STARTLOC + "theoneprobe.probe.tool_indicator" + ENDLOC + " " +
+                        INFO + STARTLOC + harvestTool + ENDLOC + " (" +
+                        STARTLOC + "theoneprobe.probe.level_indicator" + ENDLOC + " " +  STARTLOC + harvestLevelName + ENDLOC + ")");
+            }
+            else {
+                probeInfo.text(LABEL + STARTLOC + "theoneprobe.probe.tool_indicator" + ENDLOC + " " +
+                        INFO + STARTLOC + harvestTool + ENDLOC);
+            }
+
+
         }
     }
 
