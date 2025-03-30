@@ -1,6 +1,6 @@
 {
   "pack": {
-    "pack_format": 3,
-    "description": "Resources used for The One Smeagle"
+    "description": "${name} resources",
+    "pack_format": 3
   }
 }

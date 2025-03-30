@@ -42,7 +42,7 @@ public class DebugProbeInfoProvider implements IProbeInfoProvider {
         String simpleName = block.getClass().getSimpleName();
         IProbeInfo vertical = probeInfo.vertical(new LayoutStyle().borderColor(0xffff4444).spacing(2))
                 .text(LABEL + "{*theoneprobe.debug_block.reg_name_indicator*} " + INFO + Objects.requireNonNull(block.getRegistryName()))
-                .text(LABEL + "{*theoneprobe.debug_block.unlocalized_name_indicator*} " + INFO + block.getUnlocalizedName())
+                .text(LABEL + "{*theoneprobe.debug_block.unlocalized_name_indicator*} " + INFO + block.getTranslationKey())
                 .text(LABEL + "{*theoneprobe.debug_block.meta_indicator*} " + INFO + blockState.getBlock().getMetaFromState(blockState))
                 .text(LABEL + "{*theoneprobe.debug_block.class_indicator*} " + INFO + simpleName)
                 .text(LABEL + "{*theoneprobe.debug_block.hardness_indicator*} " + INFO + block.getBlockHardness(blockState, world, pos))

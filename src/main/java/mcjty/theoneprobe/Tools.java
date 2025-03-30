@@ -44,7 +44,7 @@ public class Tools {
             init();
         }
         ResourceLocation itemResourceLocation = block.getRegistryName();
-        String modId = Objects.requireNonNull(itemResourceLocation).getResourceDomain();
+        String modId = Objects.requireNonNull(itemResourceLocation).getNamespace();
         String lowercaseModId = modId.toLowerCase(Locale.ENGLISH);
         String modName = modNamesForIds.get(lowercaseModId);
         if (modName == null) {

@@ -44,7 +44,7 @@ public class ModItems {
 
              tabProbe = new CreativeTabs("Probe") {
                 @Override
-                public ItemStack getTabIconItem() {
+                public ItemStack createIcon() {
                     return new ItemStack(ModItems.probe);
                 }
             };
@@ -68,16 +68,16 @@ public class ModItems {
 
                     if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
                         ResourceLocation registryName = item.getRegistryName();
-                        if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getResourceDomain())) {
+                        if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getNamespace())) {
                             if (((ItemArmor) item).getArmorMaterial().equals(ItemArmor.ArmorMaterial.LEATHER)) {
                                 continue; //HACK HACK Skip leather helmets because of their die (dye) rendering
                             }
 
-                            String probeHelmetName = registryName.getResourcePath() + "_probe";
+                            String probeHelmetName = registryName.getPath() + "_probe";
                             Item madeHelmet = makeHelmet(item, probeHelmetName);
                             TheOneProbe.setup.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
                         } else {
-                            TheOneProbe.setup.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getResourceDomain());
+                            TheOneProbe.setup.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getNamespace());
                         }
                     }
                 }
@@ -108,7 +108,7 @@ public class ModItems {
             }
         };
 
-        item.setUnlocalizedName(TheOneProbe.MODID + "." + name);
+        item.setTranslationKey(TheOneProbe.MODID + "." + name);
         item.setRegistryName(name);
         item.setCreativeTab(ModItems.tabProbe);
 
@@ -128,9 +128,9 @@ public class ModItems {
     }
 
     private static String getBaseTexture(Item baseItem) {
-        String registryNamespace = baseItem.getRegistryName().getResourceDomain();
+        String registryNamespace = baseItem.getRegistryName().getNamespace();
 
-        String registryPath = baseItem.getRegistryName().getResourcePath();
+        String registryPath = baseItem.getRegistryName().getPath();
 
         String[] parts = registryPath.split("_");
 
