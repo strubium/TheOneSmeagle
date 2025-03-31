@@ -2,7 +2,6 @@ package mcjty.theoneprobe.rendering;
 
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.network.ThrowableIdentity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;

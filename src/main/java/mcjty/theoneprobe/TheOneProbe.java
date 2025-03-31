@@ -7,7 +7,6 @@ import mcjty.theoneprobe.items.ModItems;
 import mcjty.theoneprobe.setup.IProxy;
 import mcjty.theoneprobe.setup.ModSetup;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

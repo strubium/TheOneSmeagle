@@ -2,7 +2,6 @@ package mcjty.theoneprobe.rendering;
 
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeHitData;
 import mcjty.theoneprobe.apiimpl.ProbeHitEntityData;

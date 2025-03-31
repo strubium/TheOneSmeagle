@@ -1,11 +1,9 @@
 package mcjty.theoneprobe.apiimpl.client;
 
 import mcjty.theoneprobe.ClientTools;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.IProgressStyle;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
 import mcjty.theoneprobe.rendering.RenderHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;

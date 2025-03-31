@@ -2,7 +2,6 @@ package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
 import mcjty.theoneprobe.ClientTools;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

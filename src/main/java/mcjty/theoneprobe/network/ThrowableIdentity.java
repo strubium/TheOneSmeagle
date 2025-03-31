@@ -10,20 +10,20 @@ import java.util.Objects;
 public class ThrowableIdentity {
     private final String identifier;
 
-    private static final Map<ThrowableIdentity, Long> catchedThrowables = new HashMap<>();
+    private static final Map<ThrowableIdentity, Long> caughtThrowables = new HashMap<>();
 
     public static void registerThrowable(Throwable e) {
         ThrowableIdentity identity = new ThrowableIdentity(e);
-        long curtime = System.currentTimeMillis();
-        if (catchedThrowables.containsKey(identity)) {
-            long lasttime = catchedThrowables.get(identity);
-            if (curtime < lasttime + Config.loggingThrowableTimeout) {
+        long currentTimeMillis = System.currentTimeMillis();
+        if (caughtThrowables.containsKey(identity)) {
+            long lasttime = caughtThrowables.get(identity);
+            if (currentTimeMillis < lasttime + Config.loggingThrowableTimeout) {
                 // If this exception occurred less than some time ago we don't report it.
                 return;
             }
         }
-        catchedThrowables.put(identity, curtime);
-        TheOneProbe.setup.getLogger().debug("The One Probe catched error: ", e);
+        caughtThrowables.put(identity, currentTimeMillis);
+        TheOneProbe.setup.getLogger().debug("The One Probe caught error: ", e);
     }
 
     public ThrowableIdentity(Throwable e) {
