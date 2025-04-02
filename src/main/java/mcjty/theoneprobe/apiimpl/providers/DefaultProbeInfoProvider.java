@@ -382,7 +382,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                             if ((width <= availableWidth && nextWidth > availableWidth) || width == availableWidth)
                                 quit = true;
                             else if (width > availableWidth)
-                                index /= 2;
+                                index--;
                             else
                                 index++;
                         }

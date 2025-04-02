@@ -10,14 +10,12 @@ import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,13 +26,6 @@ import static mcjty.theoneprobe.api.IProbeInfo.ENDLOC;
 public class HarvestInfoTools {
 
     private static final ResourceLocation ICONS = new ResourceLocation(TheOneProbe.MODID, "textures/gui/icons.png");
-
-    private static final HashMap<String, ItemStack> testTools = new HashMap<>();
-    static {
-        testTools.put("theoneprobe.probe.shovel", new ItemStack(Items.WOODEN_SHOVEL));
-        testTools.put("theoneprobe.probe.axe", new ItemStack(Items.WOODEN_AXE));
-        testTools.put("theoneprobe.probe.pickaxe", new ItemStack(Items.WOODEN_PICKAXE));
-    }
 
     /**
      * Combines the functionality of showing harvest tool, harvest level, and harvestability.
@@ -83,12 +74,12 @@ public class HarvestInfoTools {
     }
 
     private static String getHarvestTool(Block block, IBlockState blockState, World world, BlockPos pos) {
-        String tool = convertToTranslation(block, blockState);
+        String tool = convertToTranslationKey(block, blockState);
 
         if (tool == null) {
             float hardness = blockState.getBlockHardness(world, pos);
             if (hardness > 0f) {
-                for (Map.Entry<String, ItemStack> entry : testTools.entrySet()) {
+                for (Map.Entry<String, ItemStack> entry : Config.getHarvestToolTests().entrySet()) {
                     ItemStack testTool = entry.getValue();
                     if (testTool != null && testTool.getItem() instanceof ItemTool) {
                         ItemTool toolItem = (ItemTool) testTool.getItem();
@@ -122,26 +113,19 @@ public class HarvestInfoTools {
         return STARTLOC + "theoneprobe.probe.notool_indicator" + ENDLOC;
     }
 
-    private static String convertToTranslation(Block block, IBlockState blockState) {
+    private static String convertToTranslationKey(Block block, IBlockState blockState) {
         String harvestTool = block.getHarvestTool(blockState);
 
-        try {
-            switch (Objects.requireNonNull(harvestTool)) {
-                case "pickaxe": return "theoneprobe.probe.pickaxe";
-                case "shovel":  return "theoneprobe.probe.shovel";
-                case "axe":     return "theoneprobe.probe.axe";
-                default:        return null;
-            }
-        } catch (Exception e) {
-            return null;
-        }
+        String key = Config.getHarvestToolTranslationKeys().get(harvestTool);
+        if (key == null) return "";
+        return key;
     }
 
     /**
      * Separate helpers for optional simple text display (if you want to call them separately)
      */
     static void showHarvestLevel(IProbeInfo probeInfo, IBlockState blockState, Block block) {
-        String harvestTool = convertToTranslation(block, blockState);
+        String harvestTool = convertToTranslationKey(block, blockState);
         if (harvestTool != null) {
             String harvestLevelName = getHarvestLevelName(block, blockState);
 
