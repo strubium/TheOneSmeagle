@@ -279,8 +279,8 @@ public class Config {
         extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_CLIENT, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
 
         String[] harvestToolMapping = cfg.getStringList("harvestToolMapping", CATEGORY_CLIENT, new String[]{"shovel:theoneprobe.probe.shovel:<minecraft:wooden_shovel>", "axe:theoneprobe.probe.axe:<minecraft:wooden_axe>", "pickaxe:theoneprobe.probe.pickaxe:<minecraft:wooden_pickaxe>"}, "This is the mapping for harvest tools");
-        Config.harvestToolTranslationKeys.clear();
-        Config.harvestToolTests.clear();
+        harvestToolTranslationKeys.clear();
+        harvestToolTests.clear();
         for (String arg: harvestToolMapping) {
             String key;
             String value;
@@ -294,7 +294,7 @@ public class Config {
             String[] keyArgs = key.split(":");
             String key1 = keyArgs[0].trim();
             String key2 = keyArgs[1].trim();
-            Config.harvestToolTranslationKeys.put(key1, key2);
+            harvestToolTranslationKeys.put(key1, key2);
             value = value.substring(1, value.length() - 1).trim();
             String[] itemArgs = value.split(":");
             if (itemArgs.length == 1 || itemArgs.length > 3) continue;
@@ -304,7 +304,7 @@ public class Config {
                 catch (NumberFormatException e) { meta = 0; }
             Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemArgs[0], itemArgs[1]));
             if (item == null) continue;
-            Config.harvestToolTests.put(key2, new ItemStack(item, 1, meta));
+            harvestToolTests.put(key2, new ItemStack(item, 1, meta));
         }
     }
 
