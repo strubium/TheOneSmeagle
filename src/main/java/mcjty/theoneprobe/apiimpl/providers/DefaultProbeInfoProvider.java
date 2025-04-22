@@ -14,6 +14,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -355,7 +356,16 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
 
         if (!Objects.requireNonNull(pickBlock).isEmpty()) {
             if (Tools.show(mode, config.getShowModName())) {
-                String blockDisplayName = pickBlock.getDisplayName();
+                String translationKey = pickBlock.getItem().getTranslationKey(pickBlock);
+                String blockDisplayName;
+
+                if (I18n.hasKey(translationKey + ".name")){
+                    TheOneProbe.setup.getLogger().debug("Using translation key {}, not display name!", translationKey);
+                    blockDisplayName = I18n.format(translationKey + ".name");
+                }
+                else {
+                    blockDisplayName = pickBlock.getDisplayName();
+                }
 
                 if (Config.getBlockNameMaxWidth() != 0) {
                     // Calculate available width for text
