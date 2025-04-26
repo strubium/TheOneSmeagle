@@ -14,7 +14,6 @@ import net.minecraft.block.*;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -32,6 +31,8 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import java.util.Collections;
 import java.util.Objects;
 
+import static mcjty.theoneprobe.api.IProbeInfo.ENDLOC;
+import static mcjty.theoneprobe.api.IProbeInfo.STARTLOC;
 import static mcjty.theoneprobe.api.TextStyleClass.*;
 
 public class DefaultProbeInfoProvider implements IProbeInfoProvider {
@@ -359,13 +360,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                 String translationKey = pickBlock.getItem().getTranslationKey(pickBlock);
                 String blockDisplayName;
 
-                if (I18n.hasKey(translationKey + ".name")){
-                    TheOneProbe.setup.getLogger().debug("Using translation key {}, not display name!", translationKey);
-                    blockDisplayName = I18n.format(translationKey + ".name");
-                }
-                else {
-                    blockDisplayName = pickBlock.getDisplayName();
-                }
+                blockDisplayName = STARTLOC + translationKey + ".name" + ENDLOC;
 
                 if (Config.getBlockNameMaxWidth() != 0) {
                     // Calculate available width for text
