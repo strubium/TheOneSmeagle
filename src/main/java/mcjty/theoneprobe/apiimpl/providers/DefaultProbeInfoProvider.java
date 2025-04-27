@@ -357,10 +357,15 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
 
         if (!Objects.requireNonNull(pickBlock).isEmpty()) {
             if (Tools.show(mode, config.getShowModName())) {
-                String translationKey = pickBlock.getItem().getTranslationKey(pickBlock);
+                String translationKey = pickBlock.getTranslationKey();
+                if (!translationKey.endsWith(".name")) {
+                    translationKey += ".name";
+                }
+                
                 String blockDisplayName;
 
-                blockDisplayName = STARTLOC + translationKey + ".name" + ENDLOC;
+
+                blockDisplayName = STARTLOC + translationKey + ENDLOC;
 
                 if (Config.getBlockNameMaxWidth() != 0) {
                     // Calculate available width for text
