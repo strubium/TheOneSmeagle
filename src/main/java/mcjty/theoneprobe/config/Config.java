@@ -1,6 +1,8 @@
 package mcjty.theoneprobe.config;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IOverlayStyle;
 import mcjty.theoneprobe.api.IProbeConfig;
@@ -9,9 +11,12 @@ import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.apiimpl.ProbeConfig;
 import mcjty.theoneprobe.apiimpl.styles.DefaultOverlayStyle;
 import mcjty.theoneprobe.setup.ModSetup;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 
@@ -110,8 +115,10 @@ public class Config {
     public static String probeNoteBlock = "minecraft:log";
     public static Set<String> probeHelmetBlacklist = new HashSet<>();
 
+    @Getter private static final Map<String, String> harvestToolTranslationKeys = new HashMap<>();
+    @Getter private static final Map<String, ItemStack> harvestToolTests = new HashMap<>();
 
-    private static String[] harvestLevels = new String[]{
+    @Getter private static String[] harvestLevels = new String[]{
             "theoneprobe.harvestlevel.stone",
             "theoneprobe.harvestlevel.iron",
             "theoneprobe.harvestlevel.diamond",
@@ -122,7 +129,7 @@ public class Config {
             "theoneprobe.harvestlevel.vibranium"
     };
 
-    private static float blockNameMaxWidth = 0.0f;
+    @Getter private static float blockNameMaxWidth = 0.0f;
 
     public static Map<TextStyleClass, String> defaultTextStyleClasses = new HashMap<>();
     public static Map<TextStyleClass, String> textStyleClasses;
@@ -146,20 +153,8 @@ public class Config {
     public static boolean showCollarColor = true;
 
     private static IOverlayStyle defaultOverlayStyle;
-    private static final ProbeConfig defaultConfig = new ProbeConfig();
-    private static IProbeConfig realConfig;
-
-    public static ProbeConfig getDefaultConfig() {
-        return defaultConfig;
-    }
-
-    public static void setRealConfig(IProbeConfig config) {
-        realConfig = config;
-    }
-
-    public static IProbeConfig getRealConfig() {
-        return realConfig;
-    }
+    @Getter private static final ProbeConfig defaultConfig = new ProbeConfig();
+    @Setter @Getter private static IProbeConfig realConfig;
 
     public static void init(Configuration cfg) {
         showProbeNoteGUI = cfg.getBoolean("showProbeNoteGUI", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showProbeNoteGUI,"Show probes note screen on right-click");
@@ -272,6 +267,35 @@ public class Config {
         textStyleClasses = newformat;
 
         extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_CLIENT, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
+
+        String[] harvestToolMapping = cfg.getStringList("harvestToolMapping", CATEGORY_CLIENT, new String[]{"shovel:theoneprobe.probe.shovel:<minecraft:wooden_shovel>", "axe:theoneprobe.probe.axe:<minecraft:wooden_axe>", "pickaxe:theoneprobe.probe.pickaxe:<minecraft:wooden_pickaxe>"}, "This is the mapping for harvest tools");
+        harvestToolTranslationKeys.clear();
+        harvestToolTests.clear();
+        for (String arg: harvestToolMapping) {
+            String key;
+            String value;
+            arg = arg.trim();
+            int index = arg.indexOf("<");
+            if (index == -1) continue;
+            key = arg.substring(0, index).trim();
+            value = arg.substring(index);
+            if (key.split(":").length != 2) continue;
+            if (!(value.startsWith("<") && value.endsWith(">"))) continue;
+            String[] keyArgs = key.split(":");
+            String key1 = keyArgs[0].trim();
+            String key2 = keyArgs[1].trim();
+            harvestToolTranslationKeys.put(key1, key2);
+            value = value.substring(1, value.length() - 1).trim();
+            String[] itemArgs = value.split(":");
+            if (itemArgs.length == 1 || itemArgs.length > 3) continue;
+            int meta = 0;
+            if (itemArgs.length == 3)
+                try { meta = Integer.parseInt(itemArgs[2]); }
+                catch (NumberFormatException e) { meta = 0; }
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemArgs[0], itemArgs[1]));
+            if (item == null) continue;
+            harvestToolTests.put(key2, new ItemStack(item, 1, meta));
+        }
     }
 
     public static void setTextStyle(TextStyleClass styleClass, String style) {
@@ -331,15 +355,7 @@ public class Config {
         updateDefaultOverlayStyle();
     }
 
-    public static String[] getHarvestLevels(){
-        return harvestLevels;
-    }
-
-    public static float getBlockNameMaxWidth(){
-        return blockNameMaxWidth;
-    }
-
-    public static boolean getHarvestStyleVanilla(){
+    public static boolean getHarvestStyleVanilla() {
         return harvestStyleVanilla;
     }
 
