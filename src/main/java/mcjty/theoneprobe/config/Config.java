@@ -1,6 +1,8 @@
 package mcjty.theoneprobe.config;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IOverlayStyle;
 import mcjty.theoneprobe.api.IProbeConfig;
@@ -97,7 +99,7 @@ public class Config {
     private static int boxFillColor = 0x55006699;
     private static int boxThickness = 2;
 
-    public static float tooltipScale = 1.0f;
+    @Getter public static float tooltipScale = 1.0f;
 
     public static int rfbarFilledColor = 0xffdd0000;
     public static int rfbarAlternateFilledColor = 0xff430000;
@@ -107,11 +109,12 @@ public class Config {
     public static int tankbarAlternateFilledColor = 0xff000043;
     public static int tankbarBorderColor = 0xff555555;
     public static int probeNoteStackSize = 1;
+    @Getter
     public static String probeNoteBlock = "minecraft:log";
     public static Set<String> probeHelmetBlacklist = new HashSet<>();
 
 
-    private static String[] harvestLevels = new String[]{
+    @Getter private static String[] harvestLevels = new String[]{
             "theoneprobe.harvestlevel.stone",
             "theoneprobe.harvestlevel.iron",
             "theoneprobe.harvestlevel.diamond",
@@ -122,7 +125,7 @@ public class Config {
             "theoneprobe.harvestlevel.vibranium"
     };
 
-    private static float blockNameMaxWidth = 0.0f;
+    @Getter private static float blockNameMaxWidth = 0.0f;
 
     public static Map<TextStyleClass, String> defaultTextStyleClasses = new HashMap<>();
     public static Map<TextStyleClass, String> textStyleClasses;
@@ -146,20 +149,8 @@ public class Config {
     public static boolean showCollarColor = true;
 
     private static IOverlayStyle defaultOverlayStyle;
-    private static final ProbeConfig defaultConfig = new ProbeConfig();
-    private static IProbeConfig realConfig;
-
-    public static ProbeConfig getDefaultConfig() {
-        return defaultConfig;
-    }
-
-    public static void setRealConfig(IProbeConfig config) {
-        realConfig = config;
-    }
-
-    public static IProbeConfig getRealConfig() {
-        return realConfig;
-    }
+    @Getter private static final ProbeConfig defaultConfig = new ProbeConfig();
+    @Getter @Setter private static IProbeConfig realConfig;
 
     public static void init(Configuration cfg) {
         showProbeNoteGUI = cfg.getBoolean("showProbeNoteGUI", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showProbeNoteGUI,"Show probes note screen on right-click");
@@ -331,32 +322,15 @@ public class Config {
         updateDefaultOverlayStyle();
     }
 
-    public static String[] getHarvestLevels(){
-        return harvestLevels;
-    }
-
-    public static float getBlockNameMaxWidth(){
-        return blockNameMaxWidth;
-    }
-
     public static boolean getHarvestStyleVanilla(){
         return harvestStyleVanilla;
     }
 
-    public static float getScale() {
-        return tooltipScale;
-    }
-    public static String getProbeNoteBlock() {
-        return probeNoteBlock;
-    }
     public static boolean getShowProbeConfigGUI(){
         return showProbeConfigGUI;
     }
     public static boolean getShowProbeNoteGUI(){
         return showProbeNoteGUI;
-    }
-    public static int getProbeButtonColor(){
-        return probeButtonColor;
     }
 
     public static void setBoxStyle(int thickness, int borderColor, int fillcolor) {

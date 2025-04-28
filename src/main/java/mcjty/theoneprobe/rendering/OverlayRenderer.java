@@ -317,7 +317,7 @@ public class OverlayRenderer {
     public static void renderOverlay(IOverlayStyle style, IProbeInfo probeInfo) {
         GlStateManager.pushMatrix();
 
-        double scale = Config.getScale();
+        double scale = Config.getTooltipScale();
 
         ScaledResolution scaledresolution = new ScaledResolution(ClientTools.mc);
         double sw = scaledresolution.getScaledWidth_double();
