@@ -1,6 +1,8 @@
 package mcjty.theoneprobe.config;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IOverlayStyle;
 import mcjty.theoneprobe.api.IProbeConfig;
@@ -113,10 +115,10 @@ public class Config {
     public static String probeNoteBlock = "minecraft:log";
     public static Set<String> probeHelmetBlacklist = new HashSet<>();
 
-    private static final Map<String, String> harvestToolTranslationKeys = new HashMap<>();
-    private static final Map<String, ItemStack> harvestToolTests = new HashMap<>();
+    @Getter private static final Map<String, String> harvestToolTranslationKeys = new HashMap<>();
+    @Getter private static final Map<String, ItemStack> harvestToolTests = new HashMap<>();
 
-    private static String[] harvestLevels = new String[]{
+    @Getter private static String[] harvestLevels = new String[]{
             "theoneprobe.harvestlevel.stone",
             "theoneprobe.harvestlevel.iron",
             "theoneprobe.harvestlevel.diamond",
@@ -127,7 +129,7 @@ public class Config {
             "theoneprobe.harvestlevel.vibranium"
     };
 
-    private static float blockNameMaxWidth = 0.0f;
+    @Getter private static float blockNameMaxWidth = 0.0f;
 
     public static Map<TextStyleClass, String> defaultTextStyleClasses = new HashMap<>();
     public static Map<TextStyleClass, String> textStyleClasses;
@@ -151,20 +153,8 @@ public class Config {
     public static boolean showCollarColor = true;
 
     private static IOverlayStyle defaultOverlayStyle;
-    private static final ProbeConfig defaultConfig = new ProbeConfig();
-    private static IProbeConfig realConfig;
-
-    public static ProbeConfig getDefaultConfig() {
-        return defaultConfig;
-    }
-
-    public static void setRealConfig(IProbeConfig config) {
-        realConfig = config;
-    }
-
-    public static IProbeConfig getRealConfig() {
-        return realConfig;
-    }
+    @Getter private static final ProbeConfig defaultConfig = new ProbeConfig();
+    @Setter @Getter private static IProbeConfig realConfig;
 
     public static void init(Configuration cfg) {
         showProbeNoteGUI = cfg.getBoolean("showProbeNoteGUI", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showProbeNoteGUI,"Show probes note screen on right-click");
@@ -363,22 +353,6 @@ public class Config {
         cfg.get(CATEGORY_CLIENT, "tooltipScale", tooltipScale).set(tooltipScale);
         cfg.save();
         updateDefaultOverlayStyle();
-    }
-
-    public static Map<String, String> getHarvestToolTranslationKeys() {
-        return harvestToolTranslationKeys;
-    }
-
-    public static Map<String, ItemStack> getHarvestToolTests() {
-        return harvestToolTests;
-    }
-
-    public static String[] getHarvestLevels() {
-        return harvestLevels;
-    }
-
-    public static float getBlockNameMaxWidth() {
-        return blockNameMaxWidth;
     }
 
     public static boolean getHarvestStyleVanilla() {
