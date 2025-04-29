@@ -61,6 +61,7 @@ public class ModSetup {
         TheOneProbe.theOneProbeImp.registerEntityProvider(new PaintingInfoProvider());
         TheOneProbe.theOneProbeImp.registerEntityProvider(new HorseInfoProvider());
         TheOneProbe.theOneProbeImp.registerEntityProvider(new VillagerProbeInfoProvider());
+        TheOneProbe.theOneProbeImp.registerEntityProvider(new PlayerInfoProvider());
         ProgressManager.pop(bar);
         modConfigDir = e.getModConfigurationDirectory();
         Config.init();
