@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityHanging;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
@@ -486,23 +487,23 @@ public class RenderHelper {
     /**
      * Draws a beam with specified thickness between two points in 3D space.
      *
-     * @param S     The start point of the beam as a Vector.
-     * @param E     The end point of the beam as a Vector.
+     * @param S     The start point of the beam as a Vec3d.
+     * @param E     The end point of the beam as a Vec3d.
      * @param P     A point to determine the normal vector for the beam's thickness.
      * @param width The thickness of the beam.
      */
-    public static void drawBeam(Vector S, Vector E, Vector P, float width) {
-        Vector PS = Sub(S, P);
-        Vector SE = Sub(E, S);
+    public static void drawBeam(Vec3d S, Vec3d E, Vec3d P, float width) {
+        Vec3d PS = Sub(S, P);
+        Vec3d SE = Sub(E, S);
 
-        Vector normal = Cross(PS, SE);
+        Vec3d normal = Cross(PS, SE);
         normal = normal.normalize();
 
-        Vector half = Mul(normal, width);
-        Vector p1 = Add(S, half);
-        Vector p2 = Sub(S, half);
-        Vector p3 = Add(E, half);
-        Vector p4 = Sub(E, half);
+        Vec3d half = Mul(normal, width);
+        Vec3d p1 = Add(S, half);
+        Vec3d p2 = Sub(S, half);
+        Vec3d p3 = Add(E, half);
+        Vec3d p4 = Sub(E, half);
 
         drawQuad(Tessellator.getInstance(), p1, p3, p4, p2);
     }
@@ -517,16 +518,16 @@ public class RenderHelper {
      * @param p3 The third vertex of the quadrilateral.
      * @param p4 The fourth vertex of the quadrilateral.
      */
-    private static void drawQuad(Tessellator tessellator, Vector p1, Vector p2, Vector p3, Vector p4) {
+    private static void drawQuad(Tessellator tessellator, Vec3d p1, Vec3d p2, Vec3d p3, Vec3d p4) {
         int brightness = 240;
         int b1 = 0;
         int b2 = brightness & 65535;
 
         BufferBuilder buffer = tessellator.getBuffer();
-        buffer.pos(p1.getX(), p1.getY(), p1.getZ()).tex(0.0D, 0.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
-        buffer.pos(p2.getX(), p2.getY(), p2.getZ()).tex(1.0D, 0.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
-        buffer.pos(p3.getX(), p3.getY(), p3.getZ()).tex(1.0D, 1.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
-        buffer.pos(p4.getX(), p4.getY(), p4.getZ()).tex(0.0D, 1.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
+        buffer.pos(p1.x, p1.y, p1.z).tex(0.0D, 0.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
+        buffer.pos(p2.x, p2.y, p2.z).tex(1.0D, 0.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
+        buffer.pos(p3.x, p3.y, p3.z).tex(1.0D, 1.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
+        buffer.pos(p4.x, p4.y, p4.z).tex(0.0D, 1.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
     }
 
     /**
@@ -710,119 +711,23 @@ public class RenderHelper {
         return width;
     }
 
-    /**
-     * A simple 3D vector class with basic vector operations.
-     */
-    public static class Vector {
-        public final float x;
-        public final float y;
-        public final float z;
-
-        /**
-         * Constructs a new vector with the given x, y, and z components.
-         *
-         * @param x The x-component of the vector.
-         * @param y The y-component of the vector.
-         * @param z The z-component of the vector.
-         */
-        public Vector(float x, float y, float z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        /**
-         * Returns the x-component of the vector.
-         *
-         * @return The x-component.
-         */
-        public float getX() {
-            return x;
-        }
-
-        /**
-         * Returns the y-component of the vector.
-         *
-         * @return The y-component.
-         */
-        public float getY() {
-            return y;
-        }
-
-        /**
-         * Returns the z-component of the vector.
-         *
-         * @return The z-component.
-         */
-        public float getZ() {
-            return z;
-        }
-
-        /**
-         * Computes the Euclidean norm (length) of the vector.
-         *
-         * @return The norm of the vector.
-         */
-        public float norm() {
-            return (float) Math.sqrt(x * x + y * y + z * z);
-        }
-
-        /**
-         * Returns a normalized (unit) vector in the same direction as this vector.
-         *
-         * @return A new vector that is the normalized version of this vector.
-         */
-        public Vector normalize() {
-            float n = norm();
-            return new Vector(x / n, y / n, z / n);
-        }
+    private static Vec3d Cross(Vec3d a, Vec3d b) {
+        double x = a.y * b.z - a.z * b.y;
+        double y = a.z * b.x - a.x * b.z;
+        double z = a.x * b.y - a.y * b.x;
+        return new Vec3d(x, y, z);
     }
 
-    /**
-     * Computes the cross product of two vectors.
-     *
-     * @param a The first vector.
-     * @param b The second vector.
-     * @return A new vector that is the cross product of vectors a and b.
-     */
-    private static Vector Cross(Vector a, Vector b) {
-        float x = a.y * b.z - a.z * b.y;
-        float y = a.z * b.x - a.x * b.z;
-        float z = a.x * b.y - a.y * b.x;
-        return new Vector(x, y, z);
+    private static Vec3d Sub(Vec3d a, Vec3d b) {
+        return a.subtract(b);
     }
 
-    /**
-     * Subtracts vector b from vector a
-     *
-     * @param a The vector from which b is subtracted.
-     * @param b The vector to subtract from a
-     * @return A new vector that is the result of a - b.
-     */
-    private static Vector Sub(Vector a, Vector b) {
-        return new Vector(a.x - b.x, a.y - b.y, a.z - b.z);
+    private static Vec3d Add(Vec3d a, Vec3d b) {
+        return a.add(b);
     }
 
-    /**
-     * Adds two vectors together.
-     *
-     * @param a The first vector.
-     * @param b The second vector.
-     * @return A new vector that is the sum of vectors a and b.
-     */
-    private static Vector Add(Vector a, Vector b) {
-        return new Vector(a.x + b.x, a.y + b.y, a.z + b.z);
-    }
-
-    /**
-     * Multiplies a vector by a scalar.
-     *
-     * @param a The vector to be multiplied.
-     * @param f The scalar by which to multiply the vector.
-     * @return A new vector that is the result of a multiplied by f.
-     */
-    private static Vector Mul(Vector a, float f) {
-        return new Vector(a.x * f, a.y * f, a.z * f);
+    private static Vec3d Mul(Vec3d a, double f) {
+        return a.scale(f);
     }
 
 
