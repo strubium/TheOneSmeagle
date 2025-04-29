@@ -53,6 +53,7 @@ theoneprobe.probe.mob_indicator=Mob:
 theoneprobe.probe.collar_color_indicator=Collar Color:
 theoneprobe.probe.waiting_server_indicator=Waiting for server...
 theoneprobe.probe.error_log_indicator=Error (see log for details)!
+theoneprobe.probe.profession_indicator=Profession
 
 theoneprobe.debug_probe.step_height_indicator=Step Height:
 theoneprobe.debug_probe.total_armor_indicator=Total Armor:
