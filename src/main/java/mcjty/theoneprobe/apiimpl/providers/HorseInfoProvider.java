@@ -41,8 +41,7 @@ public class HorseInfoProvider implements IProbeInfoEntityProvider {
             IAttributeInstance speedAttribute = horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
             probeInfo.text(LABEL + "{*theoneprobe.probe.speed_indicator*} " + INFO + dfCommas.format(speedAttribute.getAttributeValue()));
 
-            probeInfo.text(LABEL + "Temper " + INFO + dfCommas.format(horse.getTemper()));
-
+            probeInfo.text(LABEL + "{*theoneprobe.probe.temper_indicator*} " + INFO + dfCommas.format(horse.getTemper()));
         }
     }
 }
