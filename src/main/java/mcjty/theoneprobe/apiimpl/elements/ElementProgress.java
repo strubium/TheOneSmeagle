@@ -82,7 +82,13 @@ public class ElementProgress implements IElement {
     @Override
     public int getWidth() {
         if (style.isLifeBar()) {
-            return Math.max((int) (current * 4 + 2), 100);
+            if (current >= 25) {
+                // Use a reduced fixed width for high health
+                return 40; // or another suitable compact width
+            } else {
+                // Normal width based on heart count
+                return Math.max((int) (current * 4 + 2), 100);
+            }
         }
         return style.getWidth();
     }
