@@ -57,7 +57,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             }
         }
         if (!handled) {
-            showStandardBlockInfo(config, mode, probeInfo, blockState, block, data);
+            showStandardBlockInfo(config, mode, probeInfo, blockState, block, data, world);
         }
 
         if (Tools.show(mode, config.getShowCropPercentage())) {
@@ -324,7 +324,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
      * @param data Additional hit data related to the block probe.
      */
     public static void showStandardBlockInfo(IProbeConfig config, ProbeMode mode, IProbeInfo probeInfo, IBlockState blockState, Block block,
-                                             IProbeHitData data) {
+                                             IProbeHitData data, World world) {
         String modid = Tools.getModName(block);
         ItemStack pickBlock = data.getPickBlock();
 
@@ -357,7 +357,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
 
         if (!Objects.requireNonNull(pickBlock).isEmpty()) {
             if (Tools.show(mode, config.getShowModName())) {
-                String translationKey = pickBlock.getTranslationKey();
+                String translationKey = getLocalizedBlockTranslationKey(world, data.getPos());
                 if (!translationKey.endsWith(".name")) {
                     translationKey += ".name";
                 }
@@ -421,5 +421,21 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                         .text(MODNAME + modid);
             }
         }
+    }
+
+    public static String getLocalizedBlockTranslationKey(World world, BlockPos pos) {
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+
+        // Try to use getPickBlock (best for modded blocks)
+        ItemStack stack = block.getPickBlock(state, null, world, pos, null);
+        if (!stack.isEmpty()) {
+
+            String key = stack.getTranslationKey();
+            if (key != null && !key.isEmpty()) {
+                return key;
+            }
+        }
+        return "top.unknown.block";
     }
 }

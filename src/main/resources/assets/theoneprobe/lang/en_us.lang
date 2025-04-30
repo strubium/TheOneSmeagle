@@ -55,6 +55,8 @@ theoneprobe.probe.waiting_server_indicator=Waiting for server...
 theoneprobe.probe.error_log_indicator=Error (see log for details)!
 theoneprobe.probe.profession_indicator=Profession
 theoneprobe.probe.temper_indicator=Temper:
+theoneprobe.probe.experience_indicator=Experience:
+theoneprobe.probe.inventory_indicator=Inventory:
 
 theoneprobe.debug_probe.step_height_indicator=Step Height:
 theoneprobe.debug_probe.total_armor_indicator=Total Armor:
@@ -126,3 +128,7 @@ gui.theoneprobe.gui_note_config.body.3=The preview may get glitchy
 item.theoneprobe.probenote.name=The One Probe Read Me
 
 itemGroup.Probe=The One Probe
+
+#HACK HACK - Mod Support
+entity.Dummy.name=Target Dummy
+tile.EnergyCube.name=Energy Cube
