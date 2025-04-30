@@ -29,6 +29,7 @@ public class TheOneProbe {
 
     @SidedProxy(clientSide="mcjty.theoneprobe.setup.ClientProxy", serverSide="mcjty.theoneprobe.setup.ServerProxy")
     public static IProxy proxy;
+
     public static ModSetup setup = new ModSetup();
 
     @Mod.Instance

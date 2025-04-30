@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import java.util.concurrent.Callable;
 
 /**
- *  Handle client and server side operations.
+ * Handle client and server side operations.
  */
 public interface IProxy {
 

@@ -102,7 +102,7 @@ public class RenderHelper {
             GlStateManager.disableLighting();
             drawGradientRect(x, y, x + 16, y + 16, 0x80ffffff, 0xffffffff, true);
         }
-        if (!itm.isEmpty() && itm.getItem() != null) {
+        if (!itm.isEmpty()) {
             rc = true;
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 0.0F, 32.0F);

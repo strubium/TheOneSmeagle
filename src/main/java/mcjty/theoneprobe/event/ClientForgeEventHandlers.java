@@ -1,4 +1,4 @@
-package mcjty.theoneprobe;
+package mcjty.theoneprobe.event;
 
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.config.Config;
@@ -7,6 +7,7 @@ import mcjty.theoneprobe.gui.GuiNote;
 import mcjty.theoneprobe.items.ModItems;
 import mcjty.theoneprobe.keys.KeyBindings;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.Item;
@@ -21,6 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static mcjty.theoneprobe.config.Config.*;
 @SideOnly(Side.CLIENT)
+
+
 public class ClientForgeEventHandlers {
 
     public static boolean ignoreNextGuiClose = false;
@@ -28,7 +31,7 @@ public class ClientForgeEventHandlers {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         if (ignoreNextGuiClose) {
-            GuiScreen current = ClientTools.mc.currentScreen;
+            GuiScreen current = Minecraft.getMinecraft().currentScreen;
             if (event.getGui() == null && (current instanceof GuiConfig || current instanceof GuiNote)) {
                 ignoreNextGuiClose = false;
                 // We don't want our gui to be closed for a new 'null' gui
@@ -63,7 +66,7 @@ public class ClientForgeEventHandlers {
                     break;
                 case PROBE_NEEDED:
                 case PROBE_NEEDEDHARD:
-                    if (ModItems.hasAProbeSomewhere(ClientTools.mc.player)) {
+                    if (ModItems.hasAProbeSomewhere(Minecraft.getMinecraft().player)) {
                         OverlayRenderer.renderHUD(getModeForPlayer(), event.getPartialTicks());
                     }
                     break;
@@ -72,7 +75,7 @@ public class ClientForgeEventHandlers {
     }
 
     private ProbeMode getModeForPlayer() {
-        EntityPlayerSP player = ClientTools.mc.player;
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
         if (Config.extendedInMain) {
             if (hasItemInMainHand(ModItems.probe)) {
                 return ProbeMode.EXTENDED;
@@ -82,15 +85,15 @@ public class ClientForgeEventHandlers {
     }
 
     private boolean hasItemInEitherHand(Item item) {
-        ItemStack mainHeldItem = ClientTools.mc.player.getHeldItem(EnumHand.MAIN_HAND);
-        ItemStack offHeldItem = ClientTools.mc.player.getHeldItem(EnumHand.OFF_HAND);
+        ItemStack mainHeldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
+        ItemStack offHeldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.OFF_HAND);
         return (mainHeldItem != null && mainHeldItem.getItem() == item) ||
                 (offHeldItem != null && offHeldItem.getItem() == item);
     }
 
 
     private boolean hasItemInMainHand(Item item) {
-        ItemStack mainHeldItem = ClientTools.mc.player.getHeldItem(EnumHand.MAIN_HAND);
+        ItemStack mainHeldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
         return mainHeldItem != null && mainHeldItem.getItem() == item;
     }
 }

@@ -1,8 +1,10 @@
 package mcjty.theoneprobe.setup;
 
 import com.google.common.util.concurrent.ListenableFuture;
+import mcjty.theoneprobe.event.ServerForgeEventHandlers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -16,6 +18,7 @@ public class ServerProxy implements IProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {
+        MinecraftForge.EVENT_BUS.register(new ServerForgeEventHandlers());
     }
 
     @Override

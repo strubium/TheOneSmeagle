@@ -1,18 +1,14 @@
 package mcjty.theoneprobe.commands;
 
-import mcjty.theoneprobe.ClientForgeEventHandlers;
+import mcjty.theoneprobe.event.ClientForgeEventHandlers;
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.setup.GuiProxy;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CommandTopNeed extends CommandBase {
 

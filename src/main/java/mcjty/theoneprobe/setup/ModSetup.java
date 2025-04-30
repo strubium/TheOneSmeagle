@@ -1,6 +1,6 @@
 package mcjty.theoneprobe.setup;
 
-import mcjty.theoneprobe.ForgeEventHandlers;
+import mcjty.theoneprobe.event.CommonForgeEventHandlers;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IProbeInfoEntityProvider;
 import mcjty.theoneprobe.api.IProbeInfoProvider;
@@ -40,7 +40,7 @@ public class ModSetup {
     public void preInit(FMLPreInitializationEvent e) {
         logger = e.getModLog();
 
-        MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
+        MinecraftForge.EVENT_BUS.register(new CommonForgeEventHandlers());
 
         registerCapabilities();
         TheOneProbeImp.registerElements();

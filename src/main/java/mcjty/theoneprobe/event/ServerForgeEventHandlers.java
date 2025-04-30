@@ -1,5 +1,6 @@
-package mcjty.theoneprobe;
+package mcjty.theoneprobe.event;
 
+import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.items.ModItems;
 import mcjty.theoneprobe.playerdata.PlayerGotNote;
@@ -16,21 +17,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.SERVER)
+public class ServerForgeEventHandlers {
 
-public class ForgeEventHandlers {
-
-
-    @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        Config.setupStyleConfig(Config.mainConfig);
-        Config.updateDefaultOverlayStyle();
-
-        if (Config.mainConfig.hasChanged()) {
-            Config.mainConfig.save();
-        }
-    }
-
-    @SideOnly(Side.SERVER)
     @SubscribeEvent
     public void onEntityConstructing(AttachCapabilitiesEvent<Entity> event){
         if (event.getObject() instanceof EntityPlayer) {
@@ -40,7 +29,6 @@ public class ForgeEventHandlers {
         }
     }
 
-    @SideOnly(Side.SERVER)
     @SubscribeEvent
     public void onPlayerCloned(PlayerEvent.Clone event) {
         if (event.isWasDeath()) {
@@ -54,7 +42,6 @@ public class ForgeEventHandlers {
         }
     }
 
-    @SideOnly(Side.SERVER)
     @SubscribeEvent
     public void onPlayerLoggedIn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
         if (Config.spawnNote) {

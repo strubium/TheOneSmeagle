@@ -1,7 +1,7 @@
 package mcjty.theoneprobe.setup;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import mcjty.theoneprobe.ClientForgeEventHandlers;
+import mcjty.theoneprobe.event.ClientForgeEventHandlers;
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.commands.CommandTopCfg;
 import mcjty.theoneprobe.commands.CommandTopNeed;

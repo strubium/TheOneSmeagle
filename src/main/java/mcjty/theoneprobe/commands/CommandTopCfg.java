@@ -1,6 +1,6 @@
 package mcjty.theoneprobe.commands;
 
-import mcjty.theoneprobe.ClientForgeEventHandlers;
+import mcjty.theoneprobe.event.ClientForgeEventHandlers;
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.config.Config;
