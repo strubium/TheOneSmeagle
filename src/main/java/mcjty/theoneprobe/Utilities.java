@@ -8,6 +8,7 @@
  */
 package mcjty.theoneprobe;
 
+import lombok.NonNull;
 import mcjty.theoneprobe.api.ElementAlignment;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -19,7 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
@@ -34,8 +34,8 @@ public class Utilities {
      * @param name The name to include in the provider ID.
      * @return The generated provider ID.
      */
-    @Nonnull
-    public static String getProviderId(@Nonnull String name) {
+    @NonNull
+    public static String getProviderId(@NonNull String name) {
         return String.format("%s:%s_provider", TheOneProbe.MODID, name);
     }
 
@@ -46,7 +46,7 @@ public class Utilities {
      * @param foundItems A set of {@link Item}s already present in the stacks list.
      * @param stack The {@link ItemStack} to add.
      */
-    public static void addItemStack(@Nonnull List<ItemStack> stacks, @Nonnull Set<Item> foundItems, @Nonnull ItemStack stack) {
+    public static void addItemStack(@NonNull List<ItemStack> stacks, @NonNull Set<Item> foundItems, @NonNull ItemStack stack) {
         if (stack.isEmpty()) return;
         if (foundItems.contains(stack.getItem())) {
             for (ItemStack s : stacks) {
@@ -68,7 +68,7 @@ public class Utilities {
      * @param stacks The list of ItemStacks representing the chest contents.
      * @param mode The current {@link ProbeMode}.
      */
-    public static void showChestContents(@Nonnull IProbeInfo probeInfo, @Nonnull List<ItemStack> stacks, @Nonnull ProbeMode mode) {
+    public static void showChestContents(@NonNull IProbeInfo probeInfo, @NonNull List<ItemStack> stacks, @NonNull ProbeMode mode) {
         IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(Config.chestContentsBorderColor).spacing(0));
         int rows = 0;
         int idx = 0;

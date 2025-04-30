@@ -1,4 +1,4 @@
-package mcjty.theoneprobe.setup;
+package mcjty.theoneprobe.setup.proxy;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import net.minecraft.entity.player.EntityPlayer;

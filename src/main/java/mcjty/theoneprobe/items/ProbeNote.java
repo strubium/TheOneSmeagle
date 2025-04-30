@@ -3,7 +3,7 @@ package mcjty.theoneprobe.items;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.probe.ProbeBase;
-import mcjty.theoneprobe.setup.GuiProxy;
+import mcjty.theoneprobe.setup.proxy.GuiProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;

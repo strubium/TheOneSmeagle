@@ -2,7 +2,7 @@ package mcjty.theoneprobe.probe;
 
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.items.ModItems;
-import mcjty.theoneprobe.setup.GuiProxy;
+import mcjty.theoneprobe.setup.proxy.GuiProxy;
 import mcjty.theoneprobe.setup.Registration;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

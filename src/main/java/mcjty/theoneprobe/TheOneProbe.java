@@ -4,7 +4,7 @@ import mcjty.theoneprobe.api.ITheOneProbe;
 import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.gui.PresetBuilder;
 import mcjty.theoneprobe.items.ModItems;
-import mcjty.theoneprobe.setup.IProxy;
+import mcjty.theoneprobe.setup.proxy.IProxy;
 import mcjty.theoneprobe.setup.ModSetup;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
@@ -27,7 +27,7 @@ public class TheOneProbe {
     public static final String VERSION = "1.4.28";
     public static final String MIN_FORGE11_VER = "13.19.0.2176";
 
-    @SidedProxy(clientSide="mcjty.theoneprobe.setup.ClientProxy", serverSide="mcjty.theoneprobe.setup.ServerProxy")
+    @SidedProxy(clientSide="mcjty.theoneprobe.setup.proxy.ClientProxy", serverSide="mcjty.theoneprobe.setup.proxy.ServerProxy")
     public static IProxy proxy;
 
     public static ModSetup setup = new ModSetup();

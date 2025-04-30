@@ -1,4 +1,4 @@
-package mcjty.theoneprobe.setup;
+package mcjty.theoneprobe.setup.proxy;
 
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.gui.GuiConfig;

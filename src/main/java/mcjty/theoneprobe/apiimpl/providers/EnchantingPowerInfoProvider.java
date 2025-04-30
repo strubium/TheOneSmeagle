@@ -20,7 +20,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
-import javax.annotation.Nonnull;
+import lombok.NonNull;
 
 public class EnchantingPowerInfoProvider implements IProbeInfoProvider {
 
@@ -30,7 +30,7 @@ public class EnchantingPowerInfoProvider implements IProbeInfoProvider {
     }
 
     @Override
-    public void addProbeInfo(ProbeMode mode, @Nonnull IProbeInfo probeInfo, EntityPlayer player, @Nonnull World world, @Nonnull IBlockState blockState, @Nonnull IProbeHitData data) {
+    public void addProbeInfo(ProbeMode mode, @NonNull IProbeInfo probeInfo, EntityPlayer player, @NonNull World world, @NonNull IBlockState blockState, @NonNull IProbeHitData data) {
         // Only proceed if the block has a TileEntity and is an enchantment table
         if (!blockState.getBlock().hasTileEntity(blockState) || !(world.getTileEntity(data.getPos()) instanceof TileEntityEnchantmentTable)) {
             return;

@@ -9,6 +9,7 @@ import mcjty.theoneprobe.apiimpl.providers.*;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.network.PacketHandler;
 import mcjty.theoneprobe.playerdata.PlayerGotNote;
+import mcjty.theoneprobe.setup.proxy.GuiProxy;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,6 +30,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+/**
+ * This is TheOneProbes "CommonProxy". It's ran on client and server
+ *
+ * @author McJty
+ * @since 3/11/2019
+ */
 public class ModSetup {
 
     private Logger logger;

@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.gui;
 
+import lombok.Getter;
 import mcjty.theoneprobe.api.TextStyleClass;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -7,6 +8,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public class Preset {
     private final String name;
     private final int boxBorderColor;
@@ -36,35 +38,6 @@ public class Preset {
         for (Pair<TextStyleClass, String> style : styles) {
             textStyleClasses.put(style.getLeft(), style.getRight());
         }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getBoxBorderColor() {
-        return boxBorderColor;
-    }
-
-    public int getBoxFillColor() {
-        return boxFillColor;
-    }
-
-    public int getBoxThickness() {
-        return boxThickness;
-    }
-
-    public int getBoxOffset() {
-        return boxOffset;
-    }
-
-    /**
-     * Gets the map of TextStyleClass to their associated style names.
-     *
-     * @return The map of TextStyleClass to their associated style names.
-     */
-    public Map<TextStyleClass, String> getTextStyleClasses() {
-        return textStyleClasses;
     }
 
     /**

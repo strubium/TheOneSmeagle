@@ -14,7 +14,7 @@ import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import javax.annotation.Nonnull;
+import lombok.NonNull;
 
 public class ProbeHelmetRecipeFactory implements IRecipeFactory {
 
@@ -30,9 +30,9 @@ public class ProbeHelmetRecipeFactory implements IRecipeFactory {
             super(group, ingredients, result);
         }
 
-        @Nonnull
+        @NonNull
         @Override
-        public ItemStack getCraftingResult(@Nonnull InventoryCrafting inventory) {
+        public ItemStack getCraftingResult(@NonNull InventoryCrafting inventory) {
             ItemStack result = super.getCraftingResult(inventory);
             NBTTagCompound tc = new NBTTagCompound();
             tc.setInteger(ModItems.PROBETAG, 1);

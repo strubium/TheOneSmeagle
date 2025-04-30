@@ -21,9 +21,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static mcjty.theoneprobe.config.Config.*;
+
 @SideOnly(Side.CLIENT)
-
-
 public class ClientForgeEventHandlers {
 
     public static boolean ignoreNextGuiClose = false;

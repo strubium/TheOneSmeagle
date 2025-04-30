@@ -4,7 +4,7 @@ import mcjty.theoneprobe.event.ClientForgeEventHandlers;
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.config.Config;
-import mcjty.theoneprobe.setup.GuiProxy;
+import mcjty.theoneprobe.setup.proxy.GuiProxy;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

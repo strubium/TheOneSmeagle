@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
+import lombok.NonNull;
 
 public class JukeboxProvider implements IProbeInfoProvider {
 
@@ -21,7 +21,7 @@ public class JukeboxProvider implements IProbeInfoProvider {
     }
 
     @Override
-    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, @Nonnull IBlockState blockState, IProbeHitData data) {
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, @NonNull IBlockState blockState, IProbeHitData data) {
         if (blockState.getBlock() instanceof BlockJukebox) {
             TileEntity tileEntity = world.getTileEntity(data.getPos());
             if (tileEntity instanceof BlockJukebox.TileEntityJukebox) {
