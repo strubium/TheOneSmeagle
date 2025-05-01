@@ -523,11 +523,18 @@ public class RenderHelper {
         int b1 = 0;
         int b2 = brightness & 65535;
 
+        // Start buffer and define the vertex format
         BufferBuilder buffer = tessellator.getBuffer();
+        buffer.begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);  // 7 corresponds to GL_QUADS in 1.12.2
+
+        // Define each vertex of the quadrilateral
         buffer.pos(p1.x, p1.y, p1.z).tex(0.0D, 0.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
         buffer.pos(p2.x, p2.y, p2.z).tex(1.0D, 0.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
         buffer.pos(p3.x, p3.y, p3.z).tex(1.0D, 1.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
         buffer.pos(p4.x, p4.y, p4.z).tex(0.0D, 1.0D).lightmap(b1, b2).color(255, 255, 255, 128).endVertex();
+
+        // Finish rendering
+        tessellator.draw();
     }
 
     /**

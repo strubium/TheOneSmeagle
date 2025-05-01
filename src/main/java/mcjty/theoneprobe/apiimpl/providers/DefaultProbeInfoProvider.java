@@ -21,7 +21,10 @@ import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBrewingStand;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.*;
@@ -424,18 +427,24 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
     }
 
     public static String getLocalizedBlockTranslationKey(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        Block block = state.getBlock();
+        try{
+            IBlockState state = world.getBlockState(pos);
+            Block block = state.getBlock();
 
-        // Try to use getPickBlock (best for modded blocks)
-        ItemStack stack = block.getPickBlock(state, null, world, pos, null);
-        if (!stack.isEmpty()) {
+            // Try to use getPickBlock (best for modded blocks)
+            ItemStack stack = block.getPickBlock(state, new RayTraceResult(Vec3d.ZERO, EnumFacing.UP, pos), world, pos, null);
+            if (!stack.isEmpty()) {
 
-            String key = stack.getTranslationKey();
-            if (key != null && !key.isEmpty()) {
-                return key;
+                String key = stack.getTranslationKey();
+                if (key != null && !key.isEmpty()) {
+                    return key;
+                }
             }
+            return "top.unknown.block";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "top.unknown.block";
         }
-        return "top.unknown.block";
+
     }
 }

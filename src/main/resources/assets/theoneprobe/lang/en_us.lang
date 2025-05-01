@@ -127,6 +127,8 @@ gui.theoneprobe.gui_note_config.body.3=The preview may get glitchy
 
 item.theoneprobe.probenote.name=The One Probe Read Me
 
+top.unknown.block=Unknown Block
+
 itemGroup.Probe=The One Probe
 
 #HACK HACK - Mod Support
