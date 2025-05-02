@@ -33,8 +33,8 @@ public class ElementProgress implements IElement {
         style = new ProgressStyle()
                 .width(buf.readInt())
                 .height(buf.readInt())
-                .prefix(NetworkTools.readStringUTF8(buf))
-                .suffix(NetworkTools.readStringUTF8(buf))
+                .prefix(NetworkTools.readStringCompact(buf))
+                .suffix(NetworkTools.readStringCompact(buf))
                 .borderColor(buf.readInt())
                 .filledColor(buf.readInt())
                 .alternateFilledColor(buf.readInt())
@@ -104,8 +104,8 @@ public class ElementProgress implements IElement {
         buf.writeLong(max);
         buf.writeInt(style.getWidth());
         buf.writeInt(style.getHeight());
-        NetworkTools.writeStringUTF8(buf, style.getPrefix());
-        NetworkTools.writeStringUTF8(buf, style.getSuffix());
+        NetworkTools.writeStringCompact(buf, style.getPrefix());
+        NetworkTools.writeStringCompact(buf, style.getSuffix());
         buf.writeInt(style.getBorderColor());
         buf.writeInt(style.getFilledColor());
         buf.writeInt(style.getAlternatefilledColor());

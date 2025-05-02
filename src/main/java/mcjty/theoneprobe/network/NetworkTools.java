@@ -83,79 +83,25 @@ public class NetworkTools {
         }
     }
 
-    /**
-     * Reads a String from the given ByteBuf.
-     *
-     * @param dataIn The ByteBuf to read from.
-     * @return The String read from the buffer, or null if the length was -1, or an empty string if the length was 0.
-     */
-    public static String readString(ByteBuf dataIn) {
-        int s = dataIn.readInt();
-        if (s == -1) {
-            return null;
-        }
-        if (s == 0) {
-            return "";
-        }
-        byte[] dst = new byte[s];
-        dataIn.readBytes(dst);
-        return new String(dst);
-    }
-
-    /**
-     * Writes a String to the given ByteBuf.
-     *
-     * @param dataOut The ByteBuf to write to.
-     * @param str The String to write.
-     */
-    public static void writeString(ByteBuf dataOut, String str) {
+    public static void writeStringCompact(ByteBuf buf, String str) {
         if (str == null) {
-            dataOut.writeInt(-1);
+            writeVarInt(buf, 0); // length = 0 means empty/null
             return;
         }
-        byte[] bytes = str.getBytes();
-        dataOut.writeInt(bytes.length);
-        if (bytes.length > 0) {
-            dataOut.writeBytes(bytes);
-        }
-    }
 
-    /**
-     * Reads a UTF-8 encoded String from the given ByteBuf.
-     *
-     * @param dataIn The ByteBuf to read from.
-     * @return The String read from the buffer, or null if the length was -1, or an empty string if the length was 0.
-     */
-    public static String readStringUTF8(ByteBuf dataIn) {
-        int length = dataIn.readInt();
-        if (length == -1) {
-            return null;
-        }
-        if (length == 0) {
-            return "";
-        }
-        byte[] dst = new byte[length];
-        dataIn.readBytes(dst);
-        return new String(dst, java.nio.charset.StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Writes a UTF-8 encoded String to the given ByteBuf.
-     *
-     * @param dataOut The ByteBuf to write to.
-     * @param str The String to write.
-     */
-    public static void writeStringUTF8(ByteBuf dataOut, String str) {
-        if (str == null) {
-            dataOut.writeInt(-1);
-            return;
-        }
         byte[] bytes = str.getBytes(java.nio.charset.StandardCharsets.UTF_8);
-        dataOut.writeInt(bytes.length);
-        if (bytes.length > 0) {
-            dataOut.writeBytes(bytes);
-        }
+        writeVarInt(buf, bytes.length);
+        buf.writeBytes(bytes);
     }
+
+    public static String readStringCompact(ByteBuf buf) {
+        int length = readVarInt(buf);
+        if (length == 0) return "";
+        byte[] bytes = new byte[length];
+        buf.readBytes(bytes);
+        return new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
 
     /**
      * Reads a BlockPos from the given ByteBuf.
@@ -265,4 +211,31 @@ public class NetworkTools {
             return null;
         }
     }
+
+    public static void writeVarInt(ByteBuf buf, int value) {
+        while ((value & 0xFFFFFF80) != 0L) {
+            buf.writeByte((value & 0x7F) | 0x80);
+            value >>>= 7;
+        }
+        buf.writeByte(value & 0x7F);
+    }
+
+    public static int readVarInt(ByteBuf buf) {
+        int numRead = 0;
+        int result = 0;
+        byte read;
+
+        do {
+            read = buf.readByte();
+            result |= (read & 0x7F) << (7 * numRead);
+
+            numRead++;
+            if (numRead > 5) {
+                throw new RuntimeException("VarInt too big");
+            }
+        } while ((read & 0x80) != 0);
+
+        return result;
+    }
+
 }

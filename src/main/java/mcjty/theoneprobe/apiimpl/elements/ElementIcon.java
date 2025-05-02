@@ -32,7 +32,7 @@ public class ElementIcon implements IElement {
     }
 
     public ElementIcon(ByteBuf buf) {
-        icon = new ResourceLocation(Objects.requireNonNull(NetworkTools.readString(buf)), Objects.requireNonNull(NetworkTools.readString(buf)));
+        icon = new ResourceLocation(Objects.requireNonNull(NetworkTools.readStringCompact(buf)), Objects.requireNonNull(NetworkTools.readStringCompact(buf)));
         u = buf.readInt();
         v = buf.readInt();
         w = buf.readInt();
@@ -62,8 +62,8 @@ public class ElementIcon implements IElement {
 
     @Override
     public void toBytes(ByteBuf buf) {
-        NetworkTools.writeString(buf, icon.getNamespace());
-        NetworkTools.writeString(buf, icon.getPath());
+        NetworkTools.writeStringCompact(buf, icon.getNamespace());
+        NetworkTools.writeStringCompact(buf, icon.getPath());
         buf.writeInt(u);
         buf.writeInt(v);
         buf.writeInt(w);

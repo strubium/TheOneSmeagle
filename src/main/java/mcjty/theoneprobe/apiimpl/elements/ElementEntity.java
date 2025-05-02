@@ -42,7 +42,7 @@ public class ElementEntity implements IElement {
     }
 
     public ElementEntity(ByteBuf buf) {
-        entityName = NetworkTools.readString(buf);
+        entityName = NetworkTools.readStringCompact(buf);
         style = new EntityStyle()
                 .width(buf.readInt())
                 .height(buf.readInt())
@@ -81,7 +81,7 @@ public class ElementEntity implements IElement {
 
     @Override
     public void toBytes(ByteBuf buf) {
-        NetworkTools.writeString(buf, entityName);
+        NetworkTools.writeStringCompact(buf, entityName);
         buf.writeInt(style.getWidth());
         buf.writeInt(style.getHeight());
         buf.writeFloat(style.getScale());
