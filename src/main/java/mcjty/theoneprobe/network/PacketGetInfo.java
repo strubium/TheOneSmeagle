@@ -10,6 +10,7 @@ import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -47,45 +48,47 @@ public class PacketGetInfo implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         dim = buf.readInt();
-        pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
+        pos = BlockPos.fromLong(buf.readLong());
         mode = ProbeMode.values()[buf.readByte()];
+
         byte sideByte = buf.readByte();
-        if (sideByte == 127) {
-            sideHit = null;
-        } else {
-            sideHit = EnumFacing.values()[sideByte];
-        }
+        sideHit = (sideByte == 127) ? null : EnumFacing.values()[sideByte];
+
         if (buf.readBoolean()) {
-            hitVec = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+            float x = buf.readFloat();
+            float y = buf.readFloat();
+            float z = buf.readFloat();
+            hitVec = new Vec3d(x, y, z);
+        } else {
+            hitVec = null;
         }
-        pickBlock = ByteBufUtils.readItemStack(buf);
+
+        int itemId = buf.readInt();
+        int count = buf.readUnsignedByte();
+        int meta = buf.readUnsignedShort();
+        Item item = Item.getItemById(itemId);
+        pickBlock = new ItemStack(item, count, meta);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(dim);
-        buf.writeInt(pos.getX());
-        buf.writeInt(pos.getY());
-        buf.writeInt(pos.getZ());
+        buf.writeLong(pos.toLong());
         buf.writeByte(mode.ordinal());
         buf.writeByte(sideHit == null ? 127 : sideHit.ordinal());
+
         if (hitVec == null) {
             buf.writeBoolean(false);
         } else {
             buf.writeBoolean(true);
-            buf.writeDouble(hitVec.x);
-            buf.writeDouble(hitVec.y);
-            buf.writeDouble(hitVec.z);
+            buf.writeFloat((float) hitVec.x);
+            buf.writeFloat((float) hitVec.y);
+            buf.writeFloat((float) hitVec.z);
         }
 
-        ByteBuf buffer = Unpooled.buffer();
-        ByteBufUtils.writeItemStack(buffer, pickBlock);
-        if (buffer.writerIndex() <= Config.maxPacketToServer) {
-            buf.writeBytes(buffer);
-        } else {
-            ItemStack copy = new ItemStack(pickBlock.getItem(), pickBlock.getCount(), pickBlock.getMetadata());
-            ByteBufUtils.writeItemStack(buf, copy);
-        }
+        buf.writeInt(Item.getIdFromItem(pickBlock.getItem()));
+        buf.writeByte(pickBlock.getCount());
+        buf.writeShort(pickBlock.getMetadata());
     }
 
     public PacketGetInfo() {
