@@ -7,6 +7,7 @@ import mcjty.theoneprobe.api.IOverlayStyle;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.rendering.RenderHelper;
+import mcjty.theoneprobe.rendering.TextureGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -18,6 +19,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +41,7 @@ public class GuiConfig extends GuiScreen {
     private int guiLeft;
     private int guiTop;
 
-    private static final ResourceLocation background = new ResourceLocation(TheOneProbe.MODID, "textures/gui/config.png");
+    private static final ResourceLocation background = TextureGenerator.generateTexture("scene_background", WIDTH, HEIGHT, TextureGenerator.PatternType.GUI, new Color(124, 124, 124), null, 0);
     private static final ResourceLocation scene = new ResourceLocation(TheOneProbe.MODID, "textures/gui/scene.png");
 
     private List<HitBox> hitboxes = Collections.emptyList();
@@ -73,7 +75,10 @@ public class GuiConfig extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         mc.getTextureManager().bindTexture(background);
-        drawTexturedModalRect(guiLeft + WIDTH, guiTop, 0, 0, WIDTH, HEIGHT);
+        drawScaledCustomSizeModalRect(guiLeft + WIDTH, guiTop,
+                0, 0, WIDTH, HEIGHT,
+                WIDTH, HEIGHT,
+                WIDTH, HEIGHT);
         mc.getTextureManager().bindTexture(scene);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT);
 
