@@ -25,10 +25,10 @@ public class ProbeInfo extends ElementVertical {
     }
 
     public static List<IElement> createElements(ByteBuf buf) {
-        int size = buf.readShort();
+        int size = buf.readUnsignedShort();  // 2 bytes for size (0–65535)
         List<IElement> elements = new ArrayList<>(size);
-        for (int i = 0 ; i < size ; i++) {
-            int id = buf.readInt();
+        for (int i = 0; i < size; i++) {
+            int id = buf.readUnsignedShort();  // 2 bytes per element ID (0–65535)
             IElementFactory factory = TheOneProbe.theOneProbeImp.getElementFactory(id);
             IElement element = factory.createElement(buf);
             elements.add(element);
@@ -37,9 +37,11 @@ public class ProbeInfo extends ElementVertical {
     }
 
     public static void writeElements(List<IElement> elements, ByteBuf buf) {
-        buf.writeShort(elements.size());
-        for (IElement element : elements) {
-            buf.writeInt(element.getID());
+        int size = elements == null ? 0 : elements.size();
+        buf.writeShort(size);  // 2 bytes for count
+        for (int i = 0; i < size; i++) {
+            IElement element = elements.get(i);
+            buf.writeShort(element.getID());  // 2 bytes for ID
             element.toBytes(buf);
         }
     }
