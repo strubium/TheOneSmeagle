@@ -47,7 +47,7 @@ public class PacketGetInfo implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        dim = buf.readInt();
+        dim = NetworkTools.readVarInt(buf);
         pos = BlockPos.fromLong(buf.readLong());
         mode = ProbeMode.values()[buf.readByte()];
 
@@ -63,16 +63,16 @@ public class PacketGetInfo implements IMessage {
             hitVec = null;
         }
 
-        int itemId = buf.readInt();
+        int itemId = NetworkTools.readVarInt(buf);
         int count = buf.readUnsignedByte();
-        int meta = buf.readUnsignedShort();
+        int meta = NetworkTools.readVarInt(buf);
         Item item = Item.getItemById(itemId);
         pickBlock = new ItemStack(item, count, meta);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        buf.writeInt(dim);
+        NetworkTools.writeVarInt(buf, dim);
         buf.writeLong(pos.toLong());
         buf.writeByte(mode.ordinal());
         buf.writeByte(sideHit == null ? 127 : sideHit.ordinal());
@@ -86,9 +86,9 @@ public class PacketGetInfo implements IMessage {
             buf.writeFloat((float) hitVec.z);
         }
 
-        buf.writeInt(Item.getIdFromItem(pickBlock.getItem()));
+        NetworkTools.writeVarInt(buf, Item.getIdFromItem(pickBlock.getItem()));
         buf.writeByte(pickBlock.getCount());
-        buf.writeShort(pickBlock.getMetadata());
+        NetworkTools.writeVarInt(buf, pickBlock.getMetadata());
     }
 
     public PacketGetInfo() {
