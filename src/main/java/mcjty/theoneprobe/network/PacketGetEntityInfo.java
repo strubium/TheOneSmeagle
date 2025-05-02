@@ -35,7 +35,7 @@ public class PacketGetEntityInfo implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        dim = buf.readInt();
+        dim = NetworkTools.readVarInt(buf);
         uuid = new UUID(buf.readLong(), buf.readLong());
         mode = ProbeMode.values()[buf.readByte()];
         if (buf.readBoolean()) {
@@ -45,7 +45,7 @@ public class PacketGetEntityInfo implements IMessage {
 
     @Override
     public void toBytes(ByteBuf buf) {
-        buf.writeInt(dim);
+        NetworkTools.writeVarInt(buf, dim);
         buf.writeLong(uuid.getMostSignificantBits());
         buf.writeLong(uuid.getLeastSignificantBits());
         buf.writeByte(mode.ordinal());

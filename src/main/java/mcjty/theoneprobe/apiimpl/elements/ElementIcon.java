@@ -16,32 +16,35 @@ import java.util.Objects;
 public class ElementIcon implements IElement {
 
     private final ResourceLocation icon;
-    private final int u;
-    private final int v;
-    private final int w;
-    private final int h;
+    private final short u;
+    private final short v;
+    private final short w;
+    private final short h;
     private final IIconStyle style;
 
     public ElementIcon(ResourceLocation icon, int u, int v, int w, int h, IIconStyle style) {
         this.icon = icon;
-        this.u = u;
-        this.v = v;
-        this.w = w;
-        this.h = h;
+        this.u = (short) u;
+        this.v = (short) v;
+        this.w = (short) w;
+        this.h = (short) h;
         this.style = style;
     }
 
     public ElementIcon(ByteBuf buf) {
-        icon = new ResourceLocation(Objects.requireNonNull(NetworkTools.readStringCompact(buf)), Objects.requireNonNull(NetworkTools.readStringCompact(buf)));
-        u = buf.readInt();
-        v = buf.readInt();
-        w = buf.readInt();
-        h = buf.readInt();
+        icon = new ResourceLocation(
+                Objects.requireNonNull(NetworkTools.readStringCompact(buf)),
+                Objects.requireNonNull(NetworkTools.readStringCompact(buf))
+        );
+        u = buf.readShort();
+        v = buf.readShort();
+        w = buf.readShort();
+        h = buf.readShort();
         style = new IconStyle()
-                .width(buf.readInt())
-                .height(buf.readInt())
-                .textureWidth(buf.readInt())
-                .textureHeight(buf.readInt());
+                .width(buf.readShort())
+                .height(buf.readShort())
+                .textureWidth(buf.readShort())
+                .textureHeight(buf.readShort());
     }
 
     @Override
@@ -64,14 +67,14 @@ public class ElementIcon implements IElement {
     public void toBytes(ByteBuf buf) {
         NetworkTools.writeStringCompact(buf, icon.getNamespace());
         NetworkTools.writeStringCompact(buf, icon.getPath());
-        buf.writeInt(u);
-        buf.writeInt(v);
-        buf.writeInt(w);
-        buf.writeInt(h);
-        buf.writeInt(style.getWidth());
-        buf.writeInt(style.getHeight());
-        buf.writeInt(style.getTextureWidth());
-        buf.writeInt(style.getTextureHeight());
+        buf.writeShort(u);
+        buf.writeShort(v);
+        buf.writeShort(w);
+        buf.writeShort(h);
+        buf.writeShort((short) style.getWidth());
+        buf.writeShort((short) style.getHeight());
+        buf.writeShort((short) style.getTextureWidth());
+        buf.writeShort((short) style.getTextureHeight());
     }
 
     @Override
