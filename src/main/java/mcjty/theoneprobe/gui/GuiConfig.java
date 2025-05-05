@@ -41,7 +41,7 @@ public class GuiConfig extends GuiScreen {
     private int guiLeft;
     private int guiTop;
 
-    private static final ResourceLocation background = TextureGenerator.generateTexture("scene_background", WIDTH, HEIGHT, TextureGenerator.PatternType.GUI, new Color(124, 124, 124), null, 0);
+    private static final ResourceLocation background = TextureGenerator.generateTexture("scene_background", WIDTH, HEIGHT, TextureGenerator.PatternType.GUI_BACKGROUND, new Color(124, 124, 124), null, 0);
     private static final ResourceLocation scene = new ResourceLocation(TheOneProbe.MODID, "textures/gui/scene.png");
 
     private List<HitBox> hitboxes = Collections.emptyList();
@@ -148,7 +148,16 @@ public class GuiConfig extends GuiScreen {
 
     private int addPreset(int x, int y, Preset preset) {
         drawRect(x + 10, y - 1, x + 10 + WIDTH - 50, y + 10, Config.probeButtonColor);
-        RenderHelper.renderText(ClientTools.mc, x + 20, y, preset.getName());
+
+        String presetNameKey = preset.getName().toLowerCase().replace(" ", "");
+
+        if (I18n.hasKey("theoneprobe.preset."+presetNameKey+".config")){
+            RenderHelper.renderText(ClientTools.mc, x + 20, y,I18n.format("theoneprobe.preset."+presetNameKey+".config") );
+        }
+        else {
+            RenderHelper.renderText(ClientTools.mc, x + 20, y, preset.getName());
+        }
+
         hitboxes.add(new HitBox(x + 10 - guiLeft, y - 1 - guiTop, x + 10 + WIDTH - 50 - guiLeft, y + 10 - guiTop, () -> PresetBuilder.applyPreset(preset)));
         y += 14;
         return y;

@@ -5,6 +5,7 @@ import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.rendering.RenderHelper;
 import mcjty.theoneprobe.rendering.TextureGenerator;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,7 +34,16 @@ public class GuiNote extends GuiScreen {
     private int guiLeft;
     private int guiTop;
 
-    private static final ResourceLocation background = TextureGenerator.generateTexture("note_background", WIDTH, HEIGHT, TextureGenerator.PatternType.GUI, new Color(124, 124, 124), null, 0);
+    private static final ResourceLocation background = TextureGenerator.generateTexture("note_background", WIDTH, HEIGHT, TextureGenerator.PatternType.GUI_BACKGROUND, new Color(124, 124, 124), null, 0);
+    private static final ResourceLocation buttonTexture = TextureGenerator.generateTexture(
+            "note_button",
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            TextureGenerator.PatternType.BUTTON,
+            new Color(argbToRgb(probeButtonColor)[0], argbToRgb(probeButtonColor)[1], argbToRgb(probeButtonColor)[2], 255), // Button color
+            null,
+            2 // Bevel thickness
+    );
+
 
     @Override
     public boolean doesGuiPauseGame() {
@@ -135,19 +145,44 @@ public class GuiNote extends GuiScreen {
 
         hitY = y + guiTop;
         hitX = x + guiLeft;
-        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, probeButtonColor);
+
+        mc.getTextureManager().bindTexture(buttonTexture);
+        drawScaledCustomSizeModalRect(x, y,
+                0, 0, BUTTON_WIDTH, BUTTON_HEIGHT,
+                BUTTON_WIDTH, BUTTON_HEIGHT,
+                BUTTON_WIDTH, BUTTON_HEIGHT);
         RenderHelper.renderText(ClientTools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.needed"));
         x += BUTTON_MARGIN;
 
-        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, probeButtonColor);
+        mc.getTextureManager().bindTexture(buttonTexture);
+        drawScaledCustomSizeModalRect(x, y,
+                0, 0, BUTTON_WIDTH, BUTTON_HEIGHT,
+                BUTTON_WIDTH, BUTTON_HEIGHT,
+                BUTTON_WIDTH, BUTTON_HEIGHT);
         RenderHelper.renderText(ClientTools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.not_needed"));
         x += BUTTON_MARGIN;
 
-        drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, probeButtonColor);
+        mc.getTextureManager().bindTexture(buttonTexture);
+        drawScaledCustomSizeModalRect(x, y,
+                0, 0, BUTTON_WIDTH, BUTTON_HEIGHT,
+                BUTTON_WIDTH, BUTTON_HEIGHT,
+                BUTTON_WIDTH, BUTTON_HEIGHT);
         RenderHelper.renderText(ClientTools.mc, x + 3, y + 4, I18n.format("gui.theoneprobe.gui_note.button.extended"));
 
         y += BUTTON_HEIGHT - 4;
         return y;
     }
 
+
+    /**
+     * Converts an ARGB integer color to an RGB int array.
+     * @param argbColor the color in 0xAARRGGBB format
+     * @return an int array {red, green, blue}
+     */
+    public static int[] argbToRgb(int argbColor) {
+        int red = (argbColor >> 16) & 0xff;
+        int green = (argbColor >> 8) & 0xff;
+        int blue = argbColor & 0xff;
+        return new int[] { red, green, blue };
+    }
 }

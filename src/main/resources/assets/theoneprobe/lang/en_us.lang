@@ -113,7 +113,7 @@ gui.theoneprobe.gui_note.needed_hard.3=This is set server side
 gui.theoneprobe.gui_note.tail.1=Check out the 'Mod Options... for many client'
 gui.theoneprobe.gui_note.tail.2=side configuration settings or sneak-right click
 gui.theoneprobe.gui_note.tail.3=this note for more user-friendly setup
-gui.theoneprobe.gui_note.button.title=§l§aYou can change this here:
+gui.theoneprobe.gui_note.button.title=You can change this here:
 gui.theoneprobe.gui_note.button.needed=Needed
 gui.theoneprobe.gui_note.button.not_needed=Not needed
 gui.theoneprobe.gui_note.button.extended=Extended
@@ -130,6 +130,16 @@ item.theoneprobe.probenote.name=The One Probe Read Me
 top.unknown.block=Unknown Block
 
 itemGroup.Probe=The One Probe
+
+#Preset Translation
+theoneprobe.preset.oceanblue.config=Ocean Blue
+theoneprobe.preset.softpastels.config=Soft Pastels
+theoneprobe.preset.crazy!.config=Crazy!
+theoneprobe.preset.fullytransparent.config=Fully Transparent
+theoneprobe.preset.black&white.config=Black & White
+theoneprobe.preset.jade.config=Jade
+theoneprobe.preset.waila.config=WAILA
+theoneprobe.preset.default.config=Default
 
 #HACK HACK - Mod Support
 entity.Dummy.name=Target Dummy

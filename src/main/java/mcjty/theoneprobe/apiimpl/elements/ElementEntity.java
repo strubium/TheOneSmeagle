@@ -44,8 +44,8 @@ public class ElementEntity implements IElement {
     public ElementEntity(ByteBuf buf) {
         entityName = NetworkTools.readStringCompact(buf);
         style = new EntityStyle()
-                .width(buf.readInt())
-                .height(buf.readInt())
+                .width(NetworkTools.readVarInt(buf))
+                .height(NetworkTools.readVarInt(buf))
                 .scale(buf.readFloat());
         if (buf.readBoolean()) {
             entityNBT = NetworkTools.readNBT(buf);
@@ -82,8 +82,8 @@ public class ElementEntity implements IElement {
     @Override
     public void toBytes(ByteBuf buf) {
         NetworkTools.writeStringCompact(buf, entityName);
-        buf.writeInt(style.getWidth());
-        buf.writeInt(style.getHeight());
+        NetworkTools.writeVarInt(buf, style.getWidth());
+        NetworkTools.writeVarInt(buf, style.getHeight());
         buf.writeFloat(style.getScale());
         if (entityNBT != null) {
             buf.writeBoolean(true);

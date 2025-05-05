@@ -88,7 +88,7 @@ public class Config {
     public static boolean harvestStyleVanilla = true;
 
     public static int chestContentsBorderColor = 0xff006699;
-    public static int probeButtonColor = 0xff000000;
+    public static int probeButtonColor = 0xFF404040;
     public static int probeProgressColor = 0xff990000;
     public static int probeProgressAltColor = 0xff550000;
     public static int probeProgressBorderColor = 0;

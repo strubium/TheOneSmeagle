@@ -207,8 +207,8 @@ public class PresetBuilder {
                 Pair.of(TextStyleClass.OK, "green,bold"),
                 Pair.of(TextStyleClass.PROGRESS, "white,bold")
         ));
-        presets.add(new Preset("Soft Pastels", 0xffe0bbff, 0x00000000, 1, 1,
-                Pair.of(TextStyleClass.MODNAME, "pink,bold,italic")
+        presets.add(new Preset("Soft Pastels", 0xffe0bbff, 0x55bbffe0, 1, 1,
+                Pair.of(TextStyleClass.MODNAME, "light_purple,italic")
         ));
         presets.add(new Preset("Ocean Blue", 0xff003366, 0x556699cc, 2, 0,
                 Pair.of(TextStyleClass.MODNAME, "cyan"),
