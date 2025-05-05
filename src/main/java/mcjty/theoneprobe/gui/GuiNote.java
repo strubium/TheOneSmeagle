@@ -41,7 +41,7 @@ public class GuiNote extends GuiScreen {
             TextureGenerator.PatternType.BUTTON,
             new Color(argbToRgb(probeButtonColor)[0], argbToRgb(probeButtonColor)[1], argbToRgb(probeButtonColor)[2], 255), // Button color
             null,
-            2 // Bevel thickness
+            1 // Bevel thickness
     );
 
 

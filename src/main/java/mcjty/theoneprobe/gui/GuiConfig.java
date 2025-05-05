@@ -53,7 +53,7 @@ public class GuiConfig extends GuiScreen {
             TextureGenerator.PatternType.BUTTON,
             baseButtonColor,
             baseButtonColor,
-            2 // patternSize for bevel effect
+            1 // patternSize for bevel effect
     );
     private static final ResourceLocation buttonTextureLower = TextureGenerator.generateTexture(
             "config_button_lower",
@@ -61,7 +61,7 @@ public class GuiConfig extends GuiScreen {
             TextureGenerator.PatternType.BUTTON,
             baseButtonColor,
             baseButtonColor,
-            2 // patternSize used for bevel depth
+            1 // patternSize used for bevel depth
     );
 
     private List<HitBox> hitboxes = Collections.emptyList();
