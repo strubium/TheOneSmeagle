@@ -9,6 +9,7 @@ import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.rendering.RenderHelper;
 import mcjty.theoneprobe.rendering.TextureGenerator;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -43,6 +44,25 @@ public class GuiConfig extends GuiScreen {
 
     private static final ResourceLocation background = TextureGenerator.generateTexture("scene_background", WIDTH, HEIGHT, TextureGenerator.PatternType.GUI_BACKGROUND, new Color(124, 124, 124), null, 0);
     private static final ResourceLocation scene = new ResourceLocation(TheOneProbe.MODID, "textures/gui/scene.png");
+
+    // Convert ARGB int to Color
+    static Color baseButtonColor = new Color(Config.probeButtonColor, true);
+    ResourceLocation buttonTexture = TextureGenerator.generateTexture(
+            "config_button_preset",
+            WIDTH - 50, 11,
+            TextureGenerator.PatternType.BUTTON,
+            baseButtonColor,
+            baseButtonColor,
+            2 // patternSize for bevel effect
+    );
+    private static final ResourceLocation buttonTextureLower = TextureGenerator.generateTexture(
+            "config_button_lower",
+            30, 14,
+            TextureGenerator.PatternType.BUTTON,
+            baseButtonColor,
+            baseButtonColor,
+            2 // patternSize used for bevel depth
+    );
 
     private List<HitBox> hitboxes = Collections.emptyList();
 
@@ -94,7 +114,7 @@ public class GuiConfig extends GuiScreen {
         y += 20;
 
         hitboxes = new ArrayList<>();
-        RenderHelper.renderText(ClientTools.mc, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.presets"));
+        RenderHelper.renderText(ClientTools.mc, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.presets") + TextFormatting.RESET);
         y += 12;
         for (Preset preset : PresetBuilder.getPresets()) {
             y = addPreset(x, y, preset);
@@ -147,27 +167,51 @@ public class GuiConfig extends GuiScreen {
 
 
     private int addPreset(int x, int y, Preset preset) {
-        drawRect(x + 10, y - 1, x + 10 + WIDTH - 50, y + 10, Config.probeButtonColor);
+        int width = WIDTH - 50;
+        int height = 11;
 
+        // Bind and draw the texture
+        Minecraft.getMinecraft().getTextureManager().bindTexture(buttonTexture);
+        drawModalRectWithCustomSizedTexture(x + 10, y - 1, 0, 0, width, height, width, height);
+
+        // Prepare the localized name or fallback
         String presetNameKey = preset.getName().toLowerCase().replace(" ", "");
+        String displayName = I18n.hasKey("theoneprobe.preset." + presetNameKey + ".config")
+                ? I18n.format("theoneprobe.preset." + presetNameKey + ".config")
+                : preset.getName();
 
-        if (I18n.hasKey("theoneprobe.preset."+presetNameKey+".config")){
-            RenderHelper.renderText(ClientTools.mc, x + 20, y,I18n.format("theoneprobe.preset."+presetNameKey+".config") );
-        }
-        else {
-            RenderHelper.renderText(ClientTools.mc, x + 20, y, preset.getName());
-        }
+        // Render text on top of the button
+        RenderHelper.renderText(ClientTools.mc, x + 20, y, displayName);
 
-        hitboxes.add(new HitBox(x + 10 - guiLeft, y - 1 - guiTop, x + 10 + WIDTH - 50 - guiLeft, y + 10 - guiTop, () -> PresetBuilder.applyPreset(preset)));
-        y += 14;
-        return y;
+        // Register the interactive area
+        hitboxes.add(new HitBox(
+                x + 10 - guiLeft, y - 1 - guiTop,
+                x + 10 + width - guiLeft, y + height - guiTop,
+                () -> PresetBuilder.applyPreset(preset)
+        ));
+
+        return y + 14;
     }
 
     private void addButton(int x, int y, String text, Runnable runnable) {
-        drawRect(x, y, x + 30 -1, y + 14 -1, Config.probeButtonColor);
+        int width = 30;
+        int height = 14;
+
+        // Bind and draw the texture
+        Minecraft.getMinecraft().getTextureManager().bindTexture(buttonTextureLower);
+        drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
+
+        // Render the button text
         RenderHelper.renderText(ClientTools.mc, x + 3, y + 3, text);
-        hitboxes.add(new HitBox(x - guiLeft, y - guiTop, x + 30 -1 - guiLeft, y + 14 -1 - guiTop, runnable));
+
+        // Add hitbox
+        hitboxes.add(new HitBox(
+                x - guiLeft, y - guiTop,
+                x + width - 1 - guiLeft, y + height - 1 - guiTop,
+                runnable
+        ));
     }
+
 
     /**
      * Renders the fake TOP overlay in the GUI
