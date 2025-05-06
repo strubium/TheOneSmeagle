@@ -70,7 +70,7 @@ public class OverlayRenderer {
     }
 
     public static void renderHUD(ProbeMode mode, float partialTicks) {
-        if(!Minecraft.getMinecraft().gameSettings.showDebugInfo){
+        if(!ClientTools.mc.gameSettings.showDebugInfo){
             float dist = Config.probeDistance;
 
             RayTraceResult mouseOver = ClientTools.mc.objectMouseOver;
