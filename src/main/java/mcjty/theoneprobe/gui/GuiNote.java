@@ -5,7 +5,6 @@ import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.rendering.RenderHelper;
 import mcjty.theoneprobe.rendering.TextureGenerator;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,9 +39,9 @@ public class GuiNote extends GuiScreen {
     private static final ResourceLocation buttonTexture = TextureGenerator.generateTexture(
             "note_button",
             BUTTON_WIDTH, BUTTON_HEIGHT,
-            TextureGenerator.PatternType.BUTTON,
+            TextureGenerator.PatternType.GUI_BUTTON,
             baseButtonColor, // Button color
-            null,
+            baseButtonColor,
             1 // Bevel thickness
     );
 

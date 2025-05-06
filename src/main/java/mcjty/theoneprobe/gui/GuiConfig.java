@@ -50,7 +50,7 @@ public class GuiConfig extends GuiScreen {
     ResourceLocation buttonTexture = TextureGenerator.generateTexture(
             "config_button_preset",
             WIDTH - 50, 11,
-            TextureGenerator.PatternType.BUTTON,
+            TextureGenerator.PatternType.GUI_BUTTON,
             baseButtonColor,
             baseButtonColor,
             1 // patternSize for bevel effect
@@ -58,7 +58,7 @@ public class GuiConfig extends GuiScreen {
     private static final ResourceLocation buttonTextureLower = TextureGenerator.generateTexture(
             "config_button_lower",
             30, 14,
-            TextureGenerator.PatternType.BUTTON,
+            TextureGenerator.PatternType.GUI_BUTTON,
             baseButtonColor,
             baseButtonColor,
             1 // patternSize used for bevel depth

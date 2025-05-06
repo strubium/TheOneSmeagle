@@ -11,11 +11,11 @@ import java.awt.image.BufferedImage;
 public class TextureGenerator {
 
     public enum PatternType {
-        CHECKERBOARD, SOLID, GRADIENT, GUI_BACKGROUND, BUTTON
+        CHECKERBOARD, NOISE, OUTLINE, SOLID, GRADIENT, GUI_BACKGROUND, GUI_BUTTON
     }
 
     public static ResourceLocation generateTexture(String name, int width, int height, PatternType pattern, Color color1, Color color2, int patternSize) {
-        TheOneProbe.setup.getLogger().info("Creating Texture: " + name);
+        TheOneProbe.setup.getLogger().info("Creating Texture: {}", name);
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
@@ -26,6 +26,31 @@ public class TextureGenerator {
                 switch (pattern) {
                     case CHECKERBOARD:
                         pixelColor = ((x / patternSize + y / patternSize) % 2 == 0) ? color1 : color2;
+                        break;
+
+                    case NOISE:
+                        double noiseValue = Math.random();
+
+                        if (noiseValue < 0.2) {
+                            pixelColor = darken(color1, 0.3f);
+                        } else if (noiseValue < 0.4) {
+                            pixelColor = darken(color1, 0.15f);
+                        } else if (noiseValue < 0.6) {
+                            pixelColor = color1;
+                        } else if (noiseValue < 0.8) {
+                            pixelColor = brighten(color1, 0.15f);
+                        } else {
+                            pixelColor = brighten(color1, 0.3f);
+                        }
+                        break;
+
+                    case OUTLINE:
+                        int outlineThickness = patternSize > 0 ? patternSize : 1;
+
+                        boolean isBorder = x < outlineThickness || y < outlineThickness ||
+                                x >= width - outlineThickness || y >= height - outlineThickness;
+
+                        pixelColor = isBorder ? color1 : new Color(0, 0, 0, 0); // Transparent fill
                         break;
 
                     case GRADIENT:
@@ -53,7 +78,7 @@ public class TextureGenerator {
                             pixelColor = darken(pixelColor, 0.4f);
                         }
 
-                        // Add inner bevel for more depth (inner edge pixels)
+                        // Inner bevel for more depth
                         if ((x == border || y == border) && x < width - border && y < height - border) {
                             pixelColor = brighten(pixelColor, 0.2f);
                         } else if ((x == width - border - 1 || y == height - border - 1) && x >= border && y >= border) {
@@ -61,26 +86,29 @@ public class TextureGenerator {
                         }
 
                         break;
-                    case BUTTON:
-                        // Background
-                        pixelColor = color1;
 
-                        // Simulate a raised button with beveled edges
+                    case GUI_BUTTON:
+                        // Vertical gradient for depth
+                        float gradientRatio = (float) y / height;
+                        int rBtn = (int) (color1.getRed() * (1 - gradientRatio) + color2.getRed() * gradientRatio);
+                        int gBtn = (int) (color1.getGreen() * (1 - gradientRatio) + color2.getGreen() * gradientRatio);
+                        int bBtn = (int) (color1.getBlue() * (1 - gradientRatio) + color2.getBlue() * gradientRatio);
+                        int aBtn = (int) (color1.getAlpha() * (1 - gradientRatio) + color2.getAlpha() * gradientRatio);
+                        pixelColor = new Color(rBtn, gBtn, bBtn, aBtn);
+
+                        // Bevel effect on top-left and bottom-right
                         if (x < patternSize || y < patternSize) {
-                            pixelColor = brighten(pixelColor, 0.3f); // Top-left highlight
+                            pixelColor = brighten(pixelColor, 0.2f); // Top-left highlight
                         } else if (x >= width - patternSize || y >= height - patternSize) {
-                            pixelColor = darken(pixelColor, 0.3f); // Bottom-right shadow
+                            pixelColor = darken(pixelColor, 0.2f); // Bottom-right shadow
                         }
 
-                        // Optional: Add an inner bevel
-                        if ((x == patternSize || y == patternSize) && x < width - patternSize && y < height - patternSize) {
-                            pixelColor = brighten(pixelColor, 0.15f);
-                        } else if ((x == width - patternSize - 1 || y == height - patternSize - 1) && x >= patternSize && y >= patternSize) {
-                            pixelColor = darken(pixelColor, 0.15f);
+                        // Shine in upper third
+                        if (y < height / 3) {
+                            pixelColor = brighten(pixelColor, 0.05f);
                         }
+
                         break;
-
-
 
                     case SOLID:
                     default:
