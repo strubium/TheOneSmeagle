@@ -35,11 +35,13 @@ public class GuiNote extends GuiScreen {
     private int guiTop;
 
     private static final ResourceLocation background = TextureGenerator.generateTexture("note_background", WIDTH, HEIGHT, TextureGenerator.PatternType.GUI_BACKGROUND, new Color(124, 124, 124), null, 0);
+
+    static Color baseButtonColor = new Color(Config.probeButtonColor, true);
     private static final ResourceLocation buttonTexture = TextureGenerator.generateTexture(
             "note_button",
             BUTTON_WIDTH, BUTTON_HEIGHT,
             TextureGenerator.PatternType.BUTTON,
-            new Color(argbToRgb(probeButtonColor)[0], argbToRgb(probeButtonColor)[1], argbToRgb(probeButtonColor)[2], 255), // Button color
+            baseButtonColor, // Button color
             null,
             1 // Bevel thickness
     );
