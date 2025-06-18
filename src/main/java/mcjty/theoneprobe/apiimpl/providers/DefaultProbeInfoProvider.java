@@ -360,15 +360,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
 
         if (!Objects.requireNonNull(pickBlock).isEmpty()) {
             if (Tools.show(mode, config.getShowModName())) {
-                String translationKey = getLocalizedBlockTranslationKey(world, data.getPos());
-                if (!translationKey.endsWith(".name")) {
-                    translationKey += ".name";
-                }
-                
-                String blockDisplayName;
-
-
-                blockDisplayName = STARTLOC + translationKey + ENDLOC;
+                String blockDisplayName = pickBlock.getDisplayName();
 
                 if (Config.getBlockNameMaxWidth() != 0) {
                     // Calculate available width for text
@@ -424,27 +416,5 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                         .text(MODNAME + modid);
             }
         }
-    }
-
-    public static String getLocalizedBlockTranslationKey(World world, BlockPos pos) {
-        try{
-            IBlockState state = world.getBlockState(pos);
-            Block block = state.getBlock();
-
-            // Try to use getPickBlock (best for modded blocks)
-            ItemStack stack = block.getPickBlock(state, new RayTraceResult(Vec3d.ZERO, EnumFacing.UP, pos), world, pos, null);
-            if (!stack.isEmpty()) {
-
-                String key = stack.getTranslationKey();
-                if (key != null && !key.isEmpty()) {
-                    return key;
-                }
-            }
-            return "top.unknown.block";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "top.unknown.block";
-        }
-
     }
 }
