@@ -1,0 +1,145 @@
+key.toggleLiquids=Toggle Yer Grog View
+key.toggleVisible=Visibility Be Togglin’
+key.categories.theoneprobe=Th’ One Spyglass
+item.theoneprobe.probe.name=Th’ One Spyglass
+item.theoneprobe.probe_goggles.name=Th’ One Spyglass (Bauble)
+item.theoneprobe.diamond_helmet_probe.name=Diamond Cap with Spyglass
+item.theoneprobe.golden_helmet_probe.name=Golden Cap with Spyglass
+item.theoneprobe.iron_helmet_probe.name=Iron Cap with Spyglass
+item.theoneprobe.leather_helmet_probe.name=Leather Cap with Spyglass
+item.theoneprobe.chainmail_helmet_probe.name=Chainmail Cap with Spyglass
+item.theoneprobe.creativeprobe.name=Th’ Creative Spyglass
+
+theoneprobe.harvestlevel.stone=Stone, Arr
+theoneprobe.harvestlevel.iron=Iron, Matey
+theoneprobe.harvestlevel.diamond=Diamond Booty
+theoneprobe.harvestlevel.obsidian=Obsidian Rock
+theoneprobe.harvestlevel.cobalt=Cobalt Treasure
+theoneprobe.harvestlevel.duranite=Duranite Plunder
+theoneprobe.harvestlevel.valyrium=Valyrium Spoils
+theoneprobe.harvestlevel.vibranium=Vibranium Booty
+
+theoneprobe.probe.shovel=Diggin’ Shovel
+theoneprobe.probe.axe=Choppin’ Axe
+theoneprobe.probe.pickaxe=Pickaxe o’ Plunder
+
+theoneprobe.probe.get_contents=Lootin’ the contents o’ a
+theoneprobe.probe.harvestable_indicator=Ready t’ Plunder
+theoneprobe.probe.not_harvestable_indicator=Can’t Plunder Yet
+theoneprobe.probe.notool_indicator=No Tool, Ye Landlubber
+theoneprobe.probe.empty_indicator=Empty as a Rum Barrel
+theoneprobe.probe.bottle_indicator=Bottle o’ Grog
+theoneprobe.probe.bottles_indicator=Bottles o’ Grog
+theoneprobe.probe.enchanting_power_indicator=Enchantin’ Power:
+theoneprobe.probe.fuse_indicator=Fuse:
+theoneprobe.probe.fuel_indicator=Fuel Fer Yer Ship:
+theoneprobe.probe.power_indicator=Power o’ th’ Seas:
+theoneprobe.probe.time_indicator=Time, Arr:
+theoneprobe.probe.error_indicator=Blimey! An Error:
+theoneprobe.probe.tool_indicator=Yer Tool:
+theoneprobe.probe.level_indicator=Deck Level:
+theoneprobe.probe.growing_time_indicator=Growin’ Time:
+theoneprobe.probe.growth_indicator=Growth:
+theoneprobe.probe.fully_grown_indicator=Fully Grown, Matey
+theoneprobe.probe.progress_indicator=Progress o’ Th’ Voyage
+theoneprobe.probe.health_indicator=Health o’ th’ Crew:
+theoneprobe.probe.rotation_indicator=Ship’s Rotation:
+theoneprobe.probe.unknown_owner_indicator=Mystery Captain
+theoneprobe.probe.owned_by_indicator=Claimed by:
+theoneprobe.probe.jump_height_indicator=Jump Height:
+theoneprobe.probe.speed_indicator=Ship Speed:
+theoneprobe.probe.playing_indicator=Playin’ a Sea Shanty:
+theoneprobe.probe.mob_indicator=Scallywag:
+theoneprobe.probe.collar_color_indicator=Band o’ Color:
+theoneprobe.probe.waiting_server_indicator=Waitin’ fer th’ server, Arr...
+theoneprobe.probe.error_log_indicator=Blimey! Check yer log, mate!
+theoneprobe.probe.profession_indicator=Trade o’ the Pirate
+theoneprobe.probe.temper_indicator=Temper:
+theoneprobe.probe.experience_indicator=Experience Booty:
+theoneprobe.probe.inventory_indicator=Yer Stash:
+
+theoneprobe.debug_probe.step_height_indicator=Step Height:
+theoneprobe.debug_probe.total_armor_indicator=Total Armor:
+theoneprobe.debug_probe.age_indicator=Age o’ Th’ Sea Dog:
+theoneprobe.debug_probe.absorption_indicator=Absorption:
+theoneprobe.debug_probe.ai_move_speed_indicator=AI Sail Speed:
+theoneprobe.debug_probe.revenge_timer_indicator=Revenge Timer:
+theoneprobe.debug_probe.on_fire_indicator=On Fire, Arr!
+theoneprobe.debug_probe.position_indicator=Yer Bearings:
+theoneprobe.debug_probe.motion_indicator=Ship’s Motion:
+theoneprobe.debug_probe.uuid_indicator=Pirate ID:
+theoneprobe.debug_probe.custom_name_indicator=Name o’ th’ Beastie:
+theoneprobe.debug_probe.active_effects_indicator=Active Curses:
+theoneprobe.debug_probe.is_left_handed_indicator=Left Hooked:
+theoneprobe.debug_probe.max_fall_height_indicator=Tallest Mast Fall:
+theoneprobe.debug_probe.max_spawnable_in_chunk_indicator=Max Swabbies in Chunk:
+theoneprobe.debug_probe.growing_age_indicator=Growin’ Age:
+theoneprobe.debug_probe.can_breathe_underwater_indicator=Can Breathe Under th’ Sea:
+theoneprobe.debug_probe.in_water_indicator=In the Drink:
+theoneprobe.debug_probe.next_egg_in_indicator=Next Egg In:
+theoneprobe.debug_probe.food_level_indicator=Grub Level:
+theoneprobe.debug_probe.saturation_level_indicator=Belly Fullness:
+theoneprobe.debug_probe.luck_indicator=Luck o’ th’ Sea:
+theoneprobe.debug_probe.bed_location_indicator=Hammock Spot:
+
+theoneprobe.debug_block.reg_name_indicator=Registry Name:
+theoneprobe.debug_block.unlocalized_name_indicator=Unlocalized Name:
+theoneprobe.debug_block.meta_indicator=Meta:
+theoneprobe.debug_block.class_indicator=Class:
+theoneprobe.debug_block.hardness_indicator=Hardness o’ Th’ Hull:
+theoneprobe.debug_block.power_w_indicator=Power West:
+theoneprobe.debug_block.power_s_indicator=Power South:
+theoneprobe.debug_block.light_indicator=Lantern Light:
+theoneprobe.debug_block.tile_entity_indicator=TileEntity Booty:
+theoneprobe.debug_block.energy_indicator=Energy Chest:
+theoneprobe.debug_block.max_energy_indicator=Max Energy Chest:
+
+config.theoneprobe.config.title=Th’ One Spyglass Config
+
+gui.theoneprobe.gui_note.title=Things Ye Should Know ‘bout §6Th’ One Spyglass
+gui.theoneprobe.gui_note.body.1=§lThis mod can show ye a tooltip
+gui.theoneprobe.gui_note.body.2=§lwhen ye be lookin’ at a block or beastie
+gui.theoneprobe.gui_note.needed.1=In this voyage th’ spyglass be needed
+gui.theoneprobe.gui_note.needed.2=t’ see the tooltip booty
+gui.theoneprobe.gui_note.not_needed.1=In this voyage ye don’t be needin’
+gui.theoneprobe.gui_note.not_needed.2=th’ spyglass t’ see the tooltip
+gui.theoneprobe.gui_note.needed_for_extended.1=In this voyage th’ spyglass be needed
+gui.theoneprobe.gui_note.needed_for_extended.2=fer seein’ extra loot (when sneakin’)
+gui.theoneprobe.gui_note.needed_for_extended.3=but not fer basic booty
+gui.theoneprobe.gui_note.needed_hard.1=In this voyage th’ spyglass be required
+gui.theoneprobe.gui_note.needed_hard.2=t’ see th’ tooltip
+gui.theoneprobe.gui_note.needed_hard.3=Set by th’ Cap’n (server side)
+gui.theoneprobe.gui_note.tail.1=Check ‘Mod Options...’ fer many client
+gui.theoneprobe.gui_note.tail.2=side settings or sneak-right click
+gui.theoneprobe.gui_note.tail.3=this note fer a more jolly setup
+gui.theoneprobe.gui_note.button.title=Ye can change it here:
+gui.theoneprobe.gui_note.button.needed=Needed, Aye
+gui.theoneprobe.gui_note.button.not_needed=Nay Needed
+gui.theoneprobe.gui_note.button.extended=Extended Booty
+
+gui.theoneprobe.gui_note_config.title.placement=Placin’:
+gui.theoneprobe.gui_note_config.title.presets=Presets:
+gui.theoneprobe.gui_note_config.title.scale=Scale:
+gui.theoneprobe.gui_note_config.body.1=Click on th’ chart t’ move it
+gui.theoneprobe.gui_note_config.body.2=around yer tooltip
+gui.theoneprobe.gui_note_config.body.3=The preview may get cursed ‘n glitchy
+
+item.theoneprobe.probenote.name=Th’ One Spyglass Read Me
+
+top.unknown.block=Mysterious Block, Arr
+
+itemGroup.Probe=Th’ One Spyglass
+
+#Preset Translation
+theoneprobe.preset.oceanblue.config=Ocean Blue, Aye
+theoneprobe.preset.softpastels.config=Soft Pastels
+theoneprobe.preset.crazy!.config=Mad as a Kraken!
+theoneprobe.preset.fullytransparent.config=Ghost Ship Clear
+theoneprobe.preset.black&white.config=Black ‘n White Sails
+theoneprobe.preset.jade.config=Jade Seas
+theoneprobe.preset.waila.config=WAILA Matey
+theoneprobe.preset.default.config=Default Booty
+
+#HACK HACK - Mod Support
+entity.Dummy.name=Target Dummy, Arr
+tile.EnergyCube.name=Energy Chest
