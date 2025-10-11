@@ -74,7 +74,7 @@ public class Utilities {
 
         if (Tools.show(mode, Config.getRealConfig().getShowChestContentsDetailed()) && stacks.size() <= Config.showItemDetailThresshold) {
             for (ItemStack stackInSlot : stacks) {
-                vertical.horizontal(new LayoutStyle().spacing(10).alignment(ElementAlignment.ALIGN_CENTER))
+                vertical.horizontal(new LayoutStyle().spacing(8).alignment(ElementAlignment.ALIGN_CENTER))
                         .item(stackInSlot)
                         .text(TextStyleClass.INFO + stackInSlot.getDisplayName());
             }
