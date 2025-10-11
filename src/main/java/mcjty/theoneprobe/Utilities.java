@@ -13,7 +13,6 @@ import mcjty.theoneprobe.api.ElementAlignment;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.api.TextStyleClass;
-import mcjty.theoneprobe.apiimpl.styles.ItemStyle;
 import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
 import mcjty.theoneprobe.config.Config;
 import net.minecraft.item.Item;
@@ -75,8 +74,8 @@ public class Utilities {
 
         if (Tools.show(mode, Config.getRealConfig().getShowChestContentsDetailed()) && stacks.size() <= Config.showItemDetailThresshold) {
             for (ItemStack stackInSlot : stacks) {
-                vertical.horizontal(new LayoutStyle().spacing(10).alignment(ElementAlignment.ALIGN_CENTER))
-                        .item(stackInSlot, new ItemStyle().width(16).height(16))
+                vertical.horizontal(new LayoutStyle().spacing(8).alignment(ElementAlignment.ALIGN_CENTER))
+                        .item(stackInSlot)
                         .text(TextStyleClass.INFO + stackInSlot.getDisplayName());
             }
         } else {
