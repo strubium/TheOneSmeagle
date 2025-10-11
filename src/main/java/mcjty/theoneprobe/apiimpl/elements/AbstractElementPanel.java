@@ -8,6 +8,7 @@ import mcjty.theoneprobe.rendering.RenderHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -98,6 +99,12 @@ public abstract class AbstractElementPanel implements IElement, IProbeInfo {
     @Override
     public IProbeInfo itemLabel(ItemStack stack) {
         children.add(new ElementItemLabel(stack));
+        return this;
+    }
+
+    @Override
+    public IProbeInfo fluidLabel(FluidStack stack) {
+        children.add(new ElementFluidLabel(stack));
         return this;
     }
 
