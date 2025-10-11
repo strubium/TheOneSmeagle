@@ -3,6 +3,7 @@ package mcjty.theoneprobe.api;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * Information to return to the probe. Most methods here return the same probe info
@@ -86,6 +87,11 @@ public interface IProbeInfo {
      */
     IProbeInfo itemLabel(ItemStack stack, ITextStyle style);
     IProbeInfo itemLabel(ItemStack stack);
+
+    /**
+     * A localized name of the fluidstack
+     */
+    IProbeInfo fluidLabel(FluidStack stack);
 
     /**
      * This creates a progress bar of 100 width

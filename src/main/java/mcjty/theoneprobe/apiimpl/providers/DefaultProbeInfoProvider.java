@@ -224,7 +224,9 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
     private void addFluidInfo(IProbeInfo probeInfo, ProbeConfig config, FluidStack fluidStack, int maxContents) {
         int contents = fluidStack == null ? 0 : fluidStack.amount;
         if (fluidStack != null) {
-            probeInfo.text(NAME + "Liquid: " + " {*" + fluidStack.getUnlocalizedName() +"*}"); //TOPFIX: Fluid container info doesn't show fluid local name when player on server.
+            probeInfo.horizontal()
+                     .text(NAME + "Liquid: ")
+                     .fluidLabel(fluidStack); //TOPFIX: Fluid container info doesn't show fluid local name when player on server.
         }
         if (config.getTankMode() == 1) {
             probeInfo.progress(contents, maxContents,
