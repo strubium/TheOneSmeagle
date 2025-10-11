@@ -83,9 +83,15 @@ public class NetworkTools {
         }
     }
 
+    /**
+     * Writes a UTF-8 encoded String to the given ByteBuf. Can handle null strings.
+     *
+     * @param buf The ByteBuf to write to.
+     * @param str The String to write.
+     */
     public static void writeStringCompact(ByteBuf buf, String str) {
         if (str == null) {
-            writeVarInt(buf, 0); // length = 0 means empty/null
+            writeVarInt(buf, -1); // -1 = null
             return;
         }
 
@@ -94,14 +100,68 @@ public class NetworkTools {
         buf.writeBytes(bytes);
     }
 
+    /**
+     * Reads a UTF-8 encoded String from the given ByteBuf.
+     *
+     * @param buf The ByteBuf to read from.
+     * @return The String read from the buffer, or null if the length was -1, or an empty string if the length was 0.
+     */
     public static String readStringCompact(ByteBuf buf) {
         int length = readVarInt(buf);
+        if (length == -1) return null;
         if (length == 0) return "";
         byte[] bytes = new byte[length];
         buf.readBytes(bytes);
         return new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
     }
 
+    /**
+     * Writes a UTF-8 encoded String to the given ByteBuf. Can handle null strings.<br>
+     * For compat only. Use {@link NetworkTools#writeStringCompact} instead.
+     *
+     * @param buf The ByteBuf to write to.
+     * @param str The String to write.
+     */
+    @Deprecated
+    public static void writeString(ByteBuf buf, String str) {
+        writeStringCompact(buf, str);
+    }
+
+    /**
+     * Writes a UTF-8 encoded String to the given ByteBuf. Can handle null strings.<br>
+     * For compat only. Use {@link NetworkTools#writeStringCompact} instead.
+     *
+     * @param buf The ByteBuf to write to.
+     * @param str The String to write.
+     */
+    @Deprecated
+    public static void writeStringUTF8(ByteBuf buf, String str) {
+        writeStringCompact(buf, str);
+    }
+
+    /**
+     * Reads a UTF-8 encoded String from the given ByteBuf.<br>
+     * For compat only. Use {@link NetworkTools#readStringCompact} instead.
+     *
+     * @param buf The ByteBuf to read from.
+     * @return The String read from the buffer, or null if the length was -1, or an empty string if the length was 0.
+     */
+    @Deprecated
+    public static String readString(ByteBuf buf) {
+        return readStringCompact(buf);
+    }
+
+    /**
+     * Reads a UTF-8 encoded String from the given ByteBuf.<br>
+     * For compat only. Use {@link NetworkTools#readStringCompact} instead.
+     *
+     * @param buf The ByteBuf to read from.
+     * @return The String read from the buffer, or null if the length was -1, or an empty string if the length was 0.
+     */
+    @Deprecated
+    public static String readStringUTF8(ByteBuf buf) {
+        return readStringCompact(buf);
+    }
 
     /**
      * Reads a BlockPos from the given ByteBuf.
