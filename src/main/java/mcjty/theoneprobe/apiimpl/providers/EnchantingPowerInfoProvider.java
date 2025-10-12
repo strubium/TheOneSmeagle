@@ -10,8 +10,10 @@ package mcjty.theoneprobe.apiimpl.providers;
 
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.Utilities;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityEnchantmentTable;
@@ -19,7 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-
 import lombok.NonNull;
 
 public class EnchantingPowerInfoProvider implements IProbeInfoProvider {
@@ -31,39 +32,59 @@ public class EnchantingPowerInfoProvider implements IProbeInfoProvider {
 
     @Override
     public void addProbeInfo(ProbeMode mode, @NonNull IProbeInfo probeInfo, EntityPlayer player, @NonNull World world, @NonNull IBlockState blockState, @NonNull IProbeHitData data) {
-        // Only proceed if the block has a TileEntity and is an enchantment table
-        if (!blockState.getBlock().hasTileEntity(blockState) || !(world.getTileEntity(data.getPos()) instanceof TileEntityEnchantmentTable)) {
-            return;
-        }
+        Block block = blockState.getBlock();
+        BlockPos pos = data.getPos();
 
-        float enchantingPower = 0.0F;
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        // ===============================
+        // CASE 1: Looking at Enchantment Table
+        // ===============================
+        if (block.hasTileEntity(blockState) && world.getTileEntity(pos) instanceof TileEntityEnchantmentTable) {
+            float enchantingPower = 0.0F;
+            BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 
-        // Calculate enchanting power based on surrounding blocks
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                if (x == 0 && z == 0) continue; // Skip the center block
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    if (x == 0 && z == 0) continue;
 
-                // Set position to current check (air blocks around the enchantment table)
-                if (world.isAirBlock(pos.setPos(data.getPos().add(z, 0, x))) && world.isAirBlock(pos.setPos(data.getPos().add(z, 1, x)))) {
+                    // Air gaps around table
+                    if (world.isAirBlock(checkPos.setPos(pos.getX() + z, pos.getY(), pos.getZ() + x))
+                            && world.isAirBlock(checkPos.setPos(pos.getX() + z, pos.getY() + 1, pos.getZ() + x))) {
 
-                    // Using MutableBlockPos#setPos to avoid unnecessary object creation
-                    enchantingPower += ForgeHooks.getEnchantPower(world, pos.setPos(data.getPos().add(z * 2, 0, x * 2)));
-                    enchantingPower += ForgeHooks.getEnchantPower(world, pos.setPos(data.getPos().add(z * 2, 1, x * 2)));
+                        enchantingPower += ForgeHooks.getEnchantPower(world, checkPos.setPos(pos.getX() + z * 2, pos.getY(), pos.getZ() + x * 2));
+                        enchantingPower += ForgeHooks.getEnchantPower(world, checkPos.setPos(pos.getX() + z * 2, pos.getY() + 1, pos.getZ() + x * 2));
 
-                    if (x != 0 && z != 0) {
-                        enchantingPower += ForgeHooks.getEnchantPower(world, pos.setPos(data.getPos().add(z * 2, 0, x)));
-                        enchantingPower += ForgeHooks.getEnchantPower(world, pos.setPos(data.getPos().add(z * 2, 1, x)));
-                        enchantingPower += ForgeHooks.getEnchantPower(world, pos.setPos(data.getPos().add(z, 0, x * 2)));
-                        enchantingPower += ForgeHooks.getEnchantPower(world, pos.setPos(data.getPos().add(z, 1, x * 2)));
+                        if (x != 0 && z != 0) {
+                            enchantingPower += ForgeHooks.getEnchantPower(world, checkPos.setPos(pos.getX() + z * 2, pos.getY(), pos.getZ() + x));
+                            enchantingPower += ForgeHooks.getEnchantPower(world, checkPos.setPos(pos.getX() + z * 2, pos.getY() + 1, pos.getZ() + x));
+                            enchantingPower += ForgeHooks.getEnchantPower(world, checkPos.setPos(pos.getX() + z, pos.getY(), pos.getZ() + x * 2));
+                            enchantingPower += ForgeHooks.getEnchantPower(world, checkPos.setPos(pos.getX() + z, pos.getY() + 1, pos.getZ() + x * 2));
+                        }
                     }
                 }
             }
+
+            if (enchantingPower > 0.0F) {
+                probeInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
+                        .item(new ItemStack(Items.ENCHANTED_BOOK), probeInfo.defaultItemStyle().width(16).height(16))
+                        .text(TextStyleClass.LABEL + "{*theoneprobe.probe.enchanting_power_indicator*} "
+                                + TextFormatting.LIGHT_PURPLE + Utilities.FORMAT.format(enchantingPower));
+            }
+            return;
         }
-        if (enchantingPower > 0.0F) {
-            probeInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
-                    .item(new ItemStack(Items.ENCHANTED_BOOK), probeInfo.defaultItemStyle().width(16).height(16))
-                    .text(TextStyleClass.LABEL + "{*theoneprobe.probe.enchanting_power_indicator*} " + TextFormatting.LIGHT_PURPLE + Utilities.FORMAT.format(enchantingPower));
+
+        // ===============================
+        // CASE 2: Looking at a Bookshelf block directly
+        // ===============================
+        if (block == Blocks.BOOKSHELF) {
+            // ForgeHooks.getEnchantPower works here too
+            float power = ForgeHooks.getEnchantPower(world, pos);
+
+            if (power > 0.0F) {
+                probeInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
+                        .item(new ItemStack(Items.ENCHANTED_BOOK), probeInfo.defaultItemStyle().width(16).height(16))
+                        .text(TextStyleClass.LABEL + "{*theoneprobe.probe.enchanting_power_indicator*} "
+                                + TextFormatting.LIGHT_PURPLE + Utilities.FORMAT.format(power));
+            }
         }
     }
 }
