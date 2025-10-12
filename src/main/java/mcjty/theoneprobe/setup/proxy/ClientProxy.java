@@ -24,11 +24,13 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {
+        super.preInit(e);
         MinecraftForge.EVENT_BUS.register(new ClientForgeEventHandlers());
     }
 
     @Override
     public void init(FMLInitializationEvent e) {
+        super.init(e);
         ClientCommandHandler.instance.registerCommand(new CommandTopCfg());
         ClientCommandHandler.instance.registerCommand(new CommandTopNeed());
         MinecraftForge.EVENT_BUS.register(new KeyInputHandler()); //Load the keybindings
@@ -37,6 +39,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void postInit(FMLPostInitializationEvent e) {
+        super.postInit(e);
     }
 
     @Override

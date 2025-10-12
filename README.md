@@ -43,6 +43,7 @@ This mod also has a flexible API that other mods can use to add more information
    * showBreakProgressText (Default: true) Show the text in the progress bar
    * probeProgressColor, probeProgressAltColor, probeProgressBackgroundColor, and probeProgressBorderColor Config the color of the progress bar 
    * probeProgressGradient (Default: false) Use a gradient instead of alternating colors in solid blocks
+   * blockTimeout, entityTimeout Type-dependent timeouts to change how often info is requested from the server
 * Replaced the hardcoded strings with language-translatable versions
    * Updated ru_ru.lang (By: @bigenergy)
    * New en_ud.lang

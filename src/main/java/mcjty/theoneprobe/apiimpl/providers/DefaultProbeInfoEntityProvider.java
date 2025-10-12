@@ -38,8 +38,6 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
         return TheOneProbe.MODID + ":entity.default";
     }
 
-    private static final DecimalFormat dfCommas = new DecimalFormat("##.#");
-
     @Override
     public void addProbeEntityInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, Entity entity, IProbeHitEntityData data) {
         IProbeConfig config = Config.getRealConfig();
