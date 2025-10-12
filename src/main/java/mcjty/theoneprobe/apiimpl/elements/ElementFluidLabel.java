@@ -1,11 +1,11 @@
 package mcjty.theoneprobe.apiimpl.elements;
 
 import io.netty.buffer.ByteBuf;
-import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IElement;
 import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.apiimpl.client.ElementTextRender;
 import mcjty.theoneprobe.network.NetworkTools;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -74,7 +74,7 @@ public class ElementFluidLabel implements IElement {
 
         if (fluid == null) {
             // This should never happen, but just in case, return the plain fluid name
-            TheOneProbe.setup.getLogger().error("Could not find fluid with name {}", fluidName);
+            CommonProxy.getLogger().error("Could not find fluid with name {}", fluidName);
             return fluidName;
         }
 

@@ -8,6 +8,7 @@ import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.rendering.RenderHelper;
 import mcjty.theoneprobe.rendering.TextureGenerator;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -226,7 +227,7 @@ public class GuiConfig extends GuiScreen {
 
         // If the block isn't found, default to air or handle error
         if (block == Blocks.AIR || block == null) {
-            TheOneProbe.setup.getLogger().error("Block not found: {}! Defaulting to Log", blockName);
+            CommonProxy.getLogger().error("Block not found: {}! Defaulting to Log", blockName);
             block = Blocks.LOG;
         }
 

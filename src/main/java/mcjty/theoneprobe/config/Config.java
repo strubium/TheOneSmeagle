@@ -10,7 +10,7 @@ import mcjty.theoneprobe.api.NumberFormat;
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.apiimpl.ProbeConfig;
 import mcjty.theoneprobe.apiimpl.styles.DefaultOverlayStyle;
-import mcjty.theoneprobe.setup.ModSetup;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.config.Configuration;
@@ -422,7 +422,7 @@ public class Config {
     }
 
     public static void init() {
-        mainConfig = new Configuration(new File(ModSetup.modConfigDir.getPath(), TheOneProbe.MODID + ".cfg"));
+        mainConfig = new Configuration(new File(CommonProxy.modConfigDir.getPath(), TheOneProbe.MODID + ".cfg"));
         Configuration cfg = mainConfig;
         try {
             cfg.load();
@@ -431,7 +431,7 @@ public class Config {
             cfg.addCustomCategoryComment(CATEGORY_CLIENT, "Clientside Settings");
             init(cfg);
         } catch (Exception e1) {
-            TheOneProbe.setup.getLogger().log(Level.ERROR, "Problem loading config file!", e1);
+            CommonProxy.getLogger().log(Level.ERROR, "Problem loading config file!", e1);
         }
     }
 }

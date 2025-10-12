@@ -1,6 +1,6 @@
 package mcjty.theoneprobe.rendering;
 
-import mcjty.theoneprobe.TheOneProbe;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
@@ -15,7 +15,7 @@ public class TextureGenerator {
     }
 
     public static ResourceLocation generateTexture(String name, int width, int height, PatternType pattern, Color color1, Color color2, int patternSize) {
-        TheOneProbe.setup.getLogger().info("Creating Texture: {}", name);
+        CommonProxy.getLogger().info("Creating Texture: {}", name);
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 

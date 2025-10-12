@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.rendering;
 
+import lombok.NonNull;
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.*;
@@ -18,7 +19,6 @@ import mcjty.theoneprobe.network.PacketHandler;
 import mcjty.theoneprobe.network.ThrowableIdentity;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
@@ -298,7 +298,7 @@ public class OverlayRenderer {
         return probeInfo;
     }
 
-    private static void requestBlockInfo(ProbeMode mode, RayTraceResult mouseOver, BlockPos blockPos, EntityPlayerSP player) {
+    private static void requestBlockInfo(@NonNull ProbeMode mode, @NonNull RayTraceResult mouseOver, @NonNull BlockPos blockPos, @NonNull EntityPlayerSP player) {
         World world = player.getEntityWorld();
         IBlockState blockState = world.getBlockState(blockPos);
         Block block = blockState.getBlock();

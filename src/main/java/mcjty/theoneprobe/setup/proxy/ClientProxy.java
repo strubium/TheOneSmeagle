@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.concurrent.Callable;
 
 @SideOnly(Side.CLIENT)
-public class ClientProxy implements IProxy {
+public class ClientProxy extends CommonProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {

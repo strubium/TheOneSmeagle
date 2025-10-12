@@ -1,7 +1,7 @@
 package mcjty.theoneprobe.network;
 
 import mcjty.theoneprobe.config.Config;
-import mcjty.theoneprobe.TheOneProbe;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class ThrowableIdentity {
             }
         }
         caughtThrowables.put(identity, currentTimeMillis);
-        TheOneProbe.setup.getLogger().debug("The One Probe caught error: ", e);
+        CommonProxy.getLogger().debug("The One Probe caught error: ", e);
     }
 
     public ThrowableIdentity(Throwable e) {

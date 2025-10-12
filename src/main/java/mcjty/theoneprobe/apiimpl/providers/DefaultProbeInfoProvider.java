@@ -9,7 +9,7 @@ import mcjty.theoneprobe.apiimpl.ProbeConfig;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
 import mcjty.theoneprobe.compat.RedstoneFluxTools;
 import mcjty.theoneprobe.config.Config;
-import mcjty.theoneprobe.setup.ModSetup;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.block.*;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -21,10 +21,7 @@ import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBrewingStand;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.*;
@@ -34,8 +31,6 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import java.util.Collections;
 import java.util.Objects;
 
-import static mcjty.theoneprobe.api.IProbeInfo.ENDLOC;
-import static mcjty.theoneprobe.api.IProbeInfo.STARTLOC;
 import static mcjty.theoneprobe.api.TextStyleClass.*;
 
 public class DefaultProbeInfoProvider implements IProbeInfoProvider {
@@ -248,7 +243,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             long energy = ((IBigPower) te).getStoredPower();
             long maxEnergy = ((IBigPower) te).getCapacity();
             addRFInfo(probeInfo, config, energy, maxEnergy);
-        } else if (ModSetup.redstoneflux && RedstoneFluxTools.isEnergyHandler(te)) {
+        } else if (CommonProxy.redstoneflux && RedstoneFluxTools.isEnergyHandler(te)) {
             int energy = RedstoneFluxTools.getEnergy(te);
             int maxEnergy = RedstoneFluxTools.getMaxEnergy(te);
             addRFInfo(probeInfo, config, energy, maxEnergy);

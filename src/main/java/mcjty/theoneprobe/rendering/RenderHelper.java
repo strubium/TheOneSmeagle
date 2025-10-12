@@ -1,8 +1,8 @@
 package mcjty.theoneprobe.rendering;
 
 import mcjty.theoneprobe.ClientTools;
-import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.network.ThrowableIdentity;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -56,7 +56,7 @@ public class RenderHelper {
         try {
             ClientTools.mc.getRenderManager().renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
         } catch (Exception e) {
-            TheOneProbe.setup.getLogger().error("Error rendering entity!", e);
+            CommonProxy.getLogger().error("Error rendering entity!", e);
         }
         GlStateManager.popMatrix();
         net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();

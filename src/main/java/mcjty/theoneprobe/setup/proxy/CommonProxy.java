@@ -1,5 +1,7 @@
-package mcjty.theoneprobe.setup;
+package mcjty.theoneprobe.setup.proxy;
 
+import com.google.common.util.concurrent.ListenableFuture;
+import lombok.Getter;
 import mcjty.theoneprobe.event.CommonForgeEventHandlers;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IProbeInfoEntityProvider;
@@ -9,9 +11,10 @@ import mcjty.theoneprobe.apiimpl.providers.*;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.network.PacketHandler;
 import mcjty.theoneprobe.playerdata.PlayerGotNote;
-import mcjty.theoneprobe.setup.proxy.GuiProxy;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -29,7 +32,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import java.util.concurrent.Callable;
 
 /**
  * This is TheOneProbes "CommonProxy". It's ran on client and server
@@ -37,9 +40,9 @@ import java.util.Set;
  * @author McJty
  * @since 3/11/2019
  */
-public class ModSetup {
+public class CommonProxy implements IProxy {
 
-    private Logger logger;
+    @Getter private static Logger logger;
     public static File modConfigDir;
 
     public static boolean baubles = false;
@@ -77,10 +80,6 @@ public class ModSetup {
         PacketHandler.registerMessages(TheOneProbe.MODID);
 
         setupModCompat();
-    }
-
-    public Logger getLogger() {
-        return logger;
     }
 
     private void setupModCompat() {
@@ -162,5 +161,25 @@ public class ModSetup {
         Collections.addAll(excluded, excludedProviders);
 
         TheOneProbe.theOneProbeImp.configureEntityProviders(sortedProviders, excluded);
+    }
+
+    @Override
+    public World getClientWorld() {
+        throw new IllegalStateException("This should only be called from client side");
+    }
+
+    @Override
+    public EntityPlayer getClientPlayer() {
+        throw new IllegalStateException("This should only be called from client side");
+    }
+
+    @Override
+    public <V> ListenableFuture<V> addScheduledTaskClient(Callable<V> callableToSchedule) {
+        throw new IllegalStateException("This should only be called from client side");
+    }
+
+    @Override
+    public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule) {
+        throw new IllegalStateException("This should only be called from client side");
     }
 }

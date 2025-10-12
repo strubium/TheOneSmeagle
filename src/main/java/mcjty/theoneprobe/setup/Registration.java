@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.setup;
 
 import mcjty.theoneprobe.items.ModItems;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -29,7 +30,7 @@ public class Registration {
         bar.step("Registering Items");
         ModItems.init();
 
-        if (!ModSetup.baubles) { //Googles are automatically added to registration, so we need to remove it if baubles isn't loaded
+        if (!CommonProxy.baubles) { //Googles are automatically added to registration, so we need to remove it if baubles isn't loaded
             itemReg.remove(ModItems.probeGoggles);
         }
 

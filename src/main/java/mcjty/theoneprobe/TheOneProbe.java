@@ -5,7 +5,7 @@ import mcjty.theoneprobe.apiimpl.TheOneProbeImp;
 import mcjty.theoneprobe.gui.PresetBuilder;
 import mcjty.theoneprobe.items.ModItems;
 import mcjty.theoneprobe.setup.proxy.IProxy;
-import mcjty.theoneprobe.setup.ModSetup;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -30,8 +30,6 @@ public class TheOneProbe {
     @SidedProxy(clientSide="mcjty.theoneprobe.setup.proxy.ClientProxy", serverSide="mcjty.theoneprobe.setup.proxy.ServerProxy")
     public static IProxy proxy;
 
-    public static ModSetup setup = new ModSetup();
-
     @Mod.Instance
     public static TheOneProbe instance;
 
@@ -43,19 +41,16 @@ public class TheOneProbe {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         PresetBuilder.addDefaultPresets();
-        setup.preInit(e);
         proxy.preInit(e);
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
-        setup.init(e);
         proxy.init(e);
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e) {
-        setup.postInit(e);
         proxy.postInit(e);
     }
 
@@ -67,7 +62,7 @@ public class TheOneProbe {
                 if (value.isPresent()) {
                     value.get().apply(theOneProbeImp);
                 } else {
-                    setup.getLogger().warn("Some mod didn't return a valid result with getTheOneProbe!");
+                    CommonProxy.getLogger().warn("Some mod didn't return a valid result with getTheOneProbe!");
                 }
             }
         }

@@ -4,7 +4,7 @@ import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.compat.BaubleTools;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.probe.ProbeArmor;
-import mcjty.theoneprobe.setup.ModSetup;
+import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import mcjty.theoneprobe.setup.Registration;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -50,7 +50,7 @@ public class ModItems {
             };
 
 
-            int stepCount = ModSetup.baubles ? 5 : 4;
+            int stepCount = CommonProxy.baubles ? 5 : 4;
             final ProgressManager.ProgressBar bar = ProgressManager.push("Loading Mod Items", stepCount);
             bar.step("Initializing Probe");
             probe = new Probe();
@@ -75,9 +75,9 @@ public class ModItems {
 
                             String probeHelmetName = registryName.getPath() + "_probe";
                             Item madeHelmet = makeHelmet(item, probeHelmetName);
-                            TheOneProbe.setup.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
+                            CommonProxy.getLogger().info("Made Helmet: {}", madeHelmet.getRegistryName());
                         } else {
-                            TheOneProbe.setup.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getNamespace());
+                            CommonProxy.getLogger().debug("Not making helmet from: {}, matches: {}", registryName, registryName.getNamespace());
                         }
                     }
                 }
@@ -88,7 +88,7 @@ public class ModItems {
             bar.step("Initializing Probe Note");
             probeNote = new ProbeNote();
 
-            if (ModSetup.baubles) {
+            if (CommonProxy.baubles) {
                 bar.step("Initializing Probe Goggles");
                 probeGoggles = BaubleTools.initProbeGoggle();
             }
@@ -158,7 +158,7 @@ public class ModItems {
                 initModel(helmet);
             }
 
-            if (ModSetup.baubles) {
+            if (CommonProxy.baubles) {
                 initModel(probeGoggles);
             }
         }
@@ -201,6 +201,6 @@ public class ModItems {
         return isProbe(player.getHeldItem(EnumHand.MAIN_HAND))
                 || isProbe(player.getHeldItem(EnumHand.OFF_HAND))
                 || isProbeHelmet(player.inventory.getStackInSlot(36 + 3))
-                || (ModSetup.baubles && BaubleTools.hasProbeGoggle(player));
+                || (CommonProxy.baubles && BaubleTools.hasProbeGoggle(player));
     }
 }
