@@ -1,10 +1,8 @@
 package mcjty.theoneprobe.apiimpl.client;
 
 import mcjty.theoneprobe.ClientTools;
-import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.IEntityStyle;
 import mcjty.theoneprobe.rendering.RenderHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ElementEntityRender {
 
     public static void renderPlayer(String entityName, Integer playerID, IEntityStyle style, int x, int y) {
-        Entity entity = ClientTools.mc.world.getEntityByID(playerID);
+        Entity entity = ClientTools.MC.world.getEntityByID(playerID);
         if (entity != null) {
             renderEntity(style, x, y, entity);
         }
@@ -29,12 +27,12 @@ public class ElementEntityRender {
         if (entityName != null && !entityName.isEmpty()) {
             Entity entity = null;
             if (entityNBT != null) {
-                entity = EntityList.createEntityFromNBT(entityNBT, ClientTools.mc.world);
+                entity = EntityList.createEntityFromNBT(entityNBT, ClientTools.MC.world);
             } else {
                 String fixed = fixEntityId(entityName);
                 EntityEntry value = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixed));
                 if (value != null) {
-                    entity = value.newInstance(ClientTools.mc.world);
+                    entity = value.newInstance(ClientTools.MC.world);
                 }
             }
             if (entity != null) {

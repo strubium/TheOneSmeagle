@@ -93,7 +93,7 @@ public class Tools {
      * @return The screen width in pixels.
      */
     public static int getScreenWidth() {
-        ScaledResolution resolution = new ScaledResolution(ClientTools.mc);
+        ScaledResolution resolution = new ScaledResolution(ClientTools.MC);
         return resolution.getScaledWidth();
     }
 

@@ -51,7 +51,7 @@ public class PacketReturnInfo implements IMessage {
     public static class Handler implements IMessageHandler<PacketReturnInfo, IMessage> {
         @Override
         public IMessage onMessage(PacketReturnInfo message, MessageContext ctx) {
-            ClientTools.mc.addScheduledTask(() -> OverlayRenderer.registerProbeInfo(message.dim, message.pos, message.probeInfo));
+            ClientTools.MC.addScheduledTask(() -> OverlayRenderer.registerProbeInfo(message.dim, message.pos, message.probeInfo));
             return null;
         }
     }

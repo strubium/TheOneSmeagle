@@ -1,10 +1,13 @@
 package mcjty.theoneprobe.api;
 
+import lombok.Getter;
+
 /**
  * Represent a style for text. This style is configurable by the user and used server-side.
  * Use it like you would use a TextFormatting in your strings. i.e.:
  * probeInfo.text(TextStyleClass.ERROR + "Error! World will explode in 5 seconds!");
  */
+@Getter
 public enum TextStyleClass {
     /**Name of the mod*/
     MODNAME("m", "ModName"),
@@ -33,14 +36,6 @@ public enum TextStyleClass {
     TextStyleClass(String code, String readableName) {
         this.code = code;
         this.readableName = readableName;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getReadableName() {
-        return readableName;
     }
 
     /**

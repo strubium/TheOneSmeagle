@@ -52,9 +52,9 @@ public class RenderHelper {
         GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
         entity.rotationPitch = 0.0F;
         GlStateManager.translate(0.0F, (float) entity.getYOffset() + (entity instanceof EntityHanging ? 0.5F : 0.0F), 0.0F);
-        ClientTools.mc.getRenderManager().playerViewY = 180F;
+        ClientTools.MC.getRenderManager().playerViewY = 180F;
         try {
-            ClientTools.mc.getRenderManager().renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+            ClientTools.MC.getRenderManager().renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
         } catch (Exception e) {
             CommonProxy.getLogger().error("Error rendering entity!", e);
         }
@@ -215,12 +215,12 @@ public class RenderHelper {
     public static void drawLine(int x1, int y1, int x2, int y2, int color, int thickness, String orientation) {
         switch (orientation.toLowerCase()) {
             case "vertical":
-                Gui.drawRect(x1, y1, x1 + thickness, y2, color); // Fixed x1 and used y2 for ending
-                break; // Added break statement
+                Gui.drawRect(x1, y1, x1 + thickness, y2, color);
+                break;
 
             case "horizontal":
-                Gui.drawRect(x1, y1, x2, y1 + thickness, color); // Fixed y1 and used y2 for ending
-                break; // Added break statement
+                Gui.drawRect(x1, y1, x2, y1 + thickness, color);
+                break;
 
             default:
                 throw new IllegalArgumentException("Invalid orientation: " + orientation);
@@ -480,8 +480,8 @@ public class RenderHelper {
     }
 
     public static void rotateToPlayer() {
-        GlStateManager.rotate(-ClientTools.mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(ClientTools.mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(-ClientTools.MC.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(ClientTools.MC.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
     }
 
     /**
@@ -640,8 +640,8 @@ public class RenderHelper {
                 GlStateManager.enableDepth();
             }
 
-            EntityPlayerSP entityplayersp = ClientTools.mc.player;
-            float f = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), ClientTools.mc.getRenderPartialTicks());
+            EntityPlayerSP entityplayersp = ClientTools.MC.player;
+            float f = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), ClientTools.MC.getRenderPartialTicks());
 
             if (f > 0.0F) {
                 GlStateManager.disableLighting();

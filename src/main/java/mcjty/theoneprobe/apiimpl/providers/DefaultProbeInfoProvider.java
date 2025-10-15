@@ -307,9 +307,6 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
         }
     }
 
-    private static String cachedBlockName;
-    private static String cachedTruncatedBlockName;
-
     /**
      * Shows standard information about a block based on the probe configuration and mode.
      * This method handles different types of blocks and their display in the probe info.
@@ -360,40 +357,17 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                 String blockDisplayName = pickBlock.getDisplayName();
 
                 if (Config.getBlockNameMaxWidth() != 0) {
-                    // Calculate available width for text
-                    FontRenderer fontRenderer = ClientTools.mc.fontRenderer;
+                    FontRenderer fontRenderer = ClientTools.MC.fontRenderer;
                     int screenWidth = Tools.getScreenWidth();
                     int availableWidth = (int) (screenWidth * Config.getBlockNameMaxWidth());
 
-                    // String truncation
-                    if (blockDisplayName.equals(cachedBlockName))
-                        blockDisplayName = cachedTruncatedBlockName;
-                    else if (fontRenderer.getStringWidth(blockDisplayName) > availableWidth) {
-                        int charWidth = fontRenderer.getCharWidth(blockDisplayName.charAt(0));
-                        // Estimate
-                        int index = availableWidth / charWidth - 1;
-                        index = Math.max(index, 0);
-                        String truncated = null;
-                        boolean quit = false;
-                        // This loop usually runs 2-4 times
-                        while (!quit) {
-                            truncated = blockDisplayName.substring(0, index);
-                            int width = fontRenderer.getStringWidth(truncated);
-                            int nextWidth = fontRenderer.getStringWidth(blockDisplayName.substring(0, index + 1));
-
-                            if ((width <= availableWidth && nextWidth > availableWidth) || width == availableWidth)
-                                quit = true;
-                            else if (width > availableWidth)
-                                index /= 2;
-                            else
-                                index++;
+                    if (fontRenderer.getStringWidth(blockDisplayName) > availableWidth) {
+                        int index = 0;
+                        while (index < blockDisplayName.length() &&
+                                fontRenderer.getStringWidth(blockDisplayName.substring(0, index + 1) + "...") <= availableWidth) {
+                            index++;
                         }
-                        cachedBlockName = blockDisplayName;
-                        blockDisplayName = truncated + "...";
-                        cachedTruncatedBlockName = blockDisplayName;
-                    } else {
-                        cachedBlockName = blockDisplayName;
-                        cachedTruncatedBlockName = blockDisplayName;
+                        blockDisplayName = blockDisplayName.substring(0, index) + "...";
                     }
                 }
 

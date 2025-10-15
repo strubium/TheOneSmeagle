@@ -26,7 +26,7 @@ public class CommandTopNeed extends CommandBase {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         ClientForgeEventHandlers.ignoreNextGuiClose = true;
-        EntityPlayerSP player = ClientTools.mc.player;
+        EntityPlayerSP player = ClientTools.MC.player;
         player.openGui(TheOneProbe.instance, GuiProxy.GUI_NOTE, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
     }
 

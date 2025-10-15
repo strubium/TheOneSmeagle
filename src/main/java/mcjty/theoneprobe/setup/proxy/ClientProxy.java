@@ -44,21 +44,21 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public World getClientWorld() {
-        return ClientTools.mc.world;
+        return ClientTools.MC.world;
     }
 
     @Override
     public EntityPlayer getClientPlayer() {
-        return ClientTools.mc.player;
+        return ClientTools.MC.player;
     }
 
     @Override
     public <V> ListenableFuture<V> addScheduledTaskClient(Callable<V> callableToSchedule) {
-        return ClientTools.mc.addScheduledTask(callableToSchedule);
+        return ClientTools.MC.addScheduledTask(callableToSchedule);
     }
 
     @Override
     public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule) {
-        return ClientTools.mc.addScheduledTask(runnableToSchedule);
+        return ClientTools.MC.addScheduledTask(runnableToSchedule);
     }
 }

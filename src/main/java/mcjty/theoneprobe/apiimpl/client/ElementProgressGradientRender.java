@@ -29,7 +29,7 @@ public class ElementProgressGradientRender extends ElementProgressRender {
         }
 
         if (style.isShowText()) {
-            RenderHelper.renderText(ClientTools.mc, x + 3, y + 2, style.getPrefix() + ElementProgress.format(current, style.getNumberFormat(), style.getSuffix()));
+            RenderHelper.renderText(ClientTools.MC, x + 3, y + 2, style.getPrefix() + ElementProgress.format(current, style.getNumberFormat(), style.getSuffix()));
         }
     }
 

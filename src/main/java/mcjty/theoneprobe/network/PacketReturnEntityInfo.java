@@ -49,7 +49,7 @@ public class PacketReturnEntityInfo implements IMessage {
     public static class Handler implements IMessageHandler<PacketReturnEntityInfo, IMessage> {
         @Override
         public IMessage onMessage(PacketReturnEntityInfo message, MessageContext ctx) {
-            ClientTools.mc.addScheduledTask(() -> OverlayRenderer.registerProbeInfo(message.uuid, message.probeInfo));
+            ClientTools.MC.addScheduledTask(() -> OverlayRenderer.registerProbeInfo(message.uuid, message.probeInfo));
             return null;
         }
     }

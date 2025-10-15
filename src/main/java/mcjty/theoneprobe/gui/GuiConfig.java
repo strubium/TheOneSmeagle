@@ -107,15 +107,15 @@ public class GuiConfig extends GuiScreen {
 
         int x = WIDTH + guiLeft + 10;
         int y = guiTop + 10;
-        RenderHelper.renderText(ClientTools.mc, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.placement"));
+        RenderHelper.renderText(ClientTools.MC, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.placement"));
         y += 12;
-        RenderHelper.renderText(ClientTools.mc, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.1"));
+        RenderHelper.renderText(ClientTools.MC, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.1"));
         y += 10;
-        RenderHelper.renderText(ClientTools.mc, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.2"));
+        RenderHelper.renderText(ClientTools.MC, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.2"));
         y += 20;
 
         hitboxes = new ArrayList<>();
-        RenderHelper.renderText(ClientTools.mc, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.presets") + TextFormatting.RESET);
+        RenderHelper.renderText(ClientTools.MC, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.presets") + TextFormatting.RESET);
         y += 12;
         for (Preset preset : PresetBuilder.getPresets()) {
             y = addPreset(x, y, preset);
@@ -123,9 +123,9 @@ public class GuiConfig extends GuiScreen {
 
         y += 5;
 
-        RenderHelper.renderText(ClientTools.mc, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.scale"));
+        RenderHelper.renderText(ClientTools.MC, x, y, TextFormatting.GOLD + I18n.format("gui.theoneprobe.gui_note_config.title.scale"));
         y += 12;
-        RenderHelper.renderText(ClientTools.mc, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.3"));
+        RenderHelper.renderText(ClientTools.MC, x+10, y, I18n.format("gui.theoneprobe.gui_note_config.body.3"));
         y += 12;
         addButton(x+10, y, "--", () -> Config.setScale(Config.getTooltipScale() + 0.2F)); x += 36;
         addButton(x+10, y, "-", () -> Config.setScale(Config.getTooltipScale() + 0.1F)); x += 36;
@@ -182,7 +182,7 @@ public class GuiConfig extends GuiScreen {
                 : preset.getName();
 
         // Render text on top of the button
-        RenderHelper.renderText(ClientTools.mc, x + 20, y, displayName);
+        RenderHelper.renderText(ClientTools.MC, x + 20, y, displayName);
 
         // Register the interactive area
         hitboxes.add(new HitBox(
@@ -203,7 +203,7 @@ public class GuiConfig extends GuiScreen {
         drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
 
         // Render the button text
-        RenderHelper.renderText(ClientTools.mc, x + 3, y + 3, text);
+        RenderHelper.renderText(ClientTools.MC, x + 3, y + 3, text);
 
         // Add hitbox
         hitboxes.add(new HitBox(
@@ -289,7 +289,7 @@ public class GuiConfig extends GuiScreen {
             RenderHelper.drawThickBeveledBox(x + offset, y + offset, x2 - offset, y2 - offset, thick, style.getBorderColor(), style.getBorderColor(), style.getBoxColor());
         }
 
-        if (!ClientTools.mc.isGamePaused()) {
+        if (!ClientTools.MC.isGamePaused()) {
             RenderHelper.rot += .5f;
         }
 

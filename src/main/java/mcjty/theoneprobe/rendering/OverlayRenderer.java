@@ -5,7 +5,6 @@ import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeHitData;
-import mcjty.theoneprobe.apiimpl.ProbeHitEntityData;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
 import mcjty.theoneprobe.apiimpl.elements.ElementText;
@@ -33,8 +32,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
@@ -101,18 +98,18 @@ public class OverlayRenderer {
      * @param partialTicks Partial tick time for smooth entity position interpolation.
      */
     public static void renderHUD(ProbeMode mode, float partialTicks) {
-        if (ClientTools.mc.gameSettings.showDebugInfo) {
+        if (ClientTools.MC.gameSettings.showDebugInfo) {
             return;
         }
 
         // Cache values we will read often
         final double tooltipScale = Config.tooltipScale;
         final double maxDistance = Config.probeDistance;
-        ScaledResolution scaledresolution = new ScaledResolution(ClientTools.mc);
+        ScaledResolution scaledresolution = new ScaledResolution(ClientTools.MC);
         final double screenW = scaledresolution.getScaledWidth_double();
         final double screenH = scaledresolution.getScaledHeight_double();
 
-        RayTraceResult mouseOver = ClientTools.mc.objectMouseOver;
+        RayTraceResult mouseOver = ClientTools.MC.objectMouseOver;
         if (mouseOver != null && mouseOver.typeOfHit == RayTraceResult.Type.ENTITY) {
             GlStateManager.pushMatrix();
             setupOverlayRenderingScaled(screenW, screenH, tooltipScale);
@@ -124,7 +121,7 @@ public class OverlayRenderer {
         }
 
         // Raytrace for blocks from the player's eyes (so we find blocks at a configurable distance)
-        EntityPlayerSP player = ClientTools.mc.player;
+        EntityPlayerSP player = ClientTools.MC.player;
         if (player == null) {
             checkCleanup();
             return;
@@ -297,7 +294,7 @@ public class OverlayRenderer {
         }
 
         UUID uuid = entity.getPersistentID();
-        EntityPlayerSP player = ClientTools.mc.player;
+        EntityPlayerSP player = ClientTools.MC.player;
         if (player == null) return;
 
         long now = currentTimeMillis();
@@ -382,7 +379,7 @@ public class OverlayRenderer {
         BlockPos blockPos = mouseOver.getBlockPos();
         if (blockPos == null) return;
 
-        EntityPlayerSP player = ClientTools.mc.player;
+        EntityPlayerSP player = ClientTools.MC.player;
         if (player == null) return;
 
         if (player.getEntityWorld().isAirBlock(blockPos)) return;
@@ -392,7 +389,7 @@ public class OverlayRenderer {
         // Build optional break-progress element
         IElement damageElement = null;
         if (Config.showBreakProgress > 0) {
-            float damage = ClientTools.mc.playerController.curBlockDamageMP;
+            float damage = ClientTools.MC.playerController.curBlockDamageMP;
             if (damage > 0.0f) {
                 if (Config.showBreakProgress == 2) {
                     damageElement = new ElementText(TextFormatting.RED + I18n.format("theoneprobe.probe.progress_indicator") + " " + (int) (damage * 100.0f) + "%");
@@ -522,7 +519,6 @@ public class OverlayRenderer {
      */
     private static ProbeInfo getWaitingEntityInfo(ProbeMode mode, RayTraceResult mouseOver, Entity entity, EntityPlayerSP player) {
         ProbeInfo probeInfo = TheOneProbe.theOneProbeImp.create();
-        IProbeHitEntityData data = new ProbeHitEntityData(mouseOver.hitVec);
 
         IProbeConfig probeConfig = TheOneProbe.theOneProbeImp.createProbeConfig();
         try {
@@ -550,7 +546,7 @@ public class OverlayRenderer {
         GlStateManager.pushMatrix();
         double scale = Config.getTooltipScale();
 
-        ScaledResolution scaledresolution = new ScaledResolution(ClientTools.mc);
+        ScaledResolution scaledresolution = new ScaledResolution(ClientTools.MC);
         double sw = scaledresolution.getScaledWidth_double();
         double sh = scaledresolution.getScaledHeight_double();
 
@@ -625,7 +621,7 @@ public class OverlayRenderer {
             RenderHelper.drawThickBeveledBox(x + offset, y + offset, x + w - 1 - offset, y + h - 1 - offset, thick, style.getBorderColor(), style.getBorderColor(), style.getBoxColor());
         }
 
-        if (!ClientTools.mc.isGamePaused()) {
+        if (!ClientTools.MC.isGamePaused()) {
             RenderHelper.rot += .5f;
         }
 

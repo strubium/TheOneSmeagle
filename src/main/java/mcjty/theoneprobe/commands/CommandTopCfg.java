@@ -76,7 +76,7 @@ public class CommandTopCfg extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         if (args.length < 1) {
             ClientForgeEventHandlers.ignoreNextGuiClose = true;
-            EntityPlayerSP player = ClientTools.mc.player;
+            EntityPlayerSP player = ClientTools.MC.player;
             player.openGui(TheOneProbe.instance, GuiProxy.GUI_CONFIG, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
             return;
         }
