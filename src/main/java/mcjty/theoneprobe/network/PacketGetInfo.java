@@ -1,7 +1,7 @@
 package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import lombok.NoArgsConstructor;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeHitData;
@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -36,6 +35,7 @@ import static mcjty.theoneprobe.config.Config.PROBE_NEEDEDHARD;
  * @since 5/16/2016
  * @author McJty
  */
+@NoArgsConstructor
 public class PacketGetInfo implements IMessage {
 
     private int dim;
@@ -89,9 +89,6 @@ public class PacketGetInfo implements IMessage {
         NetworkTools.writeVarInt(buf, Item.getIdFromItem(pickBlock.getItem()));
         buf.writeByte(pickBlock.getCount());
         NetworkTools.writeVarInt(buf, pickBlock.getMetadata());
-    }
-
-    public PacketGetInfo() {
     }
 
     public PacketGetInfo(int dim, BlockPos pos, ProbeMode mode, RayTraceResult mouseOver, ItemStack pickBlock) {

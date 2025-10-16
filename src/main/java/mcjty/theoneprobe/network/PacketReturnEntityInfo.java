@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
+import lombok.NoArgsConstructor;
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.util.UUID;
 
+@NoArgsConstructor
 public class PacketReturnEntityInfo implements IMessage {
 
     private UUID uuid;
@@ -36,9 +38,6 @@ public class PacketReturnEntityInfo implements IMessage {
         } else {
             buf.writeBoolean(false);
         }
-    }
-
-    public PacketReturnEntityInfo() {
     }
 
     public PacketReturnEntityInfo(UUID uuid, ProbeInfo probeInfo) {

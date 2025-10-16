@@ -2,7 +2,6 @@ package mcjty.theoneprobe;
 
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.config.Config;
-import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;

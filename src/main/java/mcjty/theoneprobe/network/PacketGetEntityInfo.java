@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
+import lombok.NoArgsConstructor;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeHitEntityData;
@@ -26,6 +27,7 @@ import static mcjty.theoneprobe.api.TextStyleClass.LABEL;
 import static mcjty.theoneprobe.config.Config.PROBE_NEEDEDFOREXTENDED;
 import static mcjty.theoneprobe.config.Config.PROBE_NEEDEDHARD;
 
+@NoArgsConstructor
 public class PacketGetEntityInfo implements IMessage {
 
     private int dim;
@@ -56,8 +58,6 @@ public class PacketGetEntityInfo implements IMessage {
             buf.writeDouble(hitVec.z);
         }
     }
-
-    public PacketGetEntityInfo() {}
 
     public PacketGetEntityInfo(int dim, ProbeMode mode, RayTraceResult mouseOver, Entity entity) {
         this.dim = dim;

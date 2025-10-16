@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.network;
 
 import io.netty.buffer.ByteBuf;
+import lombok.NoArgsConstructor;
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.rendering.OverlayRenderer;
@@ -9,6 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+@NoArgsConstructor
 public class PacketReturnInfo implements IMessage {
 
     private int dim;
@@ -37,9 +39,6 @@ public class PacketReturnInfo implements IMessage {
         } else {
             buf.writeBoolean(false);
         }
-    }
-
-    public PacketReturnInfo() {
     }
 
     public PacketReturnInfo(int dim, BlockPos pos, ProbeInfo probeInfo) {

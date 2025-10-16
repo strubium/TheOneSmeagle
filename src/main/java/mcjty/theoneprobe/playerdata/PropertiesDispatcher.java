@@ -6,17 +6,19 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
+import javax.annotation.Nonnull;
+
 public class PropertiesDispatcher implements ICapabilityProvider, INBTSerializable<NBTTagCompound> {
 
     private final PlayerGotNote playerGotNote = new PlayerGotNote();
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
         return capability == PlayerProperties.PLAYER_GOT_NOTE;
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
         if (capability == PlayerProperties.PLAYER_GOT_NOTE) {
             return (T) playerGotNote;
         }

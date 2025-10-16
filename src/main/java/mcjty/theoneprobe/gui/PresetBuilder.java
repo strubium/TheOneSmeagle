@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.gui;
 
+import lombok.Getter;
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.config.Config;
 import org.apache.commons.lang3.tuple.Pair;
@@ -18,12 +19,42 @@ import java.util.Map;
 @SuppressWarnings("unused") //This is suppressed because most of these are added for groovy compact
 public class PresetBuilder {
 
+    /**
+     * -- GETTER --
+     *  Get the ArrayList containing all the presets
+     */
+    @Getter
     private static final List<Preset> presets = new ArrayList<>();
 
+    /**
+     * -- GETTER --
+     *  Get the name of the preset.
+     */
+    @Getter
     private String name;
+    /**
+     * -- GETTER --
+     *  Get the box border color of the preset.
+     */
+    @Getter
     private int boxBorderColor = 0xFFFFFF; // default value
+    /**
+     * -- GETTER --
+     *  Get the box fill color of the preset.
+     */
+    @Getter
     private int boxFillColor = 0x000000;   // default value
+    /**
+     * -- GETTER --
+     *  Get the box thickness of the preset.
+     */
+    @Getter
     private int boxThickness = 1;           // default value
+    /**
+     * -- GETTER --
+     *  Get the box offset of the preset.
+     */
+    @Getter
     private int boxOffset = 0;              // default value
     private final Map<TextStyleClass, String> textStyleClasses = new HashMap<>();
 
@@ -113,52 +144,10 @@ public class PresetBuilder {
 
 
     /**
-     * Get the name of the preset.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Get the box border color of the preset.
-     */
-    public int getBoxBorderColor() {
-        return boxBorderColor;
-    }
-
-    /**
-     * Get the box fill color of the preset.
-     */
-    public int getBoxFillColor() {
-        return boxFillColor;
-    }
-
-    /**
-     * Get the box thickness of the preset.
-     */
-    public int getBoxThickness() {
-        return boxThickness;
-    }
-
-    /**
-     * Get the box offset of the preset.
-     */
-    public int getBoxOffset() {
-        return boxOffset;
-    }
-
-    /**
      * Get the text style classes of the preset.
      */
     public Map<TextStyleClass, String> getTextStyleClasses() {
         return new HashMap<>(textStyleClasses); // Return a copy to avoid external modifications
-    }
-
-    /**
-     * Get the ArrayList containing all the presets
-     */
-    public static List<Preset> getPresets() {
-        return presets;
     }
 
     /**

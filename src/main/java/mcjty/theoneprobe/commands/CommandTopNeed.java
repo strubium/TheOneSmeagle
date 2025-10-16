@@ -34,9 +34,4 @@ public class CommandTopNeed extends CommandBase {
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         return true;
     }
-
-    @Override
-    public int compareTo(ICommand o) {
-        return getName().compareTo(o.getName());
-    }
 }

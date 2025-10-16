@@ -30,11 +30,13 @@ public class ProbeArmor extends ItemArmor {
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     public boolean hasOverlay(ItemStack stack) {
         return true; // Enable the overlay for this armor
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
         if ("overlay".equals(type)) {
             // Return the custom overlay texture (layer1)
