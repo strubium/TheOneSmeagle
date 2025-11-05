@@ -42,7 +42,7 @@ public class ClientTools {
      * @return Formatted string ready for rendering.
      */
     public static String stylifyString(String input) {
-        if (input == null || input.isEmpty()) {
+        if (StringUtils.isEmpty(input)) {
             return "";
         }
 
