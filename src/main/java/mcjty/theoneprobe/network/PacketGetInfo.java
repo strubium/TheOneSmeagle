@@ -10,7 +10,6 @@ import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -63,11 +62,7 @@ public class PacketGetInfo implements IMessage {
             hitVec = null;
         }
 
-        int itemId = NetworkTools.readVarInt(buf);
-        int count = buf.readUnsignedByte();
-        int meta = NetworkTools.readVarInt(buf);
-        Item item = Item.getItemById(itemId);
-        pickBlock = new ItemStack(item, count, meta);
+        pickBlock = NetworkTools.readItemStack(buf);
     }
 
     @Override
@@ -86,9 +81,7 @@ public class PacketGetInfo implements IMessage {
             buf.writeFloat((float) hitVec.z);
         }
 
-        NetworkTools.writeVarInt(buf, Item.getIdFromItem(pickBlock.getItem()));
-        buf.writeByte(pickBlock.getCount());
-        NetworkTools.writeVarInt(buf, pickBlock.getMetadata());
+        NetworkTools.writeItemStack(buf, pickBlock);
     }
 
     public PacketGetInfo(int dim, BlockPos pos, ProbeMode mode, RayTraceResult mouseOver, ItemStack pickBlock) {
