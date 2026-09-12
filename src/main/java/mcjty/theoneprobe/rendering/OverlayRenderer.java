@@ -19,6 +19,7 @@ import mcjty.theoneprobe.network.ThrowableIdentity;
 import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -352,7 +353,7 @@ public class OverlayRenderer {
         ProbeInfo info = cacheEntry.getRight();
 
         // If cached info is older than timeout, schedule a refresh (leave the info in cache so UI doesn't flicker)
-        if (now > cachedAt + Config.entityTimeout) {
+        if (!Minecraft.getMinecraft().isGamePaused() && now > cachedAt + Config.entityTimeout) {
             putEntityCache(uuid, now + 500L, info);
             requestEntityInfo(mode, mouseOver, entity, player);
         }
@@ -462,7 +463,7 @@ public class OverlayRenderer {
         long cachedAt = cacheEntry.getLeft();
         ProbeInfo info = cacheEntry.getRight();
 
-        if (now > cachedAt + Config.blockTimeout) {
+        if (!Minecraft.getMinecraft().isGamePaused() && now > cachedAt + Config.blockTimeout) {
             // refresh in background, keep showing current info
             putBlockCache(key, now + 500L, info);
             requestBlockInfo(mode, mouseOver, blockPos, player);
