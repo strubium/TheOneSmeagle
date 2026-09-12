@@ -127,6 +127,8 @@ public class Config {
     };
 
     @Getter private static float blockNameMaxWidth = 0.0f;
+    @Getter private static int potionMaxNumber = 5;
+
 
     public static Map<TextStyleClass, String> defaultTextStyleClasses = new HashMap<>();
     public static Map<TextStyleClass, String> textStyleClasses;
@@ -254,6 +256,7 @@ public class Config {
         harvestStyleVanilla = cfg.getBoolean("harvestStyleVanilla", CATEGORY_CLIENT, harvestStyleVanilla, "true means shows harvestability with vanilla style icons");
         harvestLevels = cfg.getStringList("harvestLevels", CATEGORY_CLIENT, harvestLevels, "The language translation keys to use when showing harvest levels");
         blockNameMaxWidth = cfg.getFloat("blockNameMaxWidth", CATEGORY_CLIENT, blockNameMaxWidth, 0.0f, 1.0f, "The max displaying width of a block name, 0.0 is no limit, otherwise represents the percentage with respect to the whole screen");
+        potionMaxNumber = cfg.getInt("potionMaxNumber", CATEGORY_CLIENT, potionMaxNumber, 1,256, "Max amount of potions to show on a entity");
 
         Map<TextStyleClass, String> newformat = new HashMap<>();
         for (TextStyleClass styleClass : textStyleClasses.keySet()) {

@@ -84,9 +84,19 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
                 if (!effects.isEmpty()) {
                     IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff));
                     float durationFactor = 1.0f;
+                    int shownEffects = 0;
+
+
                     for (PotionEffect effect : effects) {
+                        if (shownEffects >= Config.getPotionMaxNumber()) {
+                            int remaining = effects.size() - shownEffects;
+                            vertical.text("..and " + remaining + " other effects");
+                            break;
+                        }
+
                         String s1 = STARTLOC + effect.getEffectName() + ENDLOC;
                         Potion potion = effect.getPotion();
+
                         if (effect.getAmplifier() > 0) {
                             s1 = s1 + " " + STARTLOC + "potion.potency." + effect.getAmplifier() + ENDLOC;
                         }
@@ -100,6 +110,8 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
                         } else {
                             vertical.text(OK + s1);
                         }
+
+                        shownEffects++;
                     }
                 }
             }
