@@ -8,6 +8,7 @@ import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeConfig;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
 import mcjty.theoneprobe.compat.RedstoneFluxTools;
+import mcjty.theoneprobe.compat.waila.WailaTools;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.block.*;
@@ -54,8 +55,35 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
                 break;
             }
         }
+
+        // If no TOS override handled the block, use the normal block information
         if (!handled) {
-            showStandardBlockInfo(config, mode, probeInfo, blockState, block, data, world);
+
+            showStandardBlockInfo(
+                    config,
+                    mode,
+                    probeInfo,
+                    blockState,
+                    block,
+                    data,
+                    world
+            );
+
+        } else {
+
+            if (CommonProxy.waila){
+                // Give WAILA a chance to provide information for this block.
+                WailaTools.getWailaProbeInfoProvider()
+                        .addProbeInfo(
+                                mode,
+                                probeInfo,
+                                player,
+                                world,
+                                blockState,
+                                data
+                        );
+            }
+
         }
 
         if (Tools.show(mode, config.getShowCropPercentage())) {
@@ -64,6 +92,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
 
         boolean showHarvestLevel = Tools.show(mode, config.getShowHarvestLevel());
         boolean showHarvested = Tools.show(mode, config.getShowCanBeHarvested());
+
         if (showHarvested && showHarvestLevel) {
             HarvestInfoTools.showHarvestInfo(probeInfo, world, pos, block, blockState, player);
         } else if (showHarvestLevel) {
@@ -75,6 +104,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
         if (Tools.show(mode, config.getShowRedstone())) {
             showRedstonePower(probeInfo, world, blockState, data, block, Tools.show(mode, config.getShowLeverSetting()));
         }
+
         if (Tools.show(mode, config.getShowLeverSetting())) {
             showLeverSetting(probeInfo, blockState, block);
         }
@@ -84,6 +114,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
         if (config.getRFMode() > 0) {
             showRF(probeInfo, world, pos);
         }
+
         if (Tools.show(mode, config.getShowTankSetting())) {
             if (config.getTankMode() > 0) {
                 showTankInfo(probeInfo, world, pos);
@@ -97,6 +128,7 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
         if (Tools.show(mode, config.getShowMobSpawnerSetting())) {
             showMobSpawnerInfo(probeInfo, world, data, block);
         }
+
         if (blockState.getBlock() instanceof BlockCauldron) {
             for (IProperty<?> property : blockState.getProperties().keySet()) {
                 if (!"level".equals(property.getName())) continue;

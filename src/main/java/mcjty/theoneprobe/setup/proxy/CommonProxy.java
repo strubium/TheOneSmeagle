@@ -2,6 +2,7 @@ package mcjty.theoneprobe.setup.proxy;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import lombok.Getter;
+import mcjty.theoneprobe.compat.waila.WailaProbeInfoProvider;
 import mcjty.theoneprobe.event.CommonForgeEventHandlers;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IProbeInfoEntityProvider;
@@ -47,6 +48,8 @@ public class CommonProxy implements IProxy {
 
     public static boolean baubles = false;
     public static boolean redstoneflux = false;
+    public static boolean waila = false;
+
 
     public void preInit(FMLPreInitializationEvent e) {
         logger = e.getModLog();
@@ -83,6 +86,9 @@ public class CommonProxy implements IProxy {
     }
 
     private void setupModCompat() {
+
+        waila = Loader.isModLoaded("waila");
+
         redstoneflux = Loader.isModLoaded("redstoneflux");
         if (redstoneflux) {
             logger.log(Level.INFO, "The One Probe Detected RedstoneFlux: enabling support");

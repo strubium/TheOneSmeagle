@@ -13,6 +13,8 @@ minecraft {
 	extraRunJvmArguments = listOf("-Dforge.logging.console.level=debug")
 }
 
+
+
 repositories {
 	maven {
 		name = "Cleanroom"
@@ -23,11 +25,24 @@ repositories {
 		name = "CoFH Maven"
 		url = uri("https://maven.covers1624.net")
 	}
+
+	maven {
+		name = "CurseMaven"
+		url =  uri("https://curse.cleanroommc.com")
+	}
 }
 
 dependencies {
 	compileOnly(rfg.deobf("mezz:jei:4.26.2"))
 	compileOnly(rfg.deobf("cofh:RedstoneFlux:1.12-2.0.1.2:universal"))
+
+	// hwyla
+	compileOnly(rfg.deobf("curse.maven:hwyla-253449:2568751"))
+	runtimeOnly(rfg.deobf("curse.maven:hwyla-253449:2568751"))
+
+	// Little Tiles, for testing hwyla
+	runtimeOnly(rfg.deobf("curse.maven:littletiles-257818:5180387"))
+	runtimeOnly(rfg.deobf("curse.maven:creativecore-257814:4722163"))
 }
 
 // Set the toolchain version to decouple the Java we run Gradle with from the Java used to compile and run the mod
