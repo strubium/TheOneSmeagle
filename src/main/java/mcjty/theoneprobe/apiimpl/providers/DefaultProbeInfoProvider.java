@@ -22,6 +22,7 @@ import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBrewingStand;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -184,10 +185,10 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             TileEntity te = world.getTileEntity(data.getPos());
             if (te instanceof TileEntityMobSpawner) {
                 MobSpawnerBaseLogic logic = ((TileEntityMobSpawner) te).getSpawnerBaseLogic();
-                String mobName = logic.getCachedEntity().getName();
+                String mobName = logic.getEntityId().getPath().toString();
                 probeInfo.horizontal(probeInfo.defaultLayoutStyle()
                     .alignment(ElementAlignment.ALIGN_CENTER))
-                    .text(LABEL + "{*theoneprobe.probe.mob_indicator*} " + INFO + mobName);
+                    .text(LABEL + "{*theoneprobe.probe.mob_indicator*} " + INFO + Tools.capitalize(mobName));
             }
         }
     }

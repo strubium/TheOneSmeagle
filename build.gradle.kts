@@ -49,6 +49,12 @@ dependencies {
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
 tasks {
+	applySourceAccessTransformers {
+		accessTransformerFiles.from(
+			project.files("src/main/resources/META-INF/top_at.cfg")
+		)
+	}
+
 	arrayOf(deobfuscateMergedJarToSrg, srgifyBinpatchedJar).forEach {
 		it.configure {
 			accessTransformerFiles.from(project.files("src/main/resources/META-INF/top_at.cfg"))
