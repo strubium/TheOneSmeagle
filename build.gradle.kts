@@ -43,6 +43,11 @@ dependencies {
 	// Little Tiles, for testing hwyla
 	runtimeOnly(rfg.deobf("curse.maven:littletiles-257818:5180387"))
 	runtimeOnly(rfg.deobf("curse.maven:creativecore-257814:4722163"))
+
+	runtimeOnly(rfg.deobf("curse.maven:topalldependents-1120632:8547154"))
+
+	runtimeOnly(rfg.deobf("curse.maven:thaumcraft-223628:2629023"))
+	runtimeOnly(rfg.deobf("curse.maven:baubles-227083:2518667"))
 }
 
 // Set the toolchain version to decouple the Java we run Gradle with from the Java used to compile and run the mod

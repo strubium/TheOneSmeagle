@@ -6,6 +6,7 @@ import mcjty.theoneprobe.api.IIconStyle;
 import mcjty.theoneprobe.api.ILayoutStyle;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -108,10 +109,10 @@ public class HarvestInfoTools {
 
         if (harvestLevel < 0) {
             return null;
-        } else if (harvestLevel >= Config.getHarvestLevels().length) {
-            return Config.getHarvestLevels()[Config.getHarvestLevels().length - 1];
+        } else if (harvestLevel >= NewConfig.client.harvestLevelTranslationKeys.length) {
+            return NewConfig.client.harvestLevelTranslationKeys[NewConfig.client.harvestLevelTranslationKeys.length - 1];
         } else {
-            return Config.getHarvestLevels()[harvestLevel];
+            return NewConfig.client.harvestLevelTranslationKeys[harvestLevel];
         }
     }
 

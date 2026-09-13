@@ -3,6 +3,7 @@ package mcjty.theoneprobe.items;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.compat.BaubleTools;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.probe.ProbeArmor;
 import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import mcjty.theoneprobe.setup.Registration;
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,7 +70,7 @@ public class ModItems {
 
                     if (item instanceof ItemArmor && ((ItemArmor) item).armorType == EntityEquipmentSlot.HEAD) {
                         ResourceLocation registryName = item.getRegistryName();
-                        if (registryName != null && !Config.probeHelmetBlacklist.contains(registryName.getNamespace())) {
+                        if (registryName != null && !Arrays.asList(NewConfig.server.probeHelmetBlacklist).contains(registryName.getNamespace())) {
                             if (((ItemArmor) item).getArmorMaterial().equals(ItemArmor.ArmorMaterial.LEATHER)) {
                                 continue; //HACK HACK Skip leather helmets because of their die (dye) rendering
                             }

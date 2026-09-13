@@ -1,5 +1,6 @@
 package mcjty.theoneprobe.commands;
 
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.event.ClientForgeEventHandlers;
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.TheOneProbe;
@@ -49,10 +50,10 @@ public class CommandTopCfg extends CommandBase {
         SUBCOMMANDS.put("setpos", CommandTopCfg::setPos);
         SUBCOMMANDS.put("opaque", s -> Config.setBoxStyle(2, 0xff999999, 0xff003366));
         SUBCOMMANDS.put("default", s -> Config.setBoxStyle(2, 0xff999999, 0x55006699));
-        SUBCOMMANDS.put("liquids", s -> Config.setLiquids(true));
-        SUBCOMMANDS.put("noliquids", s -> Config.setLiquids(false));
-        SUBCOMMANDS.put("compactequalstacks", s -> Config.setCompactEqualStacks(true));
-        SUBCOMMANDS.put("dontcompactequalstacks", s -> Config.setCompactEqualStacks(false));
+        SUBCOMMANDS.put("liquids", s -> NewConfig.show.setLiquids(true));
+        SUBCOMMANDS.put("noliquids", s -> NewConfig.show.setLiquids(false));
+        SUBCOMMANDS.put("compactequalstacks", s -> NewConfig.server.setCompactEqualStacks(true));
+        SUBCOMMANDS.put("dontcompactequalstacks", s -> NewConfig.server.setCompactEqualStacks(false));
         SUBCOMMANDS.put("extendedinmain", s -> Config.setExtendedInMain(true));
         SUBCOMMANDS.put("defaultinmain", s -> Config.setExtendedInMain(false));
     }

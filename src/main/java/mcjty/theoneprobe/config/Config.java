@@ -49,8 +49,6 @@ public class Config {
     public static boolean extendedInMain = false;
     public static NumberFormat rfFormat = NumberFormat.COMPACT;
     public static NumberFormat tankFormat = NumberFormat.COMPACT;
-    public static int blockTimeout = 300;
-    public static int entityTimeout = 400;
     public static int waitingForServerTimeout = 2000;
     public static int maxPacketToServer = 20000;
 
@@ -68,15 +66,6 @@ public class Config {
     private static Set<ResourceLocation> inventoriesToShow = null;
     private static Set<ResourceLocation> inventoriesToNotShow = null;
     private static Set<ResourceLocation> dontSendNBTSet = null;
-
-    public static float probeDistance = 6;
-    public static boolean showLiquids = false;
-    public static boolean showDebugUUID = false;
-    public static boolean isVisible = true;
-    public static boolean compactEqualStacks = true;
-    public static boolean holdKeyToMakeVisible = false;
-    public static boolean showProbeConfigGUI = true;
-    public static boolean showProbeNoteGUI = true;
 
     public static boolean showDebugInfo = true;
 
@@ -100,7 +89,6 @@ public class Config {
     private static int boxFillColor = 0x55006699;
     private static int boxThickness = 2;
 
-    @Getter public static float tooltipScale = 1.0f;
 
     public static int rfbarFilledColor = 0xffdd0000;
     public static int rfbarAlternateFilledColor = 0xff430000;
@@ -110,21 +98,11 @@ public class Config {
     public static int tankbarAlternateFilledColor = 0xff000043;
     public static int tankbarBorderColor = 0xff555555;
     public static int probeNoteStackSize = 1;
-    @Getter
-    public static String probeNoteBlock = "minecraft:log";
-    public static Set<String> probeHelmetBlacklist = new HashSet<>();
 
 
-    @Getter private static String[] harvestLevels = new String[]{
-            "theoneprobe.harvestlevel.stone",
-            "theoneprobe.harvestlevel.iron",
-            "theoneprobe.harvestlevel.diamond",
-            "theoneprobe.harvestlevel.obsidian",
-            "theoneprobe.harvestlevel.cobalt",
-            "theoneprobe.harvestlevel.duranite",
-            "theoneprobe.harvestlevel.valyrium",
-            "theoneprobe.harvestlevel.vibranium"
-    };
+    //Tick TopAllDependents
+    public static boolean Botaniatop = false;
+
 
     @Getter private static float blockNameMaxWidth = 0.0f;
     @Getter private static int potionMaxNumber = 5;
@@ -149,17 +127,12 @@ public class Config {
 
     public static int loggingThrowableTimeout = 20000;
 
-    public static boolean showCollarColor = true;
 
     private static IOverlayStyle defaultOverlayStyle;
     @Getter private static final ProbeConfig defaultConfig = new ProbeConfig();
     @Getter @Setter private static IProbeConfig realConfig;
 
     public static void init(Configuration cfg) {
-        showProbeNoteGUI = cfg.getBoolean("showProbeNoteGUI", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showProbeNoteGUI,"Show probes note screen on right-click");
-        showProbeConfigGUI = cfg.getBoolean("showProbeConfigGUI", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showProbeConfigGUI,"Show probes config screen on right-click");
-        probeNoteBlock = cfg.getString("probeNoteBlock", CATEGORY_THEONEPROBE, probeNoteBlock,"What block should be used in inside the probe note example");
-        showDebugUUID = cfg.getBoolean("showDebugUUID", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showDebugUUID,"Show a entities UUID in the debug probe menu");
         loggingThrowableTimeout = cfg.getInt("loggingThrowableTimeout", CATEGORY_THEONEPROBE, loggingThrowableTimeout, 1, 10000000, "How much time (in ms) to wait before reporting an exception again");
         needsProbe = cfg.getInt("needsProbe", CATEGORY_THEONEPROBE, needsProbe, 0, 3, "Is the probe needed to show the tooltip? 0 = no, 1 = yes, 2 = yes and clients cannot override, 3 = probe needed for extended info only");
         regProbes = cfg.getBoolean("regProbes", CATEGORY_THEONEPROBE, regProbes, "Should probes be registered? Useful if needsProbe is 0");
@@ -167,23 +140,18 @@ public class Config {
         extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_THEONEPROBE, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
         supportBaubles = cfg.getBoolean("supportBaubles", CATEGORY_THEONEPROBE, supportBaubles, "If true there will be a bauble version of the probe if baubles is present");
         spawnNote = cfg.getBoolean("spawnNote", CATEGORY_THEONEPROBE, spawnNote, "If true there will be a readme note for first-time players");
-        showCollarColor = cfg.getBoolean("showCollarColor", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showCollarColor, "If true show the color of the collar of a wolf");
         defaultConfig.setRFMode(cfg.getInt("showRF", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, defaultConfig.getRFMode(), 0, 2, "How to display RF: 0 = do not show, 1 = show in a bar, 2 = show as text"));
         defaultConfig.setTankMode(cfg.getInt("showTank", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, defaultConfig.getTankMode(), 0, 2, "How to display tank contents: 0 = do not show, 1 = show in a bar, 2 = show as text"));
         int fmt = cfg.getInt("rfFormat", CATEGORY_THEONEPROBE, rfFormat.ordinal(), 0, 2, "Format for displaying RF: 0 = full, 1 = compact, 2 = comma separated");
         rfFormat = NumberFormat.values()[fmt];
         fmt = cfg.getInt("tankFormat", CATEGORY_THEONEPROBE, tankFormat.ordinal(), 0, 2, "Format for displaying tank contents: 0 = full, 1 = compact, 2 = comma separated");
         tankFormat = NumberFormat.values()[fmt];
-        blockTimeout = cfg.getInt("blockTimeout", CATEGORY_THEONEPROBE, blockTimeout, 50, 100000, "The amount of milliseconds to wait before updating block information from the server (this is a client-side config)");
-        entityTimeout = cfg.getInt("entityTimeout", CATEGORY_THEONEPROBE, entityTimeout, 50, 100000, "The amount of milliseconds to wait before updating entity information from the server (this is a client-side config)");
         waitingForServerTimeout = cfg.getInt("waitingForServerTimeout", CATEGORY_THEONEPROBE, waitingForServerTimeout, -1, 100000, "The amount of milliseconds to wait before showing a 'fetch from server' info on the client (if the server is slow to respond) (-1 to disable this feature)");
         maxPacketToServer = cfg.getInt("maxPacketToServer", CATEGORY_THEONEPROBE, maxPacketToServer, -1, 32768, "The maximum packet size to send an itemstack from client to server. Reduce this if you have issues with network lag caused by TOP");
-        probeDistance = cfg.getFloat("probeDistance", CATEGORY_THEONEPROBE, probeDistance, 0.1f, 200f, "Distance at which the probe works");
         initDefaultConfig(cfg);
 
         showBreakProgressText = cfg.getBoolean("showBreakProgressText", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showDebugInfo, "If true show the text in the progress bar");
         showDebugInfo = cfg.getBoolean("showDebugInfo", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showDebugInfo, "If true show debug info with creative probe");
-        compactEqualStacks = cfg.getBoolean("compactEqualStacks", CATEGORY_THEONEPROBE, compactEqualStacks, "If true equal stacks will be compacted in the chest contents overlay");
         rfbarFilledColor = parseColor(cfg.getString("rfbarFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarFilledColor), "Color for the RF bar"));
         rfbarAlternateFilledColor = parseColor(cfg.getString("rfbarAlternateFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarAlternateFilledColor), "Alternate color for the RF bar"));
         rfbarBorderColor = parseColor(cfg.getString("rfbarBorderColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarBorderColor), "Color for the RF bar border"));
@@ -196,9 +164,6 @@ public class Config {
         showContentsWithoutSneaking = cfg.getStringList("showContentsWithoutSneaking", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showContentsWithoutSneaking, "A list of blocks for which we automatically show chest contents even if not sneaking");
         dontShowContentsUnlessSneaking = cfg.getStringList("dontShowContentsUnlessSneaking", CATEGORY_THEONEPROBE, dontShowContentsUnlessSneaking, "A list of blocks for which we don't show chest contents automatically except if sneaking");
         dontSendNBT = cfg.getStringList("dontSendNBT", CATEGORY_THEONEPROBE, dontSendNBT, "A list of blocks not to send NBT over the network. This is useful for blocks that have HUGE NBT in their pickblock (itemstack)");
-        probeHelmetBlacklist  = new HashSet<>(Arrays.asList(cfg.getStringList("helmetBlacklist", CATEGORY_THEONEPROBE,
-                new String[]{"mwc"},
-                "List of mod IDs whose helmets should be ignored")));
 
         setupStyleConfig(cfg);
     }
@@ -240,11 +205,6 @@ public class Config {
         boxBorderColor = parseColor(cfg.getString("boxBorderColor", CATEGORY_CLIENT, Integer.toHexString(boxBorderColor), "Color of the border of the box (0 to disable)"));
         boxFillColor = parseColor(cfg.getString("boxFillColor", CATEGORY_CLIENT, Integer.toHexString(boxFillColor), "Color of the box (0 to disable)"));
         boxThickness = cfg.getInt("boxThickness", CATEGORY_CLIENT, boxThickness, 0, 20, "Thickness of the border of the box (0 to disable)");
-        showLiquids = cfg.getBoolean("showLiquids", CATEGORY_CLIENT, showLiquids, "If true show liquid information when the probe hits liquid first");
-        isVisible = cfg.getBoolean("isVisible", CATEGORY_CLIENT, isVisible, "Toggle default probe visibility (client can override)");
-        holdKeyToMakeVisible = cfg.getBoolean("holdKeyToMakeVisible", CATEGORY_CLIENT, holdKeyToMakeVisible, "If true, the probe hotkey must be held down to show the tooltip");
-        compactEqualStacks = cfg.getBoolean("compactEqualStacks", CATEGORY_CLIENT, compactEqualStacks, "If true equal stacks will be compacted in the chest contents overlay");
-        tooltipScale = cfg.getFloat("tooltipScale", CATEGORY_CLIENT, tooltipScale, 0.4f, 5.0f, "The scale of the tooltips, 1 is default, 2 is smaller");
         probeButtonColor = parseColor(cfg.getString("probeButtonColor", CATEGORY_CLIENT, Integer.toHexString(probeButtonColor), "Color of the buttons in the probe note (0 to disable)"));
         probeProgressColor = parseColor(cfg.getString("probeProgressColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressColor), "Color of the progress bar (0 to disable)"));
         probeProgressAltColor = parseColor(cfg.getString("probeProgressAltColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressAltColor), "Alt color of the progress bar (0 to disable)"));
@@ -254,7 +214,6 @@ public class Config {
         chestContentsBorderColor = parseColor(cfg.getString("chestContentsBorderColor", CATEGORY_CLIENT, Integer.toHexString(chestContentsBorderColor), "Color of the border of the chest contents box (0 to disable)"));
         showBreakProgress = cfg.getInt("showBreakProgress", CATEGORY_CLIENT, showBreakProgress, 0, 2, "0 means don't show break progress, 1 is show as bar, 2 is show as text");
         harvestStyleVanilla = cfg.getBoolean("harvestStyleVanilla", CATEGORY_CLIENT, harvestStyleVanilla, "true means shows harvestability with vanilla style icons");
-        harvestLevels = cfg.getStringList("harvestLevels", CATEGORY_CLIENT, harvestLevels, "The language translation keys to use when showing harvest levels");
         blockNameMaxWidth = cfg.getFloat("blockNameMaxWidth", CATEGORY_CLIENT, blockNameMaxWidth, 0.0f, 1.0f, "The max displaying width of a block name, 0.0 is no limit, otherwise represents the percentage with respect to the whole screen");
         potionMaxNumber = cfg.getInt("potionMaxNumber", CATEGORY_CLIENT, potionMaxNumber, 1,256, "Max amount of potions to show on a entity");
 
@@ -284,27 +243,6 @@ public class Config {
         cfg.save();
     }
 
-    public static void setLiquids(boolean liquids) {
-        Configuration cfg = mainConfig;
-        Config.showLiquids = liquids;
-        cfg.get(CATEGORY_CLIENT, "showLiquids", showLiquids).set(liquids);
-        cfg.save();
-    }
-
-    public static void setVisible(boolean visible) {
-        Configuration cfg = mainConfig;
-        Config.isVisible = visible;
-        cfg.get(CATEGORY_CLIENT, "isVisible", isVisible).set(visible);
-        cfg.save();
-    }
-
-    public static void setCompactEqualStacks(boolean compact) {
-        Configuration cfg = mainConfig;
-        Config.compactEqualStacks = compact;
-        cfg.get(CATEGORY_CLIENT, "compactEqualStacks", compactEqualStacks).set(compact);
-        cfg.save();
-    }
-
     public static void setPos(int leftx, int topy, int rightx, int bottomy) {
         Configuration cfg = mainConfig;
         Config.leftX = leftx;
@@ -319,25 +257,9 @@ public class Config {
         updateDefaultOverlayStyle();
     }
 
-    public static void setScale(float scale) {
-        Configuration cfg = mainConfig;
-        tooltipScale = scale;
-        cfg.get(CATEGORY_CLIENT, "tooltipScale", tooltipScale).set(tooltipScale);
-        cfg.save();
-        updateDefaultOverlayStyle();
-    }
-
     public static boolean getHarvestStyleVanilla(){
         return harvestStyleVanilla;
     }
-
-    public static boolean getShowProbeConfigGUI(){
-        return showProbeConfigGUI;
-    }
-    public static boolean getShowProbeNoteGUI(){
-        return showProbeNoteGUI;
-    }
-
     public static void setBoxStyle(int thickness, int borderColor, int fillcolor) {
         Configuration cfg = mainConfig;
         boxThickness = thickness;

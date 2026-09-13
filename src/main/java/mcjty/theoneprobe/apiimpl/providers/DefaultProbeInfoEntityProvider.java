@@ -5,12 +5,11 @@ import mcjty.theoneprobe.Tools;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.styles.ItemStyle;
 import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
+import mcjty.theoneprobe.compat.event.SpecialNameEvent;
 import mcjty.theoneprobe.config.Config;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EntityAgeable;
+import mcjty.theoneprobe.config.NewConfig;
+import net.minecraft.entity.*;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityWolf;
@@ -20,7 +19,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.UsernameCache;
 
 import java.text.DecimalFormat;
@@ -150,7 +153,7 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
             }
         }
 
-        if (entity instanceof EntityWolf && Config.showCollarColor) {
+        if (entity instanceof EntityWolf && NewConfig.server.showCollarColor) {
             if (((EntityWolf) entity).isTamed()) {
                 EnumDyeColor collarColor = ((EntityWolf) entity).getCollarColor();
                 probeInfo.text(LABEL + "{*theoneprobe.probe.collar_color_indicator*} " + INFO + collarColor.getName());
@@ -182,7 +185,7 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
             probeInfo.horizontal()
                     .entity(entity)
                     .vertical()
-                        .text(NAME + entity.getDisplayName().getFormattedText())
+                        .text(NAME + getName(entity))
                         .text(MODNAME + modid);
         } else {
             probeInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
@@ -190,4 +193,19 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
                     .text(NAME + entity.getDisplayName().getFormattedText());
         }
     }
+
+    public static String getName(Entity entity) {
+        if (entity.hasCustomName()) {
+            return new TextComponentString(entity.getCustomNameTag()).getFormattedText();
+        } else {
+
+            if (entity instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) entity;
+                return new TextComponentString(player.getName()).getFormattedText();
+            }
+
+            return entity.getDisplayName().getFormattedText();
+        }
+    }
+
 }

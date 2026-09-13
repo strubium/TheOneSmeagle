@@ -20,11 +20,10 @@ import java.util.function.Function;
 @Mod(modid = TheOneProbe.MODID, name="TheOneProbe",
         dependencies = "after:forge@[" + TheOneProbe.MIN_FORGE11_VER + ",);",
         version = TheOneProbe.VERSION,
-        acceptedMinecraftVersions = "[1.12,1.13]",
-        guiFactory = "mcjty.theoneprobe.config.TopModGuiFactory")
+        acceptedMinecraftVersions = "[1.12,1.13]")
 public class TheOneProbe {
     public static final String MODID = "theoneprobe";
-    public static final String VERSION = "1.4.28";
+    public static final String VERSION = "1.4.29";
     public static final String MIN_FORGE11_VER = "13.19.0.2176";
 
     @SidedProxy(clientSide="mcjty.theoneprobe.setup.proxy.ClientProxy", serverSide="mcjty.theoneprobe.setup.proxy.ServerProxy")

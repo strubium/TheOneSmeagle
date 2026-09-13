@@ -12,6 +12,7 @@ import mcjty.theoneprobe.apiimpl.providers.DefaultProbeInfoEntityProvider;
 import mcjty.theoneprobe.apiimpl.providers.DefaultProbeInfoProvider;
 import mcjty.theoneprobe.apiimpl.styles.ProgressStyle;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.network.PacketGetEntityInfo;
 import mcjty.theoneprobe.network.PacketGetInfo;
 import mcjty.theoneprobe.network.PacketHandler;
@@ -104,8 +105,8 @@ public class OverlayRenderer {
         }
 
         // Cache values we will read often
-        final double tooltipScale = Config.tooltipScale;
-        final double maxDistance = Config.probeDistance;
+        final double tooltipScale = NewConfig.client.tooltipScale;
+        final double maxDistance = NewConfig.probeDistance;
         ScaledResolution scaledresolution = new ScaledResolution(ClientTools.MC);
         final double screenW = scaledresolution.getScaledWidth_double();
         final double screenH = scaledresolution.getScaledHeight_double();
@@ -131,7 +132,7 @@ public class OverlayRenderer {
         Vec3d start = player.getPositionEyes(partialTicks);
         Vec3d look = player.getLook(partialTicks);
         Vec3d end = start.add(look.x * maxDistance, look.y * maxDistance, look.z * maxDistance);
-        mouseOver = player.getEntityWorld().rayTraceBlocks(start, end, Config.showLiquids);
+        mouseOver = player.getEntityWorld().rayTraceBlocks(start, end, NewConfig.show.showLiquids);
 
         if (mouseOver == null) {
             checkCleanup();
@@ -201,7 +202,7 @@ public class OverlayRenderer {
      * @param now Current time in milliseconds.
      */
     private static void cleanupCachedBlocks(long now) {
-        long expiryWindow = Config.blockTimeout + 1_000L;
+        long expiryWindow = NewConfig.networking.blockTimeout + 1_000L;
         Iterator<Map.Entry<Pair<Integer, BlockPos>, Pair<Long, ProbeInfo>>> it = cachedInfo.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Pair<Integer, BlockPos>, Pair<Long, ProbeInfo>> e = it.next();
@@ -218,7 +219,7 @@ public class OverlayRenderer {
      * @param now Current time in milliseconds.
      */
     private static void cleanupCachedEntities(long now) {
-        long expiryWindow = Config.entityTimeout + 1_000L;
+        long expiryWindow = NewConfig.networking.entityTimeout + 1_000L;
         Iterator<Map.Entry<UUID, Pair<Long, ProbeInfo>>> it = cachedEntityInfo.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<UUID, Pair<Long, ProbeInfo>> e = it.next();
@@ -334,7 +335,7 @@ public class OverlayRenderer {
             }
 
             // If we have a recent lastPair we can show it to avoid flicker
-            if (lastPair != null && now < lastPairTime + Config.entityTimeout) {
+            if (lastPair != null && now < lastPairTime + NewConfig.networking.entityTimeout) {
                 renderElements(lastPair.getRight(), Config.getDefaultOverlayStyle(), sw, sh, null);
                 lastRenderedTime = now;
             } else if (Config.waitingForServerTimeout > 0 && lastRenderedTime != -1 && now > lastRenderedTime + Config.waitingForServerTimeout) {
@@ -353,7 +354,7 @@ public class OverlayRenderer {
         ProbeInfo info = cacheEntry.getRight();
 
         // If cached info is older than timeout, schedule a refresh (leave the info in cache so UI doesn't flicker)
-        if (!Minecraft.getMinecraft().isGamePaused() && now > cachedAt + Config.entityTimeout) {
+        if (!Minecraft.getMinecraft().isGamePaused() && now > cachedAt + NewConfig.networking.entityTimeout) {
             putEntityCache(uuid, now + 500L, info);
             requestEntityInfo(mode, mouseOver, entity, player);
         }
@@ -445,7 +446,7 @@ public class OverlayRenderer {
                 requestBlockInfo(mode, mouseOver, blockPos, player);
             }
 
-            if (lastPair != null && now < lastPairTime + Config.blockTimeout) {
+            if (lastPair != null && now < lastPairTime + NewConfig.networking.blockTimeout) {
                 renderElements(lastPair.getRight(), Config.getDefaultOverlayStyle(), sw, sh, extraElement);
                 lastRenderedTime = now;
             } else if (Config.waitingForServerTimeout > 0 && lastRenderedTime != -1 && now > lastRenderedTime + Config.waitingForServerTimeout) {
@@ -463,7 +464,7 @@ public class OverlayRenderer {
         long cachedAt = cacheEntry.getLeft();
         ProbeInfo info = cacheEntry.getRight();
 
-        if (!Minecraft.getMinecraft().isGamePaused() && now > cachedAt + Config.blockTimeout) {
+        if (!Minecraft.getMinecraft().isGamePaused() && now > cachedAt + NewConfig.networking.blockTimeout) {
             // refresh in background, keep showing current info
             putBlockCache(key, now + 500L, info);
             requestBlockInfo(mode, mouseOver, blockPos, player);
@@ -545,7 +546,7 @@ public class OverlayRenderer {
      */
     public static void renderOverlay(IOverlayStyle style, IProbeInfo probeInfo) {
         GlStateManager.pushMatrix();
-        double scale = Config.getTooltipScale();
+        double scale = NewConfig.client.tooltipScale;
 
         ScaledResolution scaledresolution = new ScaledResolution(ClientTools.MC);
         double sw = scaledresolution.getScaledWidth_double();

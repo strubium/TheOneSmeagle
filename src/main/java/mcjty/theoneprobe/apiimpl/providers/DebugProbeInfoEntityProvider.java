@@ -7,6 +7,7 @@ import mcjty.theoneprobe.api.IProbeInfoEntityProvider;
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
@@ -70,7 +71,7 @@ public class DebugProbeInfoEntityProvider implements IProbeInfoEntityProvider {
                         .text(LABEL + "{*theoneprobe.debug_probe.motion_indicator*} " + INFO + String.format("X: %.2f, Y: %.2f, Z: %.2f", motionX, motionY, motionZ))
                         .text(LABEL + "{*theoneprobe.probe.health_indicator*} " + INFO + health + " / " + maxHealth);
 
-                if (Config.showDebugUUID) {
+                if (NewConfig.show.showDebugUUID) {
                     vertical.text(LABEL + "{*theoneprobe.debug_probe.uuid_indicator*} " + INFO + uuid);
                 }
                 if (entityLivingBase.hasCustomName()) {

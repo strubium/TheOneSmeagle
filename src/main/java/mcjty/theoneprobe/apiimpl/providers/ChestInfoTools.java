@@ -6,6 +6,7 @@ import mcjty.theoneprobe.api.IProbeConfig;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -59,7 +60,7 @@ public class ChestInfoTools {
     private static int getChestContents(World world, BlockPos pos, List<ItemStack> stacks) {
         TileEntity te = world.getTileEntity(pos);
 
-        Set<Item> foundItems = Config.compactEqualStacks ? new HashSet<>() : null;
+        Set<Item> foundItems = NewConfig.server.compactEqualStacks ? new HashSet<>() : null;
         int maxSlots = 0;
         try {
             if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {

@@ -2,6 +2,7 @@ package mcjty.theoneprobe.event;
 
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.gui.GuiConfig;
 import mcjty.theoneprobe.gui.GuiNote;
 import mcjty.theoneprobe.items.ModItems;
@@ -45,12 +46,12 @@ public class ClientForgeEventHandlers {
             return;
         }
 
-        if (Config.holdKeyToMakeVisible) {
+        if (NewConfig.client.holdKeyToMakeVisible) {
             if (!KeyBindings.toggleVisible.isKeyDown()) {
                 return;
             }
         } else {
-            if (!Config.isVisible) {
+            if (!NewConfig.client.isVisible) {
                 return;
             }
         }
