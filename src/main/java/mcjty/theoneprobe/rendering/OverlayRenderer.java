@@ -338,7 +338,7 @@ public class OverlayRenderer {
             if (lastPair != null && now < lastPairTime + NewConfig.networking.entityTimeout) {
                 renderElements(lastPair.getRight(), Config.getDefaultOverlayStyle(), sw, sh, null);
                 lastRenderedTime = now;
-            } else if (Config.waitingForServerTimeout > 0 && lastRenderedTime != -1 && now > lastRenderedTime + Config.waitingForServerTimeout) {
+            } else if (NewConfig.networking.waitingForServerTimeout > 0 && lastRenderedTime != -1 && now > lastRenderedTime + NewConfig.networking.waitingForServerTimeout) {
                 ProbeInfo info = getWaitingEntityInfo(mode, mouseOver, entity, player);
                 registerProbeInfo(uuid, info);
                 lastPair = Pair.of(now, info);
@@ -400,7 +400,7 @@ public class OverlayRenderer {
                             .prefix(I18n.format("theoneprobe.probe.progress_indicator") + " ")
                             .suffix("%")
                             .width(85)
-                            .showText(Config.showBreakProgressText)
+                            .showText(NewConfig.client.showBreakProgressText)
                             .backgroundColor(Config.probeProgressBackgroundColor)
                             .borderColor(Config.probeProgressBorderColor)
                             .filledColor(Config.probeProgressColor)
@@ -449,7 +449,7 @@ public class OverlayRenderer {
             if (lastPair != null && now < lastPairTime + NewConfig.networking.blockTimeout) {
                 renderElements(lastPair.getRight(), Config.getDefaultOverlayStyle(), sw, sh, extraElement);
                 lastRenderedTime = now;
-            } else if (Config.waitingForServerTimeout > 0 && lastRenderedTime != -1 && now > lastRenderedTime + Config.waitingForServerTimeout) {
+            } else if (NewConfig.networking.waitingForServerTimeout > 0 && lastRenderedTime != -1 && now > lastRenderedTime + NewConfig.networking.waitingForServerTimeout) {
                 ProbeInfo info = getWaitingInfo(mode, mouseOver, blockPos, player);
                 registerProbeInfo(dimension, blockPos, info);
                 lastPair = Pair.of(now, info);

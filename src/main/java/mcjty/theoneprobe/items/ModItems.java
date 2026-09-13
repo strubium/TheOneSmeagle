@@ -42,7 +42,7 @@ public class ModItems {
     public static CreativeTabs tabProbe;
 
     public static void init() {
-        if(Config.regProbes){
+        if(NewConfig.server.regProbes){
 
              tabProbe = new CreativeTabs("Probe") {
                 @Override
@@ -61,7 +61,7 @@ public class ModItems {
             creativeProbe = new CreativeProbe();
 
             bar.step("Creating Armor Probes");
-            if (Config.regProbeHelmets) {
+            if (NewConfig.server.regProbeHelmets) {
                 int totalItems = ForgeRegistries.ITEMS.getValuesCollection().size();
                 ProgressManager.ProgressBar progressBar = ProgressManager.push("Processing Helmets", totalItems);
 
@@ -150,7 +150,7 @@ public class ModItems {
 
     @SideOnly(Side.CLIENT)
     public static void initClient() {
-        if(Config.regProbes){
+        if(NewConfig.server.regProbes){
             initModel(probe);
             initModel(creativeProbe);
             initModel(probeNote);

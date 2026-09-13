@@ -91,7 +91,7 @@ public class DefaultProbeInfoEntityProvider implements IProbeInfoEntityProvider 
 
 
                     for (PotionEffect effect : effects) {
-                        if (shownEffects >= Config.getPotionMaxNumber()) {
+                        if (shownEffects >= NewConfig.server.potionMaxNumber) {
                             int remaining = effects.size() - shownEffects;
                             vertical.text("..and " + remaining + " other effects");
                             break;

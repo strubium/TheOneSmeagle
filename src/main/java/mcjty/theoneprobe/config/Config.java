@@ -44,16 +44,9 @@ public class Config {
     public static final int PROBE_NEEDEDFOREXTENDED = 3;
     public static int needsProbe = PROBE_NEEDEDFOREXTENDED;
 
-    public static boolean regProbes = true;
-    public static boolean regProbeHelmets = false;
     public static boolean extendedInMain = false;
     public static NumberFormat rfFormat = NumberFormat.COMPACT;
     public static NumberFormat tankFormat = NumberFormat.COMPACT;
-    public static int waitingForServerTimeout = 2000;
-    public static int maxPacketToServer = 20000;
-
-    public static boolean supportBaubles = true;
-    public static boolean spawnNote = true;
 
     // Chest related settings
     public static int showSmallChestContentsWithoutSneaking = 0;
@@ -61,13 +54,11 @@ public class Config {
     public static String[] showContentsWithoutSneaking = { "storagedrawers:basicDrawers", "storagedrawersextra:extra_drawers" };
     public static String[] dontShowContentsUnlessSneaking = {};
     public static String[] dontSendNBT = { };
-    public static boolean showBreakProgressText = true;
 
     private static Set<ResourceLocation> inventoriesToShow = null;
     private static Set<ResourceLocation> inventoriesToNotShow = null;
     private static Set<ResourceLocation> dontSendNBTSet = null;
 
-    public static boolean showDebugInfo = true;
 
     private static int leftX = 0;
     private static int topY = 0;
@@ -99,15 +90,6 @@ public class Config {
     public static int tankbarBorderColor = 0xff555555;
     public static int probeNoteStackSize = 1;
 
-
-    //Tick TopAllDependents
-    public static boolean Botaniatop = false;
-
-
-    @Getter private static float blockNameMaxWidth = 0.0f;
-    @Getter private static int potionMaxNumber = 5;
-
-
     public static Map<TextStyleClass, String> defaultTextStyleClasses = new HashMap<>();
     public static Map<TextStyleClass, String> textStyleClasses;
 
@@ -125,7 +107,6 @@ public class Config {
         textStyleClasses = new HashMap<>(defaultTextStyleClasses);
     }
 
-    public static int loggingThrowableTimeout = 20000;
 
 
     private static IOverlayStyle defaultOverlayStyle;
@@ -133,25 +114,16 @@ public class Config {
     @Getter @Setter private static IProbeConfig realConfig;
 
     public static void init(Configuration cfg) {
-        loggingThrowableTimeout = cfg.getInt("loggingThrowableTimeout", CATEGORY_THEONEPROBE, loggingThrowableTimeout, 1, 10000000, "How much time (in ms) to wait before reporting an exception again");
         needsProbe = cfg.getInt("needsProbe", CATEGORY_THEONEPROBE, needsProbe, 0, 3, "Is the probe needed to show the tooltip? 0 = no, 1 = yes, 2 = yes and clients cannot override, 3 = probe needed for extended info only");
-        regProbes = cfg.getBoolean("regProbes", CATEGORY_THEONEPROBE, regProbes, "Should probes be registered? Useful if needsProbe is 0");
-        regProbeHelmets = cfg.getBoolean("regProbeHelmets", CATEGORY_THEONEPROBE, regProbeHelmets, "Should probe helmets be registered? Useful if needsProbe is 0");
         extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_THEONEPROBE, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
-        supportBaubles = cfg.getBoolean("supportBaubles", CATEGORY_THEONEPROBE, supportBaubles, "If true there will be a bauble version of the probe if baubles is present");
-        spawnNote = cfg.getBoolean("spawnNote", CATEGORY_THEONEPROBE, spawnNote, "If true there will be a readme note for first-time players");
         defaultConfig.setRFMode(cfg.getInt("showRF", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, defaultConfig.getRFMode(), 0, 2, "How to display RF: 0 = do not show, 1 = show in a bar, 2 = show as text"));
         defaultConfig.setTankMode(cfg.getInt("showTank", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, defaultConfig.getTankMode(), 0, 2, "How to display tank contents: 0 = do not show, 1 = show in a bar, 2 = show as text"));
         int fmt = cfg.getInt("rfFormat", CATEGORY_THEONEPROBE, rfFormat.ordinal(), 0, 2, "Format for displaying RF: 0 = full, 1 = compact, 2 = comma separated");
         rfFormat = NumberFormat.values()[fmt];
         fmt = cfg.getInt("tankFormat", CATEGORY_THEONEPROBE, tankFormat.ordinal(), 0, 2, "Format for displaying tank contents: 0 = full, 1 = compact, 2 = comma separated");
         tankFormat = NumberFormat.values()[fmt];
-        waitingForServerTimeout = cfg.getInt("waitingForServerTimeout", CATEGORY_THEONEPROBE, waitingForServerTimeout, -1, 100000, "The amount of milliseconds to wait before showing a 'fetch from server' info on the client (if the server is slow to respond) (-1 to disable this feature)");
-        maxPacketToServer = cfg.getInt("maxPacketToServer", CATEGORY_THEONEPROBE, maxPacketToServer, -1, 32768, "The maximum packet size to send an itemstack from client to server. Reduce this if you have issues with network lag caused by TOP");
         initDefaultConfig(cfg);
 
-        showBreakProgressText = cfg.getBoolean("showBreakProgressText", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showDebugInfo, "If true show the text in the progress bar");
-        showDebugInfo = cfg.getBoolean("showDebugInfo", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showDebugInfo, "If true show debug info with creative probe");
         rfbarFilledColor = parseColor(cfg.getString("rfbarFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarFilledColor), "Color for the RF bar"));
         rfbarAlternateFilledColor = parseColor(cfg.getString("rfbarAlternateFilledColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarAlternateFilledColor), "Alternate color for the RF bar"));
         rfbarBorderColor = parseColor(cfg.getString("rfbarBorderColor", CATEGORY_THEONEPROBE, Integer.toHexString(rfbarBorderColor), "Color for the RF bar border"));
@@ -214,8 +186,6 @@ public class Config {
         chestContentsBorderColor = parseColor(cfg.getString("chestContentsBorderColor", CATEGORY_CLIENT, Integer.toHexString(chestContentsBorderColor), "Color of the border of the chest contents box (0 to disable)"));
         showBreakProgress = cfg.getInt("showBreakProgress", CATEGORY_CLIENT, showBreakProgress, 0, 2, "0 means don't show break progress, 1 is show as bar, 2 is show as text");
         harvestStyleVanilla = cfg.getBoolean("harvestStyleVanilla", CATEGORY_CLIENT, harvestStyleVanilla, "true means shows harvestability with vanilla style icons");
-        blockNameMaxWidth = cfg.getFloat("blockNameMaxWidth", CATEGORY_CLIENT, blockNameMaxWidth, 0.0f, 1.0f, "The max displaying width of a block name, 0.0 is no limit, otherwise represents the percentage with respect to the whole screen");
-        potionMaxNumber = cfg.getInt("potionMaxNumber", CATEGORY_CLIENT, potionMaxNumber, 1,256, "Max amount of potions to show on a entity");
 
         Map<TextStyleClass, String> newformat = new HashMap<>();
         for (TextStyleClass styleClass : textStyleClasses.keySet()) {

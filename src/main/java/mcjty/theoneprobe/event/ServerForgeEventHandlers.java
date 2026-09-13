@@ -1,7 +1,7 @@
 package mcjty.theoneprobe.event;
 
 import mcjty.theoneprobe.TheOneProbe;
-import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.items.ModItems;
 import mcjty.theoneprobe.playerdata.PlayerGotNote;
 import mcjty.theoneprobe.playerdata.PlayerProperties;
@@ -43,7 +43,7 @@ public class ServerForgeEventHandlers {
 
     @SubscribeEvent
     public void onPlayerLoggedIn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
-        if (Config.spawnNote) {
+        if (NewConfig.server.spawnNote) {
             PlayerGotNote note = PlayerProperties.getPlayerGotNote(event.player);
             if (!note.isPlayerGotNote()) {
                 boolean success = event.player.inventory.addItemStackToInventory(new ItemStack(ModItems.probeNote));

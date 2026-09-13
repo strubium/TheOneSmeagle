@@ -10,6 +10,7 @@ import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
 import mcjty.theoneprobe.compat.RedstoneFluxTools;
 import mcjty.theoneprobe.compat.waila.WailaTools;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.setup.proxy.CommonProxy;
 import net.minecraft.block.*;
 import net.minecraft.block.properties.IProperty;
@@ -22,7 +23,6 @@ import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBrewingStand;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -389,10 +389,10 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             if (Tools.show(mode, config.getShowModName())) {
                 String blockDisplayName = pickBlock.getDisplayName();
 
-                if (Config.getBlockNameMaxWidth() != 0) {
+                if (NewConfig.server.blockNameMaxWidth != 0) {
                     FontRenderer fontRenderer = ClientTools.MC.fontRenderer;
                     int screenWidth = Tools.getScreenWidth();
-                    int availableWidth = (int) (screenWidth * Config.getBlockNameMaxWidth());
+                    int availableWidth = (int) (screenWidth * NewConfig.server.blockNameMaxWidth);
 
                     if (fontRenderer.getStringWidth(blockDisplayName) > availableWidth) {
                         int index = 0;

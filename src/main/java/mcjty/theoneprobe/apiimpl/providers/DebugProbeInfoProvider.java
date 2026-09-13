@@ -2,13 +2,13 @@ package mcjty.theoneprobe.apiimpl.providers;
 
 import mcjty.lib.api.power.IBigPower;
 import mcjty.theoneprobe.compat.RedstoneFluxTools;
-import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoProvider;
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
+import mcjty.theoneprobe.config.NewConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,7 +31,7 @@ public class DebugProbeInfoProvider implements IProbeInfoProvider {
 
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-        if (mode == ProbeMode.DEBUG && Config.showDebugInfo) {
+        if (mode == ProbeMode.DEBUG && NewConfig.server.debug.showDebugInfo) {
             Block block = blockState.getBlock();
             BlockPos pos = data.getPos();
             showDebugInfo(probeInfo, world, blockState, pos, block, data.getSideHit());

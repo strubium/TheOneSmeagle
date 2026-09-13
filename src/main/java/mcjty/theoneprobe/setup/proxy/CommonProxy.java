@@ -2,7 +2,7 @@ package mcjty.theoneprobe.setup.proxy;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import lombok.Getter;
-import mcjty.theoneprobe.compat.waila.WailaProbeInfoProvider;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.event.CommonForgeEventHandlers;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IProbeInfoEntityProvider;
@@ -96,7 +96,7 @@ public class CommonProxy implements IProxy {
 
         baubles = Loader.isModLoaded("Baubles") || Loader.isModLoaded("baubles");
         if (baubles) {
-            if (Config.supportBaubles) {
+            if (NewConfig.server.supportBaubles) {
                 logger.log(Level.INFO, "The One Probe Detected Baubles: enabling support");
             } else {
                 logger.log(Level.INFO, "The One Probe Detected Baubles, but support is disabled in config");
