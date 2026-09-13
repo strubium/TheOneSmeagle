@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "mcjty.theoneprobe"
-version = "1.12-1.1.5"
+version = "1.12-1.1.6"
 
 val id = "theoneprobe"
 
