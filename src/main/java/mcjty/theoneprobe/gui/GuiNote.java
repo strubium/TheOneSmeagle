@@ -2,6 +2,7 @@ package mcjty.theoneprobe.gui;
 
 import mcjty.theoneprobe.ClientTools;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.rendering.RenderHelper;
 import mcjty.theoneprobe.rendering.TextureGenerator;
 import net.minecraft.client.gui.GuiScreen;
@@ -35,7 +36,7 @@ public class GuiNote extends GuiScreen {
 
     private static final ResourceLocation background = TextureGenerator.generateTexture("note_background", WIDTH, HEIGHT, TextureGenerator.PatternType.GUI_BACKGROUND, new Color(124, 124, 124), null, 0);
 
-    static Color baseButtonColor = new Color(Config.probeButtonColor, true);
+    static Color baseButtonColor = new Color(NewConfig.client.probeLooks.probeButtonColor, true);
     private static final ResourceLocation buttonTexture = TextureGenerator.generateTexture(
             "note_button",
             BUTTON_WIDTH, BUTTON_HEIGHT,

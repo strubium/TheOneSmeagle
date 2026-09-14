@@ -48,7 +48,7 @@ public class GuiConfig extends GuiScreen {
     private static final ResourceLocation scene = new ResourceLocation(TheOneProbe.MODID, "textures/gui/scene.png");
 
     // Convert ARGB int to Color
-    static Color baseButtonColor = new Color(Config.probeButtonColor, true);
+    static Color baseButtonColor = new Color(NewConfig.client.probeLooks.probeButtonColor, true);
     ResourceLocation buttonTexture = TextureGenerator.generateTexture(
             "config_button_preset",
             WIDTH - 50, 11,
@@ -149,7 +149,7 @@ public class GuiConfig extends GuiScreen {
 
                 int[] pos = hitboxPositionMap[j * 3 + i];
 
-                hitboxes.add(new HitBox(x1, y1, x2, y2, () -> Config.setPos(pos[0], pos[1], pos[2], pos[3])));
+                hitboxes.add(new HitBox(x1, y1, x2, y2, () -> NewConfig.client.probeLooks.setPos(pos[0], pos[1], pos[2], pos[3])));
             }
         }
 
@@ -243,7 +243,7 @@ public class GuiConfig extends GuiScreen {
         probeInfo.text(LABEL + "{*theoneprobe.probe.fuel_indicator*} " + INFO + "5 volts");
         probeInfo.text(LABEL + "{*theoneprobe.probe.error_indicator*} " + ERROR + "Oups!");
 
-        renderElements(probeInfo, Config.getDefaultOverlayStyle());
+        renderElements(probeInfo, NewConfig.client.probeLooks.getCurrentOverlayStyle());
     }
 
     /**

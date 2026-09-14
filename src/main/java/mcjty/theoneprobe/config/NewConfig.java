@@ -1,6 +1,8 @@
 package mcjty.theoneprobe.config;
 
 import mcjty.theoneprobe.TheOneProbe;
+import mcjty.theoneprobe.api.IOverlayStyle;
+import mcjty.theoneprobe.apiimpl.styles.DefaultOverlayStyle;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 
@@ -78,6 +80,10 @@ public class NewConfig {
         @Config.Comment("If true, probe helmets will be registered. Useful if needsProbe is 0")
         public boolean regProbeHelmets = false;
 
+        @Config.Comment("Stack size of the Readme note")
+        @Config.RangeInt(min = 1, max = 64)
+        public int probeNoteStackSize = 1;
+
         public void setCompactEqualStacks(boolean compact) {
             NewConfig.server.compactEqualStacks = compact;
             ConfigManager.sync(TheOneProbe.MODID, Config.Type.INSTANCE);
@@ -85,6 +91,120 @@ public class NewConfig {
     }
 
     public static class Client {
+
+        public ProbeLooks probeLooks = new ProbeLooks();
+
+        public static class ProbeLooks {
+
+            /// The current style we use for rendering
+            @Config.Ignore
+            public IOverlayStyle currentOverlayStyle;
+
+
+            @Config.Comment("The left offset for the probe")
+            @Config.RangeInt(min = -1, max = 10000)
+            private int leftX = 0;
+
+            @Config.Comment("The right offset for the probe")
+            @Config.RangeInt(min = -1, max = 10000)
+            private int topY = 0;
+
+            @Config.Comment("The top offset for the probe")
+            @Config.RangeInt(min = -1, max = 10000)
+            private int rightX = -1;
+
+            @Config.Comment("The bottom offset for the probe")
+            @Config.RangeInt(min = -1, max = 10000)
+            private int bottomY = -1;
+
+            public void setPos(int leftx, int topy, int rightx, int bottomy) {
+                NewConfig.client.probeLooks.leftX = leftx;
+                NewConfig.client.probeLooks.topY = topy;
+                NewConfig.client.probeLooks.rightX = rightx;
+                NewConfig.client.probeLooks.bottomY = bottomy;
+                ConfigManager.sync(TheOneProbe.MODID, Config.Type.INSTANCE);
+
+                updateCurrentOverlayStyle();
+            }
+
+            public void setBoxStyle(int thickness, int borderColor, int fillcolor) {
+                boxThickness = thickness;
+                boxBorderColor = borderColor;
+                boxFillColor = fillcolor;
+                ConfigManager.sync(TheOneProbe.MODID, Config.Type.INSTANCE);
+
+
+                updateCurrentOverlayStyle();
+            }
+
+            public void updateCurrentOverlayStyle() {
+                this.currentOverlayStyle = new DefaultOverlayStyle()
+                        .borderThickness(this.boxThickness)
+                        .borderColor(this.boxBorderColor)
+                        .boxColor(this.boxFillColor)
+                        .location(this.leftX, this.rightX, this.topY, this.bottomY);
+
+                ConfigManager.sync(TheOneProbe.MODID, Config.Type.INSTANCE);
+            }
+
+            public IOverlayStyle getCurrentOverlayStyle() {
+                if (currentOverlayStyle == null) {
+                    updateCurrentOverlayStyle();
+                }
+                return currentOverlayStyle;
+            }
+
+
+            @Config.Comment("Color of the buttons in the probe note (0 to disable)")
+            public int probeButtonColor = 0xFF404040;
+
+            @Config.Comment("Color of the progress bar (0 to disable)")
+            public int probeProgressColor = 0xff990000;
+
+            @Config.Comment("Alt color of the progress bar (0 to disable)")
+            public int probeProgressAltColor = 0xff550000;
+
+            @Config.Comment("Color of the border of the progress bar (0 to disable)")
+            public int probeProgressBorderColor = 0;
+
+            @Config.Comment("Color of the background of the progress bar (0 to disable)")
+            public int probeProgressBackgroundColor = 0xff000000;
+
+            @Config.Comment("Color of the border of the chest contents box (0 to disable)")
+            public int chestContentsBorderColor = 0xff006699;
+
+            @Config.Comment("Use a gradient instead of alternating colors in solid blocks")
+            public boolean probeProgressGradient = false;
+
+            @Config.Comment("Color of the border of the box (0 to disable)")
+            private int boxBorderColor = 0xff999999;
+
+            @Config.Comment("Color of the box (0 to disable)")
+            private int boxFillColor = 0x55006699;
+
+            @Config.Comment("Thickness of the border of the box (0 to disable)")
+            @Config.RangeInt(min = 0, max = 20)
+            private int boxThickness = 2;
+
+
+            @Config.Comment("Color for the RF bar")
+            public int rfbarFilledColor = 0xffdd0000;
+
+            @Config.Comment("Alternate color for the RF bar")
+            public int rfbarAlternateFilledColor = 0xff430000;
+
+            @Config.Comment("Color for the RF bar border")
+            public int rfbarBorderColor = 0xff555555;
+
+            @Config.Comment("Color for the tank bar")
+            public int tankbarFilledColor = 0xff0000dd;
+
+            @Config.Comment("Alternate color for the tank bar")
+            public int tankbarAlternateFilledColor = 0xff000043;
+
+            @Config.Comment("Color for the tank bar border")
+            public int tankbarBorderColor = 0xff555555;
+        }
 
         @Config.Comment("If true, show the text in the progress bar")
         public boolean showBreakProgressText = true;

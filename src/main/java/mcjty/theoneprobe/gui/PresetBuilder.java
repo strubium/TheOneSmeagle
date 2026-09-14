@@ -3,6 +3,7 @@ package mcjty.theoneprobe.gui;
 import lombok.Getter;
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -130,7 +131,7 @@ public class PresetBuilder {
         }
 
         // Apply box styles from the preset
-        Config.setBoxStyle(
+        NewConfig.client.probeLooks.setBoxStyle(
                 preset.getBoxThickness(),
                 preset.getBoxBorderColor(),
                 preset.getBoxFillColor()

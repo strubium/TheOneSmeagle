@@ -336,14 +336,14 @@ public class OverlayRenderer {
 
             // If we have a recent lastPair we can show it to avoid flicker
             if (lastPair != null && now < lastPairTime + NewConfig.networking.entityTimeout) {
-                renderElements(lastPair.getRight(), Config.getDefaultOverlayStyle(), sw, sh, null);
+                renderElements(lastPair.getRight(), NewConfig.client.probeLooks.getCurrentOverlayStyle(), sw, sh, null);
                 lastRenderedTime = now;
             } else if (NewConfig.networking.waitingForServerTimeout > 0 && lastRenderedTime != -1 && now > lastRenderedTime + NewConfig.networking.waitingForServerTimeout) {
                 ProbeInfo info = getWaitingEntityInfo(mode, mouseOver, entity, player);
                 registerProbeInfo(uuid, info);
                 lastPair = Pair.of(now, info);
                 lastPairTime = now;
-                renderElements(info, Config.getDefaultOverlayStyle(), sw, sh, null);
+                renderElements(info, NewConfig.client.probeLooks.getCurrentOverlayStyle(), sw, sh, null);
                 lastRenderedTime = now;
             }
             return;
@@ -359,7 +359,7 @@ public class OverlayRenderer {
             requestEntityInfo(mode, mouseOver, entity, player);
         }
 
-        renderElements(info, Config.getDefaultOverlayStyle(), sw, sh, null);
+        renderElements(info, NewConfig.client.probeLooks.getCurrentOverlayStyle(), sw, sh, null);
         lastRenderedTime = now;
         lastPair = Pair.of(now, info);
         lastPairTime = now;
@@ -401,10 +401,10 @@ public class OverlayRenderer {
                             .suffix("%")
                             .width(85)
                             .showText(NewConfig.client.showBreakProgressText)
-                            .backgroundColor(Config.probeProgressBackgroundColor)
-                            .borderColor(Config.probeProgressBorderColor)
-                            .filledColor(Config.probeProgressColor)
-                            .alternateFilledColor(Config.probeProgressAltColor));
+                            .backgroundColor(NewConfig.client.probeLooks.probeProgressBackgroundColor)
+                            .borderColor(NewConfig.client.probeLooks.probeProgressBorderColor)
+                            .filledColor(NewConfig.client.probeLooks.probeProgressColor)
+                            .alternateFilledColor(NewConfig.client.probeLooks.probeProgressAltColor));
                 }
             }
         }
@@ -447,14 +447,14 @@ public class OverlayRenderer {
             }
 
             if (lastPair != null && now < lastPairTime + NewConfig.networking.blockTimeout) {
-                renderElements(lastPair.getRight(), Config.getDefaultOverlayStyle(), sw, sh, extraElement);
+                renderElements(lastPair.getRight(), NewConfig.client.probeLooks.getCurrentOverlayStyle(), sw, sh, extraElement);
                 lastRenderedTime = now;
             } else if (NewConfig.networking.waitingForServerTimeout > 0 && lastRenderedTime != -1 && now > lastRenderedTime + NewConfig.networking.waitingForServerTimeout) {
                 ProbeInfo info = getWaitingInfo(mode, mouseOver, blockPos, player);
                 registerProbeInfo(dimension, blockPos, info);
                 lastPair = Pair.of(now, info);
                 lastPairTime = now;
-                renderElements(info, Config.getDefaultOverlayStyle(), sw, sh, extraElement);
+                renderElements(info, NewConfig.client.probeLooks.getCurrentOverlayStyle(), sw, sh, extraElement);
                 lastRenderedTime = now;
             }
             return;
@@ -470,7 +470,7 @@ public class OverlayRenderer {
             requestBlockInfo(mode, mouseOver, blockPos, player);
         }
 
-        renderElements(info, Config.getDefaultOverlayStyle(), sw, sh, extraElement);
+        renderElements(info, NewConfig.client.probeLooks.getCurrentOverlayStyle(), sw, sh, extraElement);
         lastRenderedTime = now;
         lastPair = Pair.of(now, info);
         lastPairTime = now;

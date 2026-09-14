@@ -2,6 +2,7 @@ package mcjty.theoneprobe.items;
 
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.probe.ProbeBase;
 import mcjty.theoneprobe.setup.proxy.GuiProxy;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ public class ProbeNote extends ProbeBase {
 
     public ProbeNote() {
         super("probenote");
-        setMaxStackSize(Config.probeNoteStackSize);
+        setMaxStackSize(NewConfig.server.probeNoteStackSize);
     }
 
     @Override

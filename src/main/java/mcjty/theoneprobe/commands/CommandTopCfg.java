@@ -37,19 +37,19 @@ public class CommandTopCfg extends CommandBase {
     private static final Map<String,Consumer<String[]>> SUBCOMMANDS = new HashMap<>();
 
     static {
-        SUBCOMMANDS.put("center", s -> Config.setPos(-1, -1, -1, -1));
-        SUBCOMMANDS.put("topleft", s -> Config.setPos(5, 5, -1, -1));
-        SUBCOMMANDS.put("topcenter", s -> Config.setPos(-1, 5, -1, -1));
-        SUBCOMMANDS.put("topright", s -> Config.setPos(-1, 5, 5, -1));
-        SUBCOMMANDS.put("bottomleft", s -> Config.setPos(5, -1, -1, 20));
-        SUBCOMMANDS.put("bottomcenter", s -> Config.setPos(-1, -1, -1, 20));
-        SUBCOMMANDS.put("bottomright", s -> Config.setPos(-1, -1, 5, 20));
-        SUBCOMMANDS.put("centerleft", s -> Config.setPos(5, -1, -1, -1));
-        SUBCOMMANDS.put("centerright", s -> Config.setPos(-1, -1, 5, -1));
-        SUBCOMMANDS.put("transparent", s -> Config.setBoxStyle(0, 0, 0));
+        SUBCOMMANDS.put("center", s -> NewConfig.client.probeLooks.setPos(-1, -1, -1, -1));
+        SUBCOMMANDS.put("topleft", s -> NewConfig.client.probeLooks.setPos(5, 5, -1, -1));
+        SUBCOMMANDS.put("topcenter", s -> NewConfig.client.probeLooks.setPos(-1, 5, -1, -1));
+        SUBCOMMANDS.put("topright", s -> NewConfig.client.probeLooks.setPos(-1, 5, 5, -1));
+        SUBCOMMANDS.put("bottomleft", s -> NewConfig.client.probeLooks.setPos(5, -1, -1, 20));
+        SUBCOMMANDS.put("bottomcenter", s -> NewConfig.client.probeLooks.setPos(-1, -1, -1, 20));
+        SUBCOMMANDS.put("bottomright", s -> NewConfig.client.probeLooks.setPos(-1, -1, 5, 20));
+        SUBCOMMANDS.put("centerleft", s -> NewConfig.client.probeLooks.setPos(5, -1, -1, -1));
+        SUBCOMMANDS.put("centerright", s -> NewConfig.client.probeLooks.setPos(-1, -1, 5, -1));
+        SUBCOMMANDS.put("transparent", s -> NewConfig.client.probeLooks.setBoxStyle(0, 0, 0));
         SUBCOMMANDS.put("setpos", CommandTopCfg::setPos);
-        SUBCOMMANDS.put("opaque", s -> Config.setBoxStyle(2, 0xff999999, 0xff003366));
-        SUBCOMMANDS.put("default", s -> Config.setBoxStyle(2, 0xff999999, 0x55006699));
+        SUBCOMMANDS.put("opaque", s -> NewConfig.client.probeLooks.setBoxStyle(2, 0xff999999, 0xff003366));
+        SUBCOMMANDS.put("default", s -> NewConfig.client.probeLooks.setBoxStyle(2, 0xff999999, 0x55006699));
         SUBCOMMANDS.put("liquids", s -> NewConfig.show.setLiquids(true));
         SUBCOMMANDS.put("noliquids", s -> NewConfig.show.setLiquids(false));
         SUBCOMMANDS.put("compactequalstacks", s -> NewConfig.server.setCompactEqualStacks(true));
@@ -68,7 +68,7 @@ public class CommandTopCfg extends CommandBase {
             int topy = Integer.parseInt(args[2]);
             int rightx = Integer.parseInt(args[3]);
             int bottomy = Integer.parseInt(args[4]);
-            Config.setPos(leftx, topy, rightx, bottomy);
+            NewConfig.client.probeLooks.setPos(leftx, topy, rightx, bottomy);
         } catch (NumberFormatException ignored) {
         }
     }

@@ -260,9 +260,9 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             probeInfo.progress(contents, maxContents,
                     probeInfo.defaultProgressStyle()
                             .suffix("mB")
-                            .filledColor(Config.tankbarFilledColor)
-                            .alternateFilledColor(Config.tankbarAlternateFilledColor)
-                            .borderColor(Config.tankbarBorderColor)
+                            .filledColor(NewConfig.client.probeLooks.tankbarFilledColor)
+                            .alternateFilledColor(NewConfig.client.probeLooks.tankbarAlternateFilledColor)
+                            .borderColor(NewConfig.client.probeLooks.tankbarBorderColor)
                             .numberFormat(Config.tankFormat));
         } else {
             probeInfo.text(PROGRESS + ElementProgress.format(contents, Config.tankFormat, "mB"));
@@ -305,9 +305,9 @@ public class DefaultProbeInfoProvider implements IProbeInfoProvider {
             probeInfo.progress(energy, maxEnergy,
                     probeInfo.defaultProgressStyle()
                             .suffix("RF")
-                            .filledColor(Config.rfbarFilledColor)
-                            .alternateFilledColor(Config.rfbarAlternateFilledColor)
-                            .borderColor(Config.rfbarBorderColor)
+                            .filledColor(NewConfig.client.probeLooks.rfbarFilledColor)
+                            .alternateFilledColor(NewConfig.client.probeLooks.rfbarAlternateFilledColor)
+                            .borderColor(NewConfig.client.probeLooks.rfbarBorderColor)
                             .numberFormat(Config.rfFormat));
         } else {
             probeInfo.text(PROGRESS + "RF: " + ElementProgress.format(energy, Config.rfFormat, "RF"));

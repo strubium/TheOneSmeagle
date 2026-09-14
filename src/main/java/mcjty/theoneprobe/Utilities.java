@@ -15,6 +15,7 @@ import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -68,7 +69,7 @@ public class Utilities {
      * @param mode The current {@link ProbeMode}.
      */
     public static void showChestContents(@NonNull IProbeInfo probeInfo, @NonNull List<ItemStack> stacks, @NonNull ProbeMode mode) {
-        IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(Config.chestContentsBorderColor).spacing(0));
+        IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(NewConfig.client.probeLooks.chestContentsBorderColor).spacing(0));
         int rows = 0;
         int idx = 0;
 
