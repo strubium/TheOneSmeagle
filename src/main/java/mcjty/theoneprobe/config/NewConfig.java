@@ -2,9 +2,11 @@ package mcjty.theoneprobe.config;
 
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IOverlayStyle;
+import mcjty.theoneprobe.api.ProbeRequirement;
 import mcjty.theoneprobe.apiimpl.styles.DefaultOverlayStyle;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.Configuration;
 
 @Config(modid = TheOneProbe.MODID, name = "theonesmeagle")
 public class NewConfig {
@@ -30,6 +32,11 @@ public class NewConfig {
             @Config.Comment("If true, show a entities UUID in the debug probe menu")
             public boolean showDebugUUID = false;
         }
+
+        @Config.Comment("Is the probe needed to show the tooltip? 0 = no, 1 = yes, 2 = yes and clients cannot override, 3 = probe needed for extended info only")
+        @Config.RangeInt(min = 0, max = 3)
+        public int needsProbe = ProbeRequirement.PROBE_NEEDEDFOREXTENDED.configNumber;
+
 
         @Config.Comment("If true, equal stacks will be compacted in the chest contents overlay")
         public boolean compactEqualStacks = true;
@@ -68,6 +75,11 @@ public class NewConfig {
             NewConfig.server.compactEqualStacks = compact;
             ConfigManager.sync(TheOneProbe.MODID, Config.Type.INSTANCE);
         }
+        public void setProbeNeeded(ProbeRequirement probeNeeded) {
+            NewConfig.server.needsProbe = probeNeeded.configNumber;
+            ConfigManager.sync(TheOneProbe.MODID, Config.Type.INSTANCE);
+        }
+
     }
 
     public static class Client {

@@ -7,6 +7,7 @@ import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.ProbeHitData;
 import mcjty.theoneprobe.apiimpl.ProbeInfo;
 import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,8 +28,7 @@ import java.util.List;
 
 import static mcjty.theoneprobe.api.TextStyleClass.ERROR;
 import static mcjty.theoneprobe.api.TextStyleClass.LABEL;
-import static mcjty.theoneprobe.config.Config.PROBE_NEEDEDFOREXTENDED;
-import static mcjty.theoneprobe.config.Config.PROBE_NEEDEDHARD;
+import static mcjty.theoneprobe.api.ProbeRequirement.*;
 
 /**
  * @since 5/16/2016
@@ -111,7 +111,7 @@ public class PacketGetInfo implements IMessage {
     }
 
     private static ProbeInfo getProbeInfo(EntityPlayer player, ProbeMode mode, World world, BlockPos blockPos, EnumFacing sideHit, Vec3d hitVec, ItemStack pickBlock) {
-        if (Config.needsProbe == PROBE_NEEDEDFOREXTENDED) {
+        if (NewConfig.server.needsProbe == PROBE_NEEDEDFOREXTENDED.configNumber) {
             // We need a probe only for extended information
             if (!ModItems.hasAProbeSomewhere(player)) {
                 // No probe anywhere, switch EXTENDED to NORMAL
@@ -119,7 +119,7 @@ public class PacketGetInfo implements IMessage {
                     mode = ProbeMode.NORMAL;
                 }
             }
-        } else if (Config.needsProbe == PROBE_NEEDEDHARD && !ModItems.hasAProbeSomewhere(player)) {
+        } else if (NewConfig.server.needsProbe == PROBE_NEEDEDHARD.configNumber && !ModItems.hasAProbeSomewhere(player)) {
             // The server says we need a probe, but we don't have one in our hands
             return null;
         }

@@ -1,6 +1,7 @@
 package mcjty.theoneprobe.event;
 
 import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.api.ProbeRequirement;
 import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.gui.GuiConfig;
@@ -20,8 +21,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import static mcjty.theoneprobe.config.Config.*;
 
 @SideOnly(Side.CLIENT)
 public class ClientForgeEventHandlers {
@@ -59,7 +58,7 @@ public class ClientForgeEventHandlers {
         if (hasItemInEitherHand(ModItems.creativeProbe)) {
             OverlayRenderer.renderHUD(ProbeMode.DEBUG, event.getPartialTicks());
         } else {
-            switch (Config.needsProbe) {
+            switch (ProbeRequirement.getFromNumber(NewConfig.server.needsProbe)) {
                 case PROBE_NOTNEEDED:
                 case PROBE_NEEDEDFOREXTENDED:
                     OverlayRenderer.renderHUD(getModeForPlayer(), event.getPartialTicks());

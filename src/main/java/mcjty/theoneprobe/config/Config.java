@@ -6,6 +6,7 @@ import lombok.Setter;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IProbeConfig;
 import mcjty.theoneprobe.api.NumberFormat;
+import mcjty.theoneprobe.api.ProbeRequirement;
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.apiimpl.ProbeConfig;
 import mcjty.theoneprobe.setup.proxy.CommonProxy;
@@ -36,11 +37,6 @@ public class Config {
     public static String SUBCATEGORY_SHOW = "theoneprobe_show";
 
 
-    public static final int PROBE_NOTNEEDED = 0;
-    public static final int PROBE_NEEDED = 1;
-    public static final int PROBE_NEEDEDHARD = 2;
-    public static final int PROBE_NEEDEDFOREXTENDED = 3;
-    public static int needsProbe = PROBE_NEEDEDFOREXTENDED;
 
     public static boolean extendedInMain = false;
     public static NumberFormat rfFormat = NumberFormat.COMPACT;
@@ -82,7 +78,6 @@ public class Config {
     @Getter @Setter private static IProbeConfig realConfig;
 
     public static void init(Configuration cfg) {
-        needsProbe = cfg.getInt("needsProbe", CATEGORY_THEONEPROBE, needsProbe, 0, 3, "Is the probe needed to show the tooltip? 0 = no, 1 = yes, 2 = yes and clients cannot override, 3 = probe needed for extended info only");
         extendedInMain = cfg.getBoolean("extendedInMain", CATEGORY_THEONEPROBE, extendedInMain, "If true the probe will automatically show extended information if it is in your main hand (so not required to sneak)");
         defaultConfig.setRFMode(cfg.getInt("showRF", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, defaultConfig.getRFMode(), 0, 2, "How to display RF: 0 = do not show, 1 = show in a bar, 2 = show as text"));
         defaultConfig.setTankMode(cfg.getInt("showTank", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, defaultConfig.getTankMode(), 0, 2, "How to display tank contents: 0 = do not show, 1 = show in a bar, 2 = show as text"));
@@ -121,14 +116,6 @@ public class Config {
         defaultConfig.showSilverfish(IProbeConfig.ConfigMode.values()[cfg.getInt("showSilverfish",CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW,defaultConfig.getShowSilverfish().ordinal(),0,2,"Reveal monster eggs (0 = not, 1 = always, 2 = sneak)")]);
 
     }
-
-    public static void setProbeNeeded(int probeNeeded) {
-        Configuration cfg = mainConfig;
-        Config.needsProbe = probeNeeded;
-        cfg.get(CATEGORY_THEONEPROBE, "needsProbe", probeNeeded).set(probeNeeded);
-        cfg.save();
-    }
-
 
     public static void setupStyleConfig(Configuration cfg) {
         Map<TextStyleClass, String> newformat = new HashMap<>();
