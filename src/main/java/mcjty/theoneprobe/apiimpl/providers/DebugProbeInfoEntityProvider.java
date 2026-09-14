@@ -70,7 +70,7 @@ public class DebugProbeInfoEntityProvider implements IProbeInfoEntityProvider {
                         .text(LABEL + "{*theoneprobe.debug_probe.motion_indicator*} " + INFO + String.format("X: %.2f, Y: %.2f, Z: %.2f", motionX, motionY, motionZ))
                         .text(LABEL + "{*theoneprobe.probe.health_indicator*} " + INFO + health + " / " + maxHealth);
 
-                if (NewConfig.show.showDebugUUID) {
+                if (NewConfig.server.debug.showDebugUUID) {
                     vertical.text(LABEL + "{*theoneprobe.debug_probe.uuid_indicator*} " + INFO + uuid);
                 }
                 if (entityLivingBase.hasCustomName()) {

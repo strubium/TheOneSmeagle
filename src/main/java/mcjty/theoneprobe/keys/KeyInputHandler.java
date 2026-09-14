@@ -13,7 +13,7 @@ public class KeyInputHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (KeyBindings.toggleLiquids.isPressed()) {
-            NewConfig.show.setLiquids(!NewConfig.show.showLiquids);
+            NewConfig.client.setLiquids(!NewConfig.client.showLiquids);
         } else if (KeyBindings.toggleVisible.isPressed()) {
             if (!NewConfig.client.holdKeyToMakeVisible) {
                 NewConfig.client.setVisible(!NewConfig.client.isVisible);

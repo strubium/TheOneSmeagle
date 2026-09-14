@@ -6,7 +6,7 @@ import mcjty.theoneprobe.apiimpl.styles.DefaultOverlayStyle;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 
-@Config(modid = TheOneProbe.MODID, name = TheOneProbe.MODID + "_new")
+@Config(modid = TheOneProbe.MODID, name = "theonesmeagle")
 public class NewConfig {
 
     @Config.Comment("Server sided configs. The server has authority")
@@ -18,29 +18,6 @@ public class NewConfig {
     @Config.Comment("Networking related configs. The server authority will be marked per config")
     public static Networking networking = new Networking();
 
-    public static Show show = new Show();
-
-
-    @Config.Comment("Distance at which the probe works")
-    @Config.RangeDouble(min = 0.1, max = 200)
-    public static float probeDistance = 6;
-
-
-    public static class Show {
-
-        @Config.Comment("If true show liquid information when the probe hits liquid first")
-        public boolean showLiquids = false;
-
-        @Config.Comment("Show a entities UUID in the debug probe menu")
-        public boolean showDebugUUID = false;
-
-
-        public void setLiquids(boolean liquids) {
-            NewConfig.show.showLiquids = liquids;
-            ConfigManager.sync(TheOneProbe.MODID, Config.Type.INSTANCE);
-        }
-    }
-
     public static class Server {
 
         public Debug debug = new Debug();
@@ -49,6 +26,9 @@ public class NewConfig {
 
             @Config.Comment("If true, show debug info with creative probe")
             public boolean showDebugInfo = true;
+
+            @Config.Comment("If true, show a entities UUID in the debug probe menu")
+            public boolean showDebugUUID = false;
         }
 
         @Config.Comment("If true, equal stacks will be compacted in the chest contents overlay")
@@ -206,6 +186,10 @@ public class NewConfig {
             public int tankbarBorderColor = 0xff555555;
         }
 
+        @Config.Comment("Distance at which the probe works")
+        @Config.RangeDouble(min = 0.1, max = 200)
+        public float probeDistance = 6;
+
         @Config.Comment("If true, show the text in the progress bar")
         public boolean showBreakProgressText = true;
 
@@ -246,6 +230,14 @@ public class NewConfig {
 
         @Config.Comment("The block used inside the probe note example")
         public String probeNoteBlock = "minecraft:log";
+
+        @Config.Comment("If true show liquid information when the probe hits liquid first")
+        public boolean showLiquids = false;
+
+        public void setLiquids(boolean liquids) {
+            NewConfig.client.showLiquids = liquids;
+            ConfigManager.sync(TheOneProbe.MODID, Config.Type.INSTANCE);
+        }
 
         public void setTooltipScale(float scale) {
             NewConfig.client.tooltipScale = scale;

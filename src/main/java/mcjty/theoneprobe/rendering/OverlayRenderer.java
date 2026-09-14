@@ -106,7 +106,7 @@ public class OverlayRenderer {
 
         // Cache values we will read often
         final double tooltipScale = NewConfig.client.tooltipScale;
-        final double maxDistance = NewConfig.probeDistance;
+        final double maxDistance = NewConfig.client.probeDistance;
         ScaledResolution scaledresolution = new ScaledResolution(ClientTools.MC);
         final double screenW = scaledresolution.getScaledWidth_double();
         final double screenH = scaledresolution.getScaledHeight_double();
@@ -132,7 +132,7 @@ public class OverlayRenderer {
         Vec3d start = player.getPositionEyes(partialTicks);
         Vec3d look = player.getLook(partialTicks);
         Vec3d end = start.add(look.x * maxDistance, look.y * maxDistance, look.z * maxDistance);
-        mouseOver = player.getEntityWorld().rayTraceBlocks(start, end, NewConfig.show.showLiquids);
+        mouseOver = player.getEntityWorld().rayTraceBlocks(start, end, NewConfig.client.showLiquids);
 
         if (mouseOver == null) {
             checkCleanup();

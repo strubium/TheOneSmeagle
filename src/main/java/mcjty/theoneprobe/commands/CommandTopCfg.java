@@ -50,8 +50,8 @@ public class CommandTopCfg extends CommandBase {
         SUBCOMMANDS.put("setpos", CommandTopCfg::setPos);
         SUBCOMMANDS.put("opaque", s -> NewConfig.client.probeLooks.setBoxStyle(2, 0xff999999, 0xff003366));
         SUBCOMMANDS.put("default", s -> NewConfig.client.probeLooks.setBoxStyle(2, 0xff999999, 0x55006699));
-        SUBCOMMANDS.put("liquids", s -> NewConfig.show.setLiquids(true));
-        SUBCOMMANDS.put("noliquids", s -> NewConfig.show.setLiquids(false));
+        SUBCOMMANDS.put("liquids", s -> NewConfig.client.setLiquids(true));
+        SUBCOMMANDS.put("noliquids", s -> NewConfig.client.setLiquids(false));
         SUBCOMMANDS.put("compactequalstacks", s -> NewConfig.server.setCompactEqualStacks(true));
         SUBCOMMANDS.put("dontcompactequalstacks", s -> NewConfig.server.setCompactEqualStacks(false));
         SUBCOMMANDS.put("extendedinmain", s -> Config.setExtendedInMain(true));
