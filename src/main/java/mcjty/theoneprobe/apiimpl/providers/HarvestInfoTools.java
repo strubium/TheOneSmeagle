@@ -49,7 +49,7 @@ public class HarvestInfoTools {
         String harvestTool = getHarvestTool(block, blockState, world, pos);
         String harvestLevelName = getHarvestLevelName(block, blockState);
 
-        boolean harvestStyleVanilla = Config.getHarvestStyleVanilla();
+        boolean harvestStyleVanilla = NewConfig.client.harvestStyleVanilla;
         int offs = harvestStyleVanilla ? 16 : 0;
         int dim = harvestStyleVanilla ? 13 : 16;
 

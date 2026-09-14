@@ -89,12 +89,19 @@ public class NewConfig {
         @Config.Comment("If true, show the text in the progress bar")
         public boolean showBreakProgressText = true;
 
+        @Config.Comment("0 means don't show break progress, 1 is show as bar, 2 is show as text")
+        @Config.RangeInt(min = 0, max = 2)
+        public int showBreakProgress = 1;    // 0 == off, 1 == bar, 2 == text
+
         @Config.Comment("The scale of the tooltips, 1 is default, 2 is smaller")
         @Config.RangeDouble(min = 0.4, max = 5)
         public float tooltipScale = 1.0f;
 
-        @Config.Comment("Is the probe visible? (client can override)")
+        @Config.Comment("Is the probe visible?")
         public boolean isVisible = true;
+
+        @Config.Comment("If true, show harvestability with vanilla style icons")
+        public boolean harvestStyleVanilla = true;
 
         @Config.Comment("If true, the probe hotkey must be held down to show the tooltip")
         public boolean holdKeyToMakeVisible = false;

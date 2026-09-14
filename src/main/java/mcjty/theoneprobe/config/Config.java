@@ -65,8 +65,6 @@ public class Config {
     private static int rightX = -1;
     private static int bottomY = -1;
 
-    public static int showBreakProgress = 1;    // 0 == off, 1 == bar, 2 == text
-    public static boolean harvestStyleVanilla = true;
 
     public static int chestContentsBorderColor = 0xff006699;
     public static int probeButtonColor = 0xFF404040;
@@ -184,8 +182,6 @@ public class Config {
         probeProgressBackgroundColor = parseColor(cfg.getString("probeProgressBackgroundColor", CATEGORY_CLIENT, Integer.toHexString(probeProgressBackgroundColor), "Color of the background of the progress bar (0 to disable)"));
         probeProgressGradient = cfg.getBoolean("probeProgressGradient", CATEGORY_CLIENT, probeProgressGradient, "Use a gradient instead of alternating colors in solid blocks");
         chestContentsBorderColor = parseColor(cfg.getString("chestContentsBorderColor", CATEGORY_CLIENT, Integer.toHexString(chestContentsBorderColor), "Color of the border of the chest contents box (0 to disable)"));
-        showBreakProgress = cfg.getInt("showBreakProgress", CATEGORY_CLIENT, showBreakProgress, 0, 2, "0 means don't show break progress, 1 is show as bar, 2 is show as text");
-        harvestStyleVanilla = cfg.getBoolean("harvestStyleVanilla", CATEGORY_CLIENT, harvestStyleVanilla, "true means shows harvestability with vanilla style icons");
 
         Map<TextStyleClass, String> newformat = new HashMap<>();
         for (TextStyleClass styleClass : textStyleClasses.keySet()) {
@@ -227,9 +223,6 @@ public class Config {
         updateDefaultOverlayStyle();
     }
 
-    public static boolean getHarvestStyleVanilla(){
-        return harvestStyleVanilla;
-    }
     public static void setBoxStyle(int thickness, int borderColor, int fillcolor) {
         Configuration cfg = mainConfig;
         boxThickness = thickness;

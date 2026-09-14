@@ -390,10 +390,10 @@ public class OverlayRenderer {
 
         // Build optional break-progress element
         IElement damageElement = null;
-        if (Config.showBreakProgress > 0) {
+        if (NewConfig.client.showBreakProgress > 0) {
             float damage = ClientTools.MC.playerController.curBlockDamageMP;
             if (damage > 0.0f) {
-                if (Config.showBreakProgress == 2) {
+                if (NewConfig.client.showBreakProgress == 2) {
                     damageElement = new ElementText(TextFormatting.RED + I18n.format("theoneprobe.probe.progress_indicator") + " " + (int) (damage * 100.0f) + "%");
                 } else {
                     damageElement = new ElementProgress((long) (damage * 100.0f), 100, new ProgressStyle()
