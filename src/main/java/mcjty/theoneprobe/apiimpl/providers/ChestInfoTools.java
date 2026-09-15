@@ -26,8 +26,8 @@ public class ChestInfoTools {
 
         // Determine the chestMode based on configuration and world state
         if (chestMode == IProbeConfig.ConfigMode.EXTENDED
-                && (Config.showSmallChestContentsWithoutSneaking > 0 || !Config.getInventoriesToShow().isEmpty())) {
-            if (Config.getInventoriesToShow().contains(world.getBlockState(pos).getBlock().getRegistryName())) {
+                && (Config.showSmallChestContentsWithoutSneaking > 0 || !NewConfig.server.getInventoriesToShow().isEmpty())) {
+            if (NewConfig.server.getInventoriesToShow().contains(world.getBlockState(pos).getBlock().getRegistryName())) {
                 chestMode = IProbeConfig.ConfigMode.NORMAL;
             } else if (Config.showSmallChestContentsWithoutSneaking > 0) {
                 stacks = new ArrayList<>();
@@ -36,8 +36,8 @@ public class ChestInfoTools {
                     chestMode = IProbeConfig.ConfigMode.NORMAL;
                 }
             }
-        } else if (chestMode == IProbeConfig.ConfigMode.NORMAL && !Config.getInventoriesToNotShow().isEmpty()) {
-            if (Config.getInventoriesToNotShow().contains(world.getBlockState(pos).getBlock().getRegistryName())) {
+        } else if (chestMode == IProbeConfig.ConfigMode.NORMAL && !NewConfig.server.getInventoriesToNotShow().isEmpty()) {
+            if (NewConfig.server.getInventoriesToNotShow().contains(world.getBlockState(pos).getBlock().getRegistryName())) {
                 chestMode = IProbeConfig.ConfigMode.EXTENDED;
             }
         }

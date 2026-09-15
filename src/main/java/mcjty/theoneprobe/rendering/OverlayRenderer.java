@@ -11,7 +11,6 @@ import mcjty.theoneprobe.apiimpl.elements.ElementText;
 import mcjty.theoneprobe.apiimpl.providers.DefaultProbeInfoEntityProvider;
 import mcjty.theoneprobe.apiimpl.providers.DefaultProbeInfoProvider;
 import mcjty.theoneprobe.apiimpl.styles.ProgressStyle;
-import mcjty.theoneprobe.config.Config;
 import mcjty.theoneprobe.config.NewConfig;
 import mcjty.theoneprobe.network.PacketGetEntityInfo;
 import mcjty.theoneprobe.network.PacketGetInfo;
@@ -264,7 +263,7 @@ public class OverlayRenderer {
         if (pickBlock == null || (!pickBlock.isEmpty() && pickBlock.getItem() == null)) {
             pickBlock = ItemStack.EMPTY;
         }
-        if (!pickBlock.isEmpty() && Config.getDontSendNBTSet().contains(pickBlock.getItem().getRegistryName())) {
+        if (!pickBlock.isEmpty() && NewConfig.server.getDontSendNBTSet().contains(pickBlock.getItem().getRegistryName())) {
             pickBlock = pickBlock.copy();
             pickBlock.setTagCompound(null);
         }

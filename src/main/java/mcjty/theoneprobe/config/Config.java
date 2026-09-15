@@ -6,7 +6,6 @@ import lombok.Setter;
 import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IProbeConfig;
 import mcjty.theoneprobe.api.NumberFormat;
-import mcjty.theoneprobe.api.ProbeRequirement;
 import mcjty.theoneprobe.api.TextStyleClass;
 import mcjty.theoneprobe.apiimpl.ProbeConfig;
 import mcjty.theoneprobe.setup.proxy.CommonProxy;
@@ -45,13 +44,6 @@ public class Config {
     // Chest related settings
     public static int showSmallChestContentsWithoutSneaking = 0;
     public static int showItemDetailThresshold = 4;
-    public static String[] showContentsWithoutSneaking = { "storagedrawers:basicDrawers", "storagedrawersextra:extra_drawers" };
-    public static String[] dontShowContentsUnlessSneaking = {};
-    public static String[] dontSendNBT = { };
-
-    private static Set<ResourceLocation> inventoriesToShow = null;
-    private static Set<ResourceLocation> inventoriesToNotShow = null;
-    private static Set<ResourceLocation> dontSendNBTSet = null;
 
 
 
@@ -89,9 +81,6 @@ public class Config {
 
         showItemDetailThresshold = cfg.getInt("showItemDetailThresshold", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showItemDetailThresshold, 0, 20, "If the number of items in an inventory is lower or equal then this number then more info is shown");
         showSmallChestContentsWithoutSneaking = cfg.getInt("showSmallChestContentsWithoutSneaking", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showSmallChestContentsWithoutSneaking, 0, 1000, "The maximum amount of slots (empty or not) to show without sneaking");
-        showContentsWithoutSneaking = cfg.getStringList("showContentsWithoutSneaking", CATEGORY_THEONEPROBE + "." + SUBCATEGORY_SHOW, showContentsWithoutSneaking, "A list of blocks for which we automatically show chest contents even if not sneaking");
-        dontShowContentsUnlessSneaking = cfg.getStringList("dontShowContentsUnlessSneaking", CATEGORY_THEONEPROBE, dontShowContentsUnlessSneaking, "A list of blocks for which we don't show chest contents automatically except if sneaking");
-        dontSendNBT = cfg.getStringList("dontSendNBT", CATEGORY_THEONEPROBE, dontSendNBT, "A list of blocks not to send NBT over the network. This is useful for blocks that have HUGE NBT in their pickblock (itemstack)");
 
         setupStyleConfig(cfg);
     }
@@ -177,35 +166,6 @@ public class Config {
         }
     }
 
-    public static Set<ResourceLocation> getInventoriesToShow() {
-        if (inventoriesToShow == null) {
-            inventoriesToShow = new HashSet<>();
-            for (String s : showContentsWithoutSneaking) {
-                inventoriesToShow.add(new ResourceLocation(s));
-            }
-        }
-        return inventoriesToShow;
-    }
-
-    public static Set<ResourceLocation> getInventoriesToNotShow() {
-        if (inventoriesToNotShow == null) {
-            inventoriesToNotShow = new HashSet<>();
-            for (String s : dontShowContentsUnlessSneaking) {
-                inventoriesToNotShow.add(new ResourceLocation(s));
-            }
-        }
-        return inventoriesToNotShow;
-    }
-
-    public static Set<ResourceLocation> getDontSendNBTSet() {
-        if (dontSendNBTSet == null) {
-            dontSendNBTSet = new HashSet<>();
-            for (String s : dontSendNBT) {
-                dontSendNBTSet.add(new ResourceLocation(s));
-            }
-        }
-        return dontSendNBTSet;
-    }
 
     public static void init() {
         mainConfig = new Configuration(new File(CommonProxy.modConfigDir.getPath(), TheOneProbe.MODID + ".cfg"));

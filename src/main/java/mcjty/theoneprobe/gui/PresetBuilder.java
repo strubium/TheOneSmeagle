@@ -125,7 +125,7 @@ public class PresetBuilder {
             throw new IllegalArgumentException("Preset cannot be null.");
         }
 
-        // Apply text styles from the preset
+        // Reset text styles
         for (Map.Entry<TextStyleClass, String> entry : Config.defaultTextStyleClasses.entrySet()) {
             Config.setTextStyle(entry.getKey(), entry.getValue());
         }

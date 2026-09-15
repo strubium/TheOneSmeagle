@@ -4,9 +4,13 @@ import mcjty.theoneprobe.TheOneProbe;
 import mcjty.theoneprobe.api.IOverlayStyle;
 import mcjty.theoneprobe.api.ProbeRequirement;
 import mcjty.theoneprobe.apiimpl.styles.DefaultOverlayStyle;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Config(modid = TheOneProbe.MODID, name = "theonesmeagle")
 public class NewConfig {
@@ -70,6 +74,54 @@ public class NewConfig {
         @Config.Comment("Stack size of the Readme note")
         @Config.RangeInt(min = 1, max = 64)
         public int probeNoteStackSize = 1;
+
+        @Config.Comment("A list of blocks for which we automatically show chest contents even if not sneaking")
+        public static String[] showContentsWithoutSneaking = { "storagedrawers:basicDrawers", "storagedrawersextra:extra_drawers" };
+
+        @Config.Comment("A list of blocks for which we don't show chest contents automatically except if sneaking")
+        public static String[] dontShowContentsUnlessSneaking = {};
+
+        @Config.Comment("A list of blocks not to send NBT over the network. This is useful for blocks that have HUGE NBT in their pickblock (itemstack)")
+        public static String[] dontSendNBT = { };
+
+        @Config.Ignore
+        private static Set<ResourceLocation> inventoriesToShow = null;
+        @Config.Ignore
+        private static Set<ResourceLocation> inventoriesToNotShow = null;
+        @Config.Ignore
+        private static Set<ResourceLocation> dontSendNBTSet = null;
+
+
+        public Set<ResourceLocation> getInventoriesToShow() {
+            if (inventoriesToShow == null) {
+                inventoriesToShow = new HashSet<>();
+                for (String s : showContentsWithoutSneaking) {
+                    inventoriesToShow.add(new ResourceLocation(s));
+                }
+            }
+            return inventoriesToShow;
+        }
+
+        public Set<ResourceLocation> getInventoriesToNotShow() {
+            if (inventoriesToNotShow == null) {
+                inventoriesToNotShow = new HashSet<>();
+                for (String s : dontShowContentsUnlessSneaking) {
+                    inventoriesToNotShow.add(new ResourceLocation(s));
+                }
+            }
+            return inventoriesToNotShow;
+        }
+
+        public Set<ResourceLocation> getDontSendNBTSet() {
+            if (dontSendNBTSet == null) {
+                dontSendNBTSet = new HashSet<>();
+                for (String s : dontSendNBT) {
+                    dontSendNBTSet.add(new ResourceLocation(s));
+                }
+            }
+            return dontSendNBTSet;
+        }
+
 
         public void setCompactEqualStacks(boolean compact) {
             NewConfig.server.compactEqualStacks = compact;
